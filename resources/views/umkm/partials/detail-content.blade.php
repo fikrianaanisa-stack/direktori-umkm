@@ -304,9 +304,91 @@
                 <span class="umkm-detail-value">{{ $umkm->tahun_berdiri ?: '-' }}</span>
             </div>
 
+            
+            {{-- Jam Operasional Ringkas --}}
+            @php
+                $daftarHari = [
+                    'Senin', 'Selasa', 'Rabu', 'Kamis',
+                    'Jumat', 'Sabtu', 'Minggu'
+                ];
+
+                $jadwalHarian = $umkm->jamOperasionalHarian->keyBy('hari');
+
+                $kelompokJadwal = [];
+
+                foreach ($daftarHari as $hari) {
+                    $jadwal = $jadwalHarian->get($hari);
+
+                    if (!$jadwal) {
+                        $keterangan = 'Belum Diatur';
+                    } elseif (!$jadwal->is_buka) {
+                        $keterangan = 'Tutup';
+                    } else {
+                        $keterangan = substr($jadwal->jam_buka, 0, 5)
+                            . '–'
+                            . substr($jadwal->jam_tutup, 0, 5)
+                            . ' WIT';
+                    }
+
+                    $jumlahKelompok = count($kelompokJadwal);
+
+                    if (
+                        $jumlahKelompok > 0 &&
+                        $kelompokJadwal[$jumlahKelompok - 1]['keterangan'] === $keterangan
+                    ) {
+                        $kelompokJadwal[$jumlahKelompok - 1]['akhir'] = $hari;
+                    } else {
+                        $kelompokJadwal[] = [
+                            'awal' => $hari,
+                            'akhir' => $hari,
+                            'keterangan' => $keterangan,
+                        ];
+                    }
+                }
+            @endphp
+
             <div class="umkm-detail-info">
                 <span class="umkm-detail-label">Jam Operasional</span>
-                <span class="umkm-detail-value">{{ $umkm->jam_operasional ?: '-' }}</span>
+
+                <div class="umkm-detail-value">
+
+                    @if ($jadwalHarian->isNotEmpty())
+
+                        @foreach ($kelompokJadwal as $kelompok)
+                            <div style="display: flex;
+                                        justify-content: space-between;
+                                        gap: 12px;
+                                        padding: 5px 0;">
+
+                                <span>
+                                    {{ $kelompok['awal'] }}
+                                    @if ($kelompok['awal'] !== $kelompok['akhir'])
+                                        –{{ $kelompok['akhir'] }}
+                                    @endif
+                                </span>
+
+                                <span style="
+                                    color: {{
+                                        $kelompok['keterangan'] === 'Tutup'
+                                            ? '#dc2626'
+                                            : ($kelompok['keterangan'] === 'Belum Diatur'
+                                                ? '#64748b'
+                                                : '#16a34a')
+                                    }};
+                                    text-align: right;
+                                ">
+                                    {{ $kelompok['keterangan'] }}
+                                </span>
+
+                            </div>
+                        @endforeach
+
+                    @else
+
+                        {{ $umkm->jam_operasional ?: 'Belum tersedia' }}
+
+                    @endif
+                </div>
             </div>
         </div>
 

@@ -41,4 +41,9 @@ class Umkm extends Model
         return $this->hasMany(Produk::class, 'umkm_id');
     }
 
+    // Relasi UMKM dengan jadwal operasional per hari
+    public function jamOperasionalHarian()
+    {
+        return $this->hasMany(JamOperasionalUmkm::class, 'umkm_id');
+    }
 }

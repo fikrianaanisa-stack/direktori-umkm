@@ -19,14 +19,11 @@ class ProdukController extends Controller
         return view('produk.index', compact('produk'));
     }
     
-    // Menampilkan detail produk
+    // Menampilkan detail produk berdasarkan ID
     public function show($id)
     {
-        
-    $produk = Produk::with(['umkm', 'kategoriProduk', 'hargaProduk'])
-        ->orderBy('id', 'desc')
-        ->get();
-
+        $produk = Produk::with(['umkm', 'kategoriProduk', 'hargaProduk'])
+            ->findOrFail($id);
 
         return view('produk.show', compact('produk'));
     }
@@ -39,7 +36,7 @@ class ProdukController extends Controller
             ->orderBy('id', 'desc')
             ->get();
 
-        return view('produk.admin-index', compact('produk'));
+        return view('admin.produk.index', compact('produk'));
     }
 
 
@@ -50,7 +47,7 @@ class ProdukController extends Controller
 
         $kategoriProduk = KategoriProduk::orderBy('nama_kategori')->get();
 
-        return view('produk.create', compact('umkm', 'kategoriProduk'));
+        return view('admin.produk.create', compact('umkm', 'kategoriProduk'));
     }
 
         // Menyimpan data produk baru
@@ -137,7 +134,7 @@ class ProdukController extends Controller
 
             $kategoriProduk = KategoriProduk::orderBy('nama_kategori')->get();
 
-            return view('produk.edit', compact(
+            return view('admin.produk.edit', compact(
                 'produk',
                 'umkm',
                 'kategoriProduk'

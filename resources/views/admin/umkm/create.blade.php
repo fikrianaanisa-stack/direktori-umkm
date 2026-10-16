@@ -88,7 +88,7 @@
         </div>
     @endif
 
-    <form action="{{ url('/umkm') }}" method="POST"
+    <form action="{{ route('umkm.store') }}" method="POST"
           enctype="multipart/form-data">
         @csrf
 
@@ -195,6 +195,76 @@
                value="{{ old('jam_operasional') }}"
                placeholder="Contoh: Senin-Sabtu, 08.00-17.00 WIT">
 
+        {{-- Pengaturan jam operasional harian --}}
+        <div style="margin-top: 20px;">
+            <h3>Jam Operasional Harian</h3>
+
+            <p>Atur status dan jam operasional untuk setiap hari.</p>
+
+            @php
+                $hariList = [
+                    'Senin', 'Selasa', 'Rabu', 'Kamis',
+                    'Jumat', 'Sabtu', 'Minggu'
+                ];
+            @endphp
+
+            @foreach ($hariList as $hari)
+                @php
+                    $statusJadwal = old("jadwal.$hari.status", 'belum_diatur');
+                @endphp
+
+                <div style="padding: 12px; margin-bottom: 10px;
+                            border: 1px solid #ddd; border-radius: 8px;">
+
+                    <strong>{{ $hari }}</strong>
+
+                    <div style="margin-top: 10px;">
+                        <label for="status-{{ $hari }}">
+                            Status Operasional
+                        </label>
+
+                        <select name="jadwal[{{ $hari }}][status]"
+                                id="status-{{ $hari }}"
+                                style="max-width: 220px;">
+
+                            <option value="belum_diatur"
+                                @selected($statusJadwal === 'belum_diatur')>
+                                Belum Diatur
+                            </option>
+
+                            <option value="buka"
+                                @selected($statusJadwal === 'buka')>
+                                Buka
+                            </option>
+
+                            <option value="tutup"
+                                @selected($statusJadwal === 'tutup')>
+                                Tutup
+                            </option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 8px;">
+                        <div>
+                            <label>Jam Buka</label>
+                            <input type="time"
+                                name="jadwal[{{ $hari }}][jam_buka]"
+                                value="{{ old("jadwal.$hari.jam_buka") }}"
+                                @disabled($statusJadwal !== 'buka')>
+                        </div>
+
+                        <div>
+                            <label>Jam Tutup</label>
+                            <input type="time"
+                                name="jadwal[{{ $hari }}][jam_tutup]"
+                                value="{{ old("jadwal.$hari.jam_tutup") }}"
+                                @disabled($statusJadwal !== 'buka')>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
         <label>Tahun Berdiri</label>
         <input type="number" name="tahun_berdiri"
                min="1900" max="2100"
@@ -267,6 +337,51 @@ document.addEventListener('DOMContentLoaded', function () {
     if (wilayahLama) {
         wilayahSelect.value = wilayahLama;
     }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Pengaturan jam operasional harian
+    const hariList = [
+        'Senin', 'Selasa', 'Rabu', 'Kamis',
+        'Jumat', 'Sabtu', 'Minggu'
+    ];
+
+    hariList.forEach(function (hari) {
+        const status = document.getElementById('status-' + hari);
+
+        const jamBuka = document.querySelector(
+            `[name="jadwal[${hari}][jam_buka]"]`
+        );
+
+        const jamTutup = document.querySelector(
+            `[name="jadwal[${hari}][jam_tutup]"]`
+        );
+
+        if (!status || !jamBuka || !jamTutup) return;
+
+        function perbaruiKolomJam() {
+            const isBuka = status.value === 'buka';
+
+            // Aktifkan kolom jam hanya jika status Buka
+            jamBuka.disabled = !isBuka;
+            jamTutup.disabled = !isBuka;
+
+            // Bedakan tampilan kolom aktif dan tidak aktif
+            jamBuka.style.backgroundColor = isBuka ? '#ffffff' : '#f1f5f9';
+            jamTutup.style.backgroundColor = isBuka ? '#ffffff' : '#f1f5f9';
+
+            jamBuka.style.cursor = isBuka ? 'text' : 'not-allowed';
+            jamTutup.style.cursor = isBuka ? 'text' : 'not-allowed';
+        }
+
+        // Jalankan ketika halaman pertama kali dibuka
+        perbaruiKolomJam();
+
+        // Jalankan setiap kali status diubah
+        status.addEventListener('change', perbaruiKolomJam);
+    });
 });
 </script>
 @endpush

@@ -26,7 +26,7 @@ class UmkmController extends Controller
     {
         $umkm = Umkm::orderBy('nama_umkm', 'asc')->get();
 
-        return view('umkm.admin-index', compact('umkm'));
+        return view('admin.umkm.index', compact('umkm'));
     }
 
     /**
@@ -43,7 +43,7 @@ class UmkmController extends Controller
             ->orderBy('kelurahan_desa')
             ->get();
 
-        return view('umkm.create', compact('kategori', 'wilayah'));
+        return view('admin.umkm.create', compact('kategori', 'wilayah'));
     }
 
     /**
@@ -72,6 +72,14 @@ class UmkmController extends Controller
             'jam_operasional' => 'nullable|string|max:255',
             'tahun_berdiri' => 'nullable|integer|between:1900,2100',
 
+            // Validasi jadwal operasional harian
+            'jadwal' => 'sometimes|array',
+            'jadwal.*' => 'array',
+            'jadwal.*.status' => 'required|in:belum_diatur,buka,tutup',
+            'jadwal.*.jam_buka' => 'nullable|date_format:H:i',
+            'jadwal.*.jam_tutup' => 'nullable|date_format:H:i',
+
+
             'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'foto_usaha' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
@@ -85,6 +93,19 @@ class UmkmController extends Controller
             'foto_usaha.uploaded' => 'Foto usaha gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
         ]);
 
+        // Memastikan hari berstatus Buka memiliki jam lengkap
+        foreach ($data['jadwal'] ?? [] as $hari => $jadwal) {
+            if (($jadwal['status'] ?? '') !== 'buka') {
+                continue;
+            }
+
+            if (empty($jadwal['jam_buka']) || empty($jadwal['jam_tutup'])) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'jadwal' => "Jam buka dan jam tutup hari {$hari} wajib diisi.",
+                ]);
+            }
+        }
+
         // Menyimpan logo UMKM
         if ($request->hasFile('logo')) {
             $data['logo'] = $request->file('logo')
@@ -97,8 +118,41 @@ class UmkmController extends Controller
                 ->store('umkm/foto-usaha', 'public');
         }
 
-        // Menyimpan data ke database
-        Umkm::create($data);
+        // Pisahkan jadwal harian dari data utama UMKM
+        $jadwalHarian = $data['jadwal'] ?? [];
+        unset($data['jadwal']);
+
+        // Menyimpan data utama UMKM
+        $umkm = Umkm::create($data);
+
+        // Menyimpan jadwal operasional harian
+        foreach ($jadwalHarian as $hari => $jadwal) {
+
+            // Pastikan nama hari sesuai
+            if (!in_array($hari, [
+                'Senin', 'Selasa', 'Rabu', 'Kamis',
+                'Jumat', 'Sabtu', 'Minggu'
+            ], true)) {
+                continue;
+            }
+
+            $status = $jadwal['status'] ?? 'belum_diatur';
+
+            // Hari yang belum diatur tidak disimpan
+            if ($status === 'belum_diatur') {
+                continue;
+            }
+
+            $isBuka = $status === 'buka';
+
+            // Simpan jadwal yang berstatus Buka atau Tutup
+            $umkm->jamOperasionalHarian()->create([
+                'hari' => $hari,
+                'is_buka' => $isBuka,
+                'jam_buka' => $isBuka ? ($jadwal['jam_buka'] ?? null) : null,
+                'jam_tutup' => $isBuka ? ($jadwal['jam_tutup'] ?? null) : null,
+            ]);
+        }
 
         return redirect()
             ->route('admin.umkm.index')
@@ -138,7 +192,7 @@ class UmkmController extends Controller
             ->where('id', $umkm->wilayah_id)
             ->first();
 
-        return view('umkm.admin-show', compact(
+        return view('admin.umkm.show', compact(
             'umkm',
             'kategori',
             'wilayah'
@@ -161,7 +215,7 @@ class UmkmController extends Controller
             ->orderBy('kelurahan_desa')
             ->get();
 
-        return view('umkm.edit', compact('umkm', 'kategori', 'wilayah'));
+        return view('admin.umkm.edit', compact('umkm', 'kategori', 'wilayah'));
     }
 
     /**
@@ -192,6 +246,13 @@ class UmkmController extends Controller
             'jam_operasional' => 'nullable|string|max:255',
             'tahun_berdiri' => 'nullable|integer|between:1900,2100',
 
+            // Validasi jadwal operasional harian
+            'jadwal' => 'sometimes|array',
+            'jadwal.*' => 'array',
+            'jadwal.*.status' => 'required|in:belum_diatur,buka,tutup',
+            'jadwal.*.jam_buka' => 'nullable|date_format:H:i',
+            'jadwal.*.jam_tutup' => 'nullable|date_format:H:i',
+
             'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'foto_usaha' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
@@ -204,6 +265,19 @@ class UmkmController extends Controller
             'logo.uploaded' => 'Logo gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
             'foto_usaha.uploaded' => 'Foto usaha gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
         ]);
+
+        // Memastikan hari berstatus Buka memiliki jam lengkap
+        foreach ($data['jadwal'] ?? [] as $hari => $jadwal) {
+            if (($jadwal['status'] ?? '') !== 'buka') {
+                continue;
+            }
+
+            if (empty($jadwal['jam_buka']) || empty($jadwal['jam_tutup'])) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'jadwal' => "Jam buka dan jam tutup hari {$hari} wajib diisi.",
+                ]);
+            }
+        }
 
         // Mengganti logo UMKM
         if ($request->hasFile('logo')) {
@@ -231,12 +305,61 @@ class UmkmController extends Controller
             $data['foto_usaha'] = $fotoBaru;
         }
 
-        // Memperbarui data di database
+        // Pisahkan jadwal harian dari data utama UMKM
+        $jadwalHarian = $data['jadwal'] ?? [];
+        unset($data['jadwal']);
+
+        // Memperbarui data utama UMKM
         $umkm->update($data);
 
-        return redirect()
-            ->route('admin.umkm.index')
-            ->with('success', 'Data UMKM berhasil diperbarui.');
+        // Menyimpan jadwal operasional harian
+        foreach ($jadwalHarian as $hari => $jadwal) {
+
+            // Hanya menerima nama hari yang valid
+            if (!in_array($hari, [
+                'Senin', 'Selasa', 'Rabu', 'Kamis',
+                'Jumat', 'Sabtu', 'Minggu'
+            ], true)) {
+                continue;
+            }
+
+            $status = $jadwal['status'] ?? 'belum_diatur';
+
+            // Hapus jadwal harian jika status Belum Diatur
+            if ($status === 'belum_diatur') {
+                $umkm->jamOperasionalHarian()
+                    ->where('hari', $hari)
+                    ->delete();
+
+                continue;
+            }
+
+            // Menentukan status buka atau tutup
+            $isBuka = $status === 'buka';
+
+            // Simpan atau perbarui jadwal tanpa duplikasi
+            $umkm->jamOperasionalHarian()->updateOrCreate(
+                ['hari' => $hari],
+                [
+                    'is_buka' => $isBuka,
+                    'jam_buka' => $isBuka ? ($jadwal['jam_buka'] ?? null) : null,
+                    'jam_tutup' => $isBuka ? ($jadwal['jam_tutup'] ?? null) : null,
+                ]
+            );
+        }
+
+        // Respons JSON untuk penyimpanan melalui AJAX
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data UMKM dan jadwal operasional berhasil diperbarui.',
+                'redirect' => route('admin.umkm.index'),
+            ]);
+        }
+
+        // Respons untuk penyimpanan formulir biasa
+        return redirect()->route('admin.umkm.index')
+            ->with('success', 'Data UMKM dan jadwal operasional berhasil diperbarui.');
     }
 
     /**

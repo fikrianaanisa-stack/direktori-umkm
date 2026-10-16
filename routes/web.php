@@ -6,108 +6,94 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 
-// Halaman utama website
+// Halaman utama publik Direktori UMKM Kota Ambon
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
-// Menampilkan daftar UMKM
+// Direktori UMKM
 Route::get('/umkm', [UmkmController::class, 'index'])
     ->name('umkm.index');
 
-// Menampilkan formulir tambah UMKM
-Route::get('/umkm/create', [UmkmController::class, 'create'])
-    ->middleware(['auth', 'admin'])
-    ->name('umkm.create');
-
-// Menyimpan data UMKM baru
-Route::post('/umkm', [UmkmController::class, 'store'])
-    ->middleware(['auth', 'admin'])
-    ->name('umkm.store');
-
-// Menampilkan formulir edit UMKM
-Route::get('/umkm/{id}/edit', [UmkmController::class, 'edit'])
-    ->middleware(['auth', 'admin'])
-    ->name('umkm.edit');
-
-// Menyimpan perubahan data UMKM
-Route::put('/umkm/{id}', [UmkmController::class, 'update'])
-    ->middleware(['auth', 'admin'])
-    ->name('umkm.update');
-
-// Menampilkan detail UMKM
 Route::get('/umkm/{id}', [UmkmController::class, 'show'])
+    ->whereNumber('id')
     ->name('umkm.show');
 
-// Menghapus data UMKM
-Route::delete('/umkm/{id}', [UmkmController::class, 'destroy'])
-    ->middleware(['auth', 'admin'])
-    ->name('umkm.destroy');
-
-// Route Daftar Produk
+// Katalog produk
 Route::get('/produk', [ProdukController::class, 'index'])
     ->name('produk.index');
 
-// Route Formulir Tambah Produk
-Route::get('/produk/create', [ProdukController::class, 'create'])
-    ->middleware(['auth', 'admin'])
-    ->name('produk.create');
-
-// Route Simpan Produk
-Route::post('/produk', [ProdukController::class, 'store'])
-    ->middleware(['auth', 'admin'])
-    ->name('produk.store');
-
- // Menampilkan detail produk untuk pengunjung
 Route::get('/produk/{id}', [ProdukController::class, 'show'])
     ->whereNumber('id')
     ->name('produk.show');
 
-// Route Formulir Edit Produk
-Route::get('/produk/{id}/edit', [ProdukController::class, 'edit'])
-    ->middleware(['auth', 'admin'])
-    ->name('produk.edit');
+// Autentikasi pengguna
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])
+        ->name('login');
 
-// Route Memperbarui Data Produk
-Route::put('/produk/{id}', [ProdukController::class, 'update'])
-    ->middleware(['auth', 'admin'])
-    ->name('produk.update');
+    Route::post('/login', [LoginController::class, 'login']);
+});
 
-// Route Menghapus Data Produk
-Route::delete('/produk/{id}', [ProdukController::class, 'destroy'])
-    ->middleware(['auth', 'admin'])
-    ->name('produk.destroy');
-
-// Menampilkan halaman login
-Route::get('/login', [LoginController::class, 'showLoginForm'])
-    ->middleware('guest')
-    ->name('login');
-
-// Memproses login
-Route::post('/login', [LoginController::class, 'login'])
-    ->middleware('guest');
-
-// Memproses logout
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-// Dashboard khusus Super Admin dan Admin
-Route::get('/admin/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'admin'])
-    ->name('admin.dashboard');
+// Route pengelolaan untuk Admin dan Super Admin
+Route::middleware(['auth', 'admin'])->group(function () {
 
-// Halaman pengelolaan UMKM khusus Admin dan Super Admin */
-Route::get('/admin/umkm', [UmkmController::class, 'adminIndex'])
-    ->middleware(['auth', 'admin'])
-    ->name('admin.umkm.index');
+    // Dashboard admin
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
- //Menampilkan detail UMKM khusus Admin dan Super Admin.
-Route::get('/admin/umkm/{id}', [UmkmController::class, 'adminShow'])
-    ->middleware(['auth', 'admin'])
-    ->name('admin.umkm.show');
+   
+    // Pengelolaan data UMKM
+    Route::get('/admin/umkm', [UmkmController::class, 'adminIndex'])
+        ->name('admin.umkm.index');
 
-// Daftar produk admin
-Route::get('/admin/produk', [ProdukController::class, 'adminIndex'])
-    ->middleware(['auth', 'admin'])
-    ->name('admin.produk.index');
+    Route::get('/admin/umkm/create', [UmkmController::class, 'create'])
+        ->name('umkm.create');
+
+    Route::post('/admin/umkm', [UmkmController::class, 'store'])
+        ->name('umkm.store');
+
+    Route::get('/admin/umkm/{id}/edit', [UmkmController::class, 'edit'])
+        ->whereNumber('id')
+        ->name('umkm.edit');
+
+    Route::put('/admin/umkm/{id}', [UmkmController::class, 'update'])
+        ->whereNumber('id')
+        ->name('umkm.update');
+
+    Route::delete('/admin/umkm/{id}', [UmkmController::class, 'destroy'])
+        ->whereNumber('id')
+        ->name('umkm.destroy');
+
+    Route::get('/admin/umkm/{id}', [UmkmController::class, 'adminShow'])
+        ->whereNumber('id')
+        ->name('admin.umkm.show');
+
+    
+    // Pengelolaan data produk
+    Route::get('/admin/produk', [ProdukController::class, 'adminIndex'])
+        ->name('admin.produk.index');
+
+    Route::get('/admin/produk/create', [ProdukController::class, 'create'])
+        ->name('produk.create');
+
+    Route::post('/admin/produk', [ProdukController::class, 'store'])
+        ->name('produk.store');
+
+    Route::get('/admin/produk/{id}/edit', [ProdukController::class, 'edit'])
+        ->whereNumber('id')
+        ->name('produk.edit');
+
+    Route::put('/admin/produk/{id}', [ProdukController::class, 'update'])
+        ->whereNumber('id')
+        ->name('produk.update');
+
+    Route::delete('/admin/produk/{id}', [ProdukController::class, 'destroy'])
+        ->whereNumber('id')
+        ->name('produk.destroy');
+
+});

@@ -294,11 +294,19 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         daftarHarga.appendChild(pilihanBaru);
-        // Hapus pilihan harga baru dari formulir
+
+        
+        // Hapus pilihan harga baru setelah konfirmasi
         pilihanBaru.querySelector('.hapus-pilihan-harga')
             .addEventListener('click', function () {
+
+                if (!confirm('Apakah Anda yakin ingin menghapus pilihan harga ini?')) {
+                    return;
+                }
+
                 pilihanBaru.remove();
             });
+
                 indeksHarga++;
     });
 
