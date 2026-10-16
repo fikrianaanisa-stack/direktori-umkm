@@ -141,6 +141,20 @@
 
         <h3 class="section-title">B. Lokasi Google Maps</h3>
 
+        <label for="google_maps_url">Link Google Maps</label>
+        <input type="url"
+            id="google_maps_url"
+            name="google_maps_url"
+            value="{{ old('google_maps_url') }}"
+            placeholder="https://maps.app.goo.gl/..."
+            maxlength="2048">
+
+        <small style="color: #64748b;">
+            Buka profil usaha di Google Maps, klik Bagikan,
+            lalu Salin link dan tempelkan di sini.
+        </small>
+
+        
         <label>Latitude</label>
         <input type="number" step="any" name="latitude"
                value="{{ old('latitude') }}"
@@ -151,7 +165,10 @@
                value="{{ old('longitude') }}"
                placeholder="Contoh: 128.1800000">
 
-        <p>Koordinat dapat dilengkapi kemudian melalui fitur Edit UMKM.</p>
+        <p>
+            Link Google Maps dapat digunakan tanpa mengisi koordinat.
+            Latitude dan longitude bersifat opsional.
+        </p>
 
         <h3 class="section-title">C. Kontak dan Media Sosial</h3>
 

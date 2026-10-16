@@ -61,6 +61,7 @@ class UmkmController extends Controller
 
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
+            'google_maps_url' => 'nullable|url|max:2048',
 
             'telepon' => 'nullable|string|max:30',
             'whatsapp' => 'nullable|string|max:30',
@@ -109,7 +110,7 @@ class UmkmController extends Controller
      */
     public function show(string $id)
     {
-        $umkm = Umkm::findOrFail($id);
+        $umkm = Umkm::with(['produk.kategoriProduk'])->findOrFail($id);
 
         $kategori = DB::table('kategori_umkm')
             ->where('id', $umkm->kategori_umkm_id)
@@ -127,7 +128,7 @@ class UmkmController extends Controller
      */
     public function adminShow(string $id)
     {
-        $umkm = Umkm::findOrFail($id);
+        $umkm = Umkm::with(['produk.kategoriProduk'])->findOrFail($id);
 
         $kategori = DB::table('kategori_umkm')
             ->where('id', $umkm->kategori_umkm_id)
@@ -180,6 +181,7 @@ class UmkmController extends Controller
 
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
+            'google_maps_url' => 'nullable|url|max:2048',
 
             'telepon' => 'nullable|string|max:30',
             'whatsapp' => 'nullable|string|max:30',

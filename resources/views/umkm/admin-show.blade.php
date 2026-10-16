@@ -22,7 +22,27 @@
 
     .detail-umkm-back:hover {
         background: #1d4ed8;
+        
     }
+    
+.detail-umkm-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #f59e0b;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.detail-umkm-edit:hover {
+    background: #d97706;
+}
+
 </style>
 @endpush
 
@@ -43,10 +63,17 @@
     {{-- Memanggil informasi UMKM dari Blade Partial --}}
     @include('umkm.partials.detail-content')
 
+    
     <a href="{{ route('admin.umkm.index') }}"
-       class="detail-umkm-back">
+    class="detail-umkm-back">
         ← Kembali ke Data UMKM
     </a>
+
+    <a href="{{ route('umkm.edit', $umkm->id) }}"
+    class="detail-umkm-edit">
+        ✎ Edit UMKM
+    </a>
+
 
 </div>
 

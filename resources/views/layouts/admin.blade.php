@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -378,6 +377,59 @@
 </head>
 
 <body>
+    
+    {{-- Notifikasi global Admin --}}
+    @if (session('success') || session('error') || $errors->any())
+        @php
+            $toastType = session('success') ? 'success' : 'error';
+            $toastTitle = $toastType === 'success' ? 'Berhasil' : 'Validasi Gagal';
+
+            $toastMessage = session('success')
+                ?? session('error')
+                ?? 'Periksa kembali data yang dimasukkan.';
+
+            if ($errors->any()) {
+                // Ambil pesan kesalahan validasi pertama
+                $toastMessage = $errors->first();
+            }
+        @endphp
+
+        <div id="admin-toast"
+            data-type="{{ $toastType }}"
+            role="{{ $toastType === 'error' ? 'alert' : 'status' }}"
+            style="
+                position:fixed;
+                top:20px;
+                right:20px;
+                z-index:9999;
+                width:calc(100% - 40px);
+                max-width:360px;
+                padding:16px;
+                border-radius:10px;
+                background:{{ $toastType === 'success' ? '#f0fdf4' : '#fef2f2' }};
+                border:1px solid {{ $toastType === 'success' ? '#86efac' : '#fca5a5' }};
+                color:{{ $toastType === 'success' ? '#166534' : '#991b1b' }};
+                box-shadow:0 8px 24px rgba(0,0,0,0.15);
+            ">
+
+            <div style="display:flex;justify-content:space-between;gap:12px;">
+                <div>
+                    <strong>{{ $toastTitle }}</strong>
+                    <p style="margin:8px 0 0;font-size:14px;line-height:1.5;">
+                        {{ $toastMessage }}
+                    </p>
+                </div>
+
+                <button type="button"
+                        onclick="document.getElementById('admin-toast').remove()"
+                        aria-label="Tutup notifikasi"
+                        style="background:none;border:none;color:inherit;cursor:pointer;font-size:20px;align-self:flex-start;">
+                    &times;
+                </button>
+            </div>
+        </div>
+    @endif
+
 <div class="app">
 
     
@@ -456,8 +508,8 @@
                 Data UMKM
             </a>
 
-            <a href="{{ route('produk.index') }}"
-               class="{{ request()->routeIs('produk.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.produk.index') }}"
+            class="{{ request()->routeIs('admin.produk.*', 'produk.create', 'produk.edit') ? 'active' : '' }}">
                 Data Produk
             </a>
 
@@ -495,9 +547,31 @@
 
 </div>
 
-
 @stack('scripts')
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toast = document.getElementById('admin-toast');
+
+        if (!toast) return;
+
+        // Notifikasi berhasil menutup otomatis setelah 5 detik
+        if (toast.dataset.type === 'success') {
+            setTimeout(function () {
+                if (!toast.isConnected) return;
+
+                toast.style.transition = 'opacity 0.4s ease';
+                toast.style.opacity = '0';
+
+                setTimeout(function () {
+                    toast.remove();
+                }, 400);
+            }, 5000);
+        }
+
+        // Notifikasi error tetap tampil sampai ditutup pengguna
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

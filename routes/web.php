@@ -58,6 +58,11 @@ Route::post('/produk', [ProdukController::class, 'store'])
     ->middleware(['auth', 'admin'])
     ->name('produk.store');
 
+ // Menampilkan detail produk untuk pengunjung
+Route::get('/produk/{id}', [ProdukController::class, 'show'])
+    ->whereNumber('id')
+    ->name('produk.show');
+
 // Route Formulir Edit Produk
 Route::get('/produk/{id}/edit', [ProdukController::class, 'edit'])
     ->middleware(['auth', 'admin'])
@@ -92,14 +97,17 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'admin'])
     ->name('admin.dashboard');
 
-/* Halaman pengelolaan UMKM khusus Admin dan Super Admin */
+// Halaman pengelolaan UMKM khusus Admin dan Super Admin */
 Route::get('/admin/umkm', [UmkmController::class, 'adminIndex'])
     ->middleware(['auth', 'admin'])
     ->name('admin.umkm.index');
 
-/**
- * Menampilkan detail UMKM khusus Admin dan Super Admin.
- */
+ //Menampilkan detail UMKM khusus Admin dan Super Admin.
 Route::get('/admin/umkm/{id}', [UmkmController::class, 'adminShow'])
     ->middleware(['auth', 'admin'])
     ->name('admin.umkm.show');
+
+// Daftar produk admin
+Route::get('/admin/produk', [ProdukController::class, 'adminIndex'])
+    ->middleware(['auth', 'admin'])
+    ->name('admin.produk.index');

@@ -1,149 +1,153 @@
-
-@php
-    $isPengelola = auth()->check()
-        && in_array(auth()->user()->role, ['super_admin', 'admin']);
-@endphp
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar UMKM - Direktori UMKM Ambon</title>
+    <title>Direktori UMKM Kota Ambon</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            margin: 30px;
-            background-color: #f5f6fa;
+            margin: 0;
+            background: #f4f6fa;
+            color: #1e293b;
         }
 
-        h1 {
-            color: #243b53;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #2563eb;
+        header {
+            background: #2344a8;
             color: white;
+            padding: 22px 5%;
         }
 
-        tr:nth-child(even) {
-            background-color: #f8fafc;
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: #dbeafe;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            margin: 0 0 8px;
+        }
+
+        .page-title p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .umkm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 22px;
+        }
+
+        .umkm-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .umkm-name {
+            font-size: 19px;
+            margin: 0 0 16px;
+            color: #1e293b;
+        }
+
+        .umkm-info {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .umkm-info strong {
+            color: #334155;
+        }
+
+        .detail-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 10px 14px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .detail-link:hover {
+            background: #1d4ed8;
+        }
+
+        .empty-message {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <h1>Daftar UMKM Kota Ambon</h1>
-    @if (session('success'))
-        <div style="
-            background-color: #dcfce7;
-            color: #166534;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px solid #86efac;
-            border-radius: 5px;
-        ">
-            {{ session('success') }}
-        </div>
-    @endif
-    <p>Data Usaha Mikro, Kecil, dan Menengah</p>
-    {{-- Tombol khusus Super Admin dan Admin --}}
-    @auth
-        @if (in_array(auth()->user()->role, ['super_admin', 'admin']))
-            <div style="margin-bottom: 20px;">
-                <a href="{{ route('umkm.create') }}"
-                style="
-                    display: inline-block;
-                    background-color: #2563eb;
-                    color: white;
-                    padding: 12px 18px;
-                    border-radius: 6px;
-                    text-decoration: none;
-                ">
-                    + Tambah UMKM
+<header>
+    <h1>Direktori UMKM Kota Ambon</h1>
+    <p>Temukan berbagai usaha lokal di Kota Ambon.</p>
+</header>
+
+<main class="container">
+    <div class="page-title">
+        <h2>Daftar UMKM</h2>
+        <p>Jelajahi informasi pelaku usaha mikro, kecil, dan menengah.</p>
+    </div>
+
+    <div class="umkm-grid">
+        @forelse ($umkm as $item)
+            <div class="umkm-card">
+                <h3 class="umkm-name">
+                    {{ $item->nama_umkm }}
+                </h3>
+
+                <div class="umkm-info">
+                    <strong>Alamat:</strong>
+                    {{ $item->alamat ?? '-' }}
+                </div>
+
+                <div class="umkm-info">
+                    <strong>Telepon:</strong>
+                    {{ $item->telepon ?? '-' }}
+                </div>
+
+                <a href="{{ route('umkm.show', $item->id) }}"
+                   class="detail-link">
+                    Lihat Detail
                 </a>
             </div>
-        @endif
-    @endauth
-
-    <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Nama UMKM</th>
-                <th>Alamat</th>
-                <th>Telepon</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @forelse ($umkm as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->nama_umkm }}</td>
-                    <td>{{ $item->alamat }}</td>
-                    <td>{{ $item->telepon ?? '-' }}</td>
-                    
-                    <td>
-                        {{-- Detail dapat dilihat semua pengunjung --}}
-                        <a href="{{ route('umkm.show', $item->id) }}">
-                            Detail
-                        </a>
-
-                        {{-- Edit dan Hapus hanya untuk pengelola --}}
-                        @auth
-                            @if (in_array(auth()->user()->role, ['super_admin', 'admin']))
-                                |
-                                <a href="{{ route('umkm.edit', $item->id) }}">
-                                    Edit
-                                </a>
-
-                                |
-                                <form action="{{ route('umkm.destroy', $item->id) }}"
-                                    method="POST"
-                                    style="display: inline;"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus UMKM ini?');">
-
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit"
-                                            style="
-                                                background: none;
-                                                border: none;
-                                                color: red;
-                                                cursor: pointer;
-                                                font-size: 14px;
-                                                padding: 0;
-                                            ">
-                                        Hapus
-                                    </button>
-                                </form>
-                            @endif
-                        @endauth
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5">Belum ada data UMKM.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        @empty
+            <div class="empty-message">
+                Belum ada data UMKM yang tersedia.
+            </div>
+        @endforelse
+    </div>
+</main>
 
 </body>
 </html>

@@ -175,6 +175,72 @@
             padding: 16px;
         }
     }
+    
+    .umkm-produk-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .umkm-produk-item {
+        min-width: 0;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .umkm-produk-foto {
+        width: 100%;
+        height: 190px;
+        object-fit: contain;
+        background: #f8fafc;
+    }
+
+    .umkm-produk-body {
+        padding: 15px;
+    }
+
+    .umkm-produk-body h4 {
+        margin: 0 0 8px;
+        font-size: 16px;
+    }
+
+    .umkm-produk-harga {
+        color: #2563eb;
+        font-weight: bold;
+        margin: 10px 0 0;
+    }
+
+    .umkm-produk-link {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 9px 14px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .umkm-produk-link:hover {
+        background: #1d4ed8;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .umkm-produk-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 480px) {
+        .umkm-produk-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
 </style>
 
 <div class="umkm-detail">
@@ -317,26 +383,95 @@
         </div>
     </div>
 
+    
     {{-- Lokasi Usaha --}}
-    @if ($umkm->latitude !== null && $umkm->longitude !== null)
+    @if ($umkm->google_maps_url ||
+        ($umkm->latitude !== null && $umkm->longitude !== null))
+
         @php
-            $koordinat = $umkm->latitude . ',' . $umkm->longitude;
-            $linkMaps = 'https://www.google.com/maps/search/?api=1&query='
-                . rawurlencode($koordinat);
+            // Prioritaskan link Google Maps
+            if ($umkm->google_maps_url) {
+                $linkMaps = $umkm->google_maps_url;
+            } else {
+                $koordinat = $umkm->latitude . ',' . $umkm->longitude;
+                $linkMaps = 'https://www.google.com/maps/search/?api=1&query='
+                    . rawurlencode($koordinat);
+            }
         @endphp
 
         <div class="umkm-detail-card" style="margin-top: 16px;">
             <h3>Lokasi Usaha</h3>
+
             <p style="color: #64748b; margin: 0 0 14px;">
                 Lihat lokasi usaha melalui Google Maps.
             </p>
-            <a
-                href="{{ $linkMaps }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="umkm-social-link">
+
+            <a href="{{ $linkMaps }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="umkm-social-link">
                 Lihat di Google Maps ↗
             </a>
         </div>
     @endif
+
+    
+    {{-- Katalog Produk UMKM --}}
+    <div class="umkm-detail-card" style="margin-top: 16px;">
+        <h3>Katalog Produk</h3>
+
+        @if ($umkm->produk->isNotEmpty())
+            <div class="umkm-produk-grid">
+
+                @foreach ($umkm->produk as $produk)
+                    <div class="umkm-produk-item">
+
+                        @if ($produk->foto)
+                            <img
+                                src="{{ asset('storage/' . $produk->foto) }}"
+                                alt="{{ $produk->nama_produk }}"
+                                class="umkm-produk-foto">
+                        @else
+                            <div class="umkm-produk-foto"
+                                style="display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                                Foto belum tersedia
+                            </div>
+                        @endif
+
+                        <div class="umkm-produk-body">
+                            <h4>{{ $produk->nama_produk }}</h4>
+
+                            <p style="color: #64748b; font-size: 13px;">
+                                {{ $produk->kategoriProduk->nama_kategori ?? '-' }}
+                            </p>
+
+                            <p class="umkm-produk-harga">
+                                @if ($produk->harga === null)
+                                    <span style="color:#64748b;font-size:14px;">
+                                        Hubungi UMKM untuk informasi harga
+                                    </span>
+                                @else
+                                    Rp {{ number_format($produk->harga, 0, ',', '.') }}
+                                @endif
+                            </p>
+                            
+                            <a href="{{ route('produk.show', $produk->id) }}"
+                            class="umkm-produk-link">
+                                Lihat Detail Produk →
+                            </a>
+
+                        </div>
+
+                    </div>
+                @endforeach
+
+            </div>
+        @else
+            <p style="color: #64748b;">
+                Belum ada produk yang ditambahkan untuk UMKM ini.
+            </p>
+        @endif
+    </div>
+
+
 </div>

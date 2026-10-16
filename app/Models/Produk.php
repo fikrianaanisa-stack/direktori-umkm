@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Produk extends Model
 {
@@ -26,5 +27,11 @@ class Produk extends Model
     public function kategoriProduk(): BelongsTo
     {
         return $this->belongsTo(KategoriProduk::class, 'kategori_produk_id');
+    }
+
+    // Satu produk memiliki banyak pilihan harga
+    public function hargaProduk(): HasMany
+    {
+        return $this->hasMany(HargaProduk::class, 'produk_id');
     }
 }

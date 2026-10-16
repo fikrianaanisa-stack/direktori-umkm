@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Umkm extends Model
 {
@@ -16,6 +17,7 @@ class Umkm extends Model
         'alamat',
         'latitude',
         'longitude',
+        'google_maps_url',
         'telepon',
         'whatsapp',
         'instagram',
@@ -33,4 +35,10 @@ class Umkm extends Model
         'longitude' => 'decimal:7',
         'tahun_berdiri' => 'integer',
     ];
+
+    public function produk(): HasMany
+    {
+        return $this->hasMany(Produk::class, 'umkm_id');
+    }
+
 }

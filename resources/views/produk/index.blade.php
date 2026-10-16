@@ -3,165 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Produk UMKM</title>
+    <title>Katalog Produk UMKM Kota Ambon</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            margin: 30px;
-            background: #f5f6fa;
+            margin: 0;
+            background: #f4f6fa;
+            color: #1e293b;
         }
 
-        h2 {
-            color: #333;
+        header {
+            background: #2344a8;
+            color: white;
+            padding: 22px 5%;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: #dbeafe;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            margin: 0 0 8px;
+        }
+
+        .page-title p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 22px;
+        }
+
+        .product-card {
             background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #007bff;
-            color: white;
-        }
-
-        img {
-            width: 80px;
-            height: 80px;
+        .product-image {
+            width: 100%;
+            height: 210px;
             object-fit: cover;
+            background: #e2e8f0;
         }
 
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
+        .no-image {
+            height: 210px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e2e8f0;
+            color: #64748b;
         }
-        /* Tampilan tombol aksi */
-        .btn-edit,
-        .btn-hapus {
-            display: inline-block;
-            padding: 8px 14px;
-            border: none;
-            border-radius: 5px;
-            color: white;
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .category {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 12px;
+        }
+
+        .price {
+            color: #2563eb;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .business-name {
+            color: #475569;
             font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .detail-link {
+            display: inline-block;
+            padding: 10px 14px;
+            background: #2563eb;
+            color: white;
             text-decoration: none;
-            cursor: pointer;
+            border-radius: 7px;
+            font-size: 14px;
         }
 
-        .btn-edit {
-            background-color: #ffc107;
-            color: #212529;
+        .detail-link:hover {
+            background: #1d4ed8;
         }
 
-        .btn-hapus {
-            background-color: #dc3545;
-        }
-
-        .btn-edit:hover {
-            background-color: #e0a800;
-        }
-
-        .btn-hapus:hover {
-            background-color: #c82333;
+        .empty-message {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <h2>Daftar Produk UMKM</h2>
-    
-    {{-- Tombol Tambah Produk --}}
-    <a href="{{ route('produk.create') }}" class="btn-tambah">
-        + Tambah Produk
-    </a>
+<header>
+    <h1>Direktori UMKM Kota Ambon</h1>
+    <p>Temukan berbagai produk dari pelaku UMKM Kota Ambon.</p>
+</header>
 
-    {{-- Notifikasi berhasil --}}
-    @if (session('success'))
-        <div class="alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Foto</th>
-                <th>Nama Produk</th>
-                <th>UMKM</th>
-                <th>Kategori Produk</th>
-                <th>Harga</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
+<main class="container">
+    <div class="page-title">
+        <h2>Katalog Produk UMKM</h2>
+        <p>Jelajahi produk yang tersedia dari berbagai UMKM.</p>
+    </div>
 
-        <tbody>
-            @forelse ($produk as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
+    <div class="product-grid">
+        @forelse ($produk as $item)
+            <div class="product-card">
+                @if ($item->foto)
+                    <img
+                        src="{{ asset('storage/' . $item->foto) }}"
+                        alt="{{ $item->nama_produk }}"
+                        class="product-image">
+                @else
+                    <div class="no-image">Tidak ada foto</div>
+                @endif
 
-                    <td>
-                        @if ($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}"
-                                 alt="{{ $item->nama_produk }}">
+                <div class="product-info">
+                    <div class="category">
+                        {{ $item->kategoriProduk?->nama_kategori ?? 'Tanpa Kategori' }}
+                    </div>
+
+                    <h3 class="product-name">
+                        {{ $item->nama_produk }}
+                    </h3>
+
+                    <div class="price">
+                        @php
+                            // Ambil pilihan harga produk
+                            $pilihanHarga = $item->hargaProduk;
+                            $jumlahPilihan = $pilihanHarga->count();
+                            $hargaTerendah = $pilihanHarga->min('harga_min');
+                        @endphp
+
+                        @if ($jumlahPilihan === 0)
+                            <span style="color:#64748b;font-size:14px;">
+                                Hubungi UMKM untuk informasi harga
+                            </span>
+
+                        @elseif ($jumlahPilihan === 1)
+                            @php
+                                $pilihan = $pilihanHarga->first();
+                            @endphp
+
+                            Rp {{ number_format($pilihan->harga_min, 0, ',', '.') }}
+
+                            @if ($pilihan->harga_max !== null && $pilihan->harga_max > $pilihan->harga_min)
+                                – Rp {{ number_format($pilihan->harga_max, 0, ',', '.') }}
+                            @endif
+
+                            @if ($pilihan->satuan)
+                                <span style="font-size:14px;">
+                                    / {{ rtrim(rtrim(number_format($pilihan->jumlah_satuan, 2, ',', '.'), '0'), ',') }}
+                                    {{ $pilihan->satuan }}
+                                </span>
+                            @endif
+
                         @else
-                            Tidak ada foto
+                            Mulai Rp {{ number_format($hargaTerendah, 0, ',', '.') }}
+
+                            <div style="font-size:13px;color:#64748b;font-weight:normal;margin-top:5px;">
+                                {{ $jumlahPilihan }} pilihan harga tersedia
+                            </div>
                         @endif
-                    </td>
+                    </div>
 
-                    <td>{{ $item->nama_produk }}</td>
+                    <div class="business-name">
+                        UMKM: {{ $item->umkm?->nama_umkm ?? '-' }}
+                    </div>
 
-                    <td>{{ $item->umkm?->nama_umkm ?? '-' }}</td>
+                    <a href="{{ route('produk.show', $item->id) }}"
+                    class="detail-link">
+                        Detail Produk
+                    </a>
 
-                    <td>{{ $item->kategoriProduk?->nama_kategori ?? '-' }}</td>
-
-                    <td>
-                        Rp {{ number_format($item->harga, 0, ',', '.') }}
-                    </td>
-
-                    {{-- Kolom Aksi --}}
-                    <td>
-                        {{-- Tombol Edit --}}
-                        <a href="{{ route('produk.edit', $item->id) }}"
-                        class="btn-edit">
-                            Edit
+                    @if ($item->umkm)
+                        <a href="{{ route('umkm.show', $item->umkm->id) }}"
+                        class="detail-link">
+                            Lihat UMKM
                         </a>
+                    @endif
 
-                        {{-- Tombol Hapus --}}
-                        <form action="{{ route('produk.destroy', $item->id) }}"
-                            method="POST"
-                            style="display: inline;"
-                            onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn-hapus">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7" style="text-align: center;">
-                        Belum ada data produk.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+                </div>
+            </div>
+        @empty
+            <div class="empty-message">
+                Belum ada produk yang tersedia.
+            </div>
+        @endforelse
+    </div>
+</main>
 
 </body>
 </html>
