@@ -1,22 +1,61 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail UMKM - {{ $umkm->nama_umkm }}</title>
-</head>
-<body>
+@extends('layouts.public')
 
-    <h1>Detail UMKM</h1>
+@section('title', 'Detail UMKM - ' . $umkm->nama_umkm)
 
-    <p>
-        <a href="{{ route('umkm.index') }}">
-            ← Kembali ke Daftar UMKM
-        </a>
-    </p>
+@section('content')
 
-    {{-- Menampilkan informasi UMKM dari partial --}}
-    @include('umkm.partials.detail-content')
+    <div class="umkm-detail-page">
 
-</body>
-</html>
+        <nav class="breadcrumb" aria-label="Navigasi halaman">
+            <a href="{{ route('home') }}">Beranda</a>
+            <span> / </span>
+            <a href="{{ route('umkm.index') }}">Direktori UMKM</a>
+            <span> / </span>
+            <span>{{ $umkm->nama_umkm }}</span>
+        </nav>
+
+        <h1 class="detail-title">
+            {{ $umkm->nama_umkm }}
+        </h1>
+
+        {{-- Menampilkan komponen detail UMKM tanpa kartu pembungkus tambahan --}}
+        @include('umkm.partials.detail-content')
+
+    </div>
+
+@endsection
+
+@push('styles')
+<style>
+    .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 22px;
+        font-size: 14px;
+        color: #64748b;
+    }
+
+    .breadcrumb a {
+        color: #0f766e;
+        text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
+
+    .detail-title {
+        margin: 0 0 24px;
+        font-size: 28px;
+        color: #0f172a;
+        overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 600px) {
+        .detail-title {
+            font-size: 23px;
+        }
+    }
+</style>
+@endpush

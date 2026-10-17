@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog Produk UMKM Kota Ambon</title>
+@extends('layouts.public')
+
+@section('title', 'Katalog Produk UMKM Kota Ambon')
+
+@push('styles')
 
     <style>
         * {
@@ -15,22 +14,6 @@
             margin: 0;
             background: #f4f6fa;
             color: #1e293b;
-        }
-
-        header {
-            background: #2344a8;
-            color: white;
-            padding: 22px 5%;
-        }
-
-        header h1 {
-            font-size: 24px;
-            margin: 0;
-        }
-
-        header p {
-            margin: 8px 0 0;
-            color: #dbeafe;
         }
 
         .container {
@@ -131,24 +114,188 @@
             text-align: center;
             color: #64748b;
         }
-    </style>
-</head>
-<body>
+        
+        /* Navigasi kembali ke beranda */
+        .home-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
 
-<header>
-    <h1>Direktori UMKM Kota Ambon</h1>
-    <p>Temukan berbagai produk dari pelaku UMKM Kota Ambon.</p>
-</header>
+        .home-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Formulir filter dan pencarian */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 220px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #ffffff;
+            color: #1e293b;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: 2px solid #93c5fd;
+            border-color: #2563eb;
+        }
+
+        .filter-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-button:hover {
+            background: #1d4ed8;
+        }
+        
+        /* Informasi jumlah hasil pencarian */
+        .jumlah-hasil {
+            margin: 0 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        /* Pesan hasil pencarian kosong */
+        .pencarian-kosong {
+            padding: 30px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .pencarian-kosong h3 {
+            margin: 0 0 10px;
+            color: #334155;
+        }
+
+        .pencarian-kosong p {
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        /* Tombol reset filter */
+        .reset-filter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .reset-filter:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+    </style>
+@endpush
+
+@section('content')
 
 <main class="container">
     <div class="page-title">
         <h2>Katalog Produk UMKM</h2>
         <p>Jelajahi produk yang tersedia dari berbagai UMKM.</p>
     </div>
+    
+    <!-- Filter kategori dan pencarian produk -->
+    <form action="{{ route('produk.index') }}" method="GET" class="filter-container">
+
+        <div class="filter-group">
+            <label for="kategori">Kategori Produk</label>
+
+            <select name="kategori" id="kategori">
+                <option value="">Semua Kategori</option>
+
+                @foreach ($kategoriProduk as $kategori)
+                    <option
+                        value="{{ $kategori->id }}"
+                        {{ request('kategori') == $kategori->id ? 'selected' : '' }}>
+                        {{ $kategori->nama_kategori }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="cari">Cari Produk</label>
+
+            <input
+                type="search"
+                name="cari"
+                id="cari"
+                value="{{ request('cari') }}"
+                placeholder="Masukkan nama produk...">
+        </div>
+
+        <button type="submit" class="filter-button">
+            Terapkan Filter
+        </button>
+
+        <a href="{{ route('produk.index') }}" class="reset-filter">
+            Reset Filter
+        </a>
+
+    </form>
+    <!-- Informasi jumlah produk -->
+    <p id="jumlah-hasil" class="jumlah-hasil" aria-live="polite">
+        Menampilkan {{ $produk->count() }} produk
+    </p>
 
     <div class="product-grid">
         @forelse ($produk as $item)
-            <div class="product-card">
+            <div class="product-card"
+                data-nama="{{ Str::lower($item->nama_produk) }}">
+
                 @if ($item->foto)
                     <img
                         src="{{ asset('storage/' . $item->foto) }}"
@@ -231,7 +378,71 @@
             </div>
         @endforelse
     </div>
-</main>
 
-</body>
-</html>
+    <!-- Pesan ketika pencarian langsung tidak menemukan produk -->
+    <div id="pencarian-kosong"
+         class="pencarian-kosong"
+         style="display: none;"
+         role="status">
+
+        <h3>Produk Tidak Ditemukan</h3>
+        <p>Tidak ada produk yang sesuai dengan kata kunci pencarian.</p>
+    </div>
+</main>
+@endsection
+
+@push('scripts')
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const inputCari = document.getElementById('cari');
+    const kartuProduk = document.querySelectorAll('.product-card');
+    const jumlahHasil = document.getElementById('jumlah-hasil');
+    const pencarianKosong = document.getElementById('pencarian-kosong');
+
+    if (!inputCari) return;
+
+    function filterProduk() {
+
+        const kataKunci = inputCari.value.toLowerCase().trim();
+        let jumlahDitemukan = 0;
+
+        kartuProduk.forEach(function (kartu) {
+
+            const namaProduk = kartu.dataset.nama || '';
+            const cocok = namaProduk.includes(kataKunci);
+
+            kartu.style.display = cocok ? '' : 'none';
+
+            if (cocok) {
+                jumlahDitemukan++;
+            }
+
+        });
+
+        // Memperbarui jumlah produk yang ditemukan
+        if (jumlahHasil) {
+            jumlahHasil.textContent =
+                'Ditemukan ' + jumlahDitemukan + ' produk';
+        }
+
+        // Menampilkan pesan jika tidak ditemukan produk
+        if (pencarianKosong) {
+            pencarianKosong.style.display =
+                jumlahDitemukan === 0 && kartuProduk.length > 0
+                    ? 'block'
+                    : 'none';
+        }
+
+    }
+
+    // Pencarian langsung saat mengetik
+    inputCari.addEventListener('input', filterProduk);
+
+    // Menyesuaikan tampilan saat halaman pertama dibuka
+    filterProduk();
+
+});
+</script>
+@endpush

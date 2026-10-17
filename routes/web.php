@@ -5,11 +5,11 @@ use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 
 // Halaman utama publik Direktori UMKM Kota Ambon
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
 // Direktori UMKM
 Route::get('/umkm', [UmkmController::class, 'index'])

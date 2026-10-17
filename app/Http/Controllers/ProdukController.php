@@ -9,25 +9,53 @@ use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
-    public function index()
+    
+    public function index(Request $request)
     {
-        
-        $produk = Produk::with(['umkm', 'kategoriProduk', 'hargaProduk'])
-            ->orderBy('id', 'desc')
+        // Menyiapkan query produk beserta relasinya
+        $query = Produk::with([
+            'umkm',
+            'kategoriProduk',
+            'hargaProduk'
+        ]);
+
+        // Filter berdasarkan kategori produk
+        if ($request->filled('kategori')) {
+            $kategoriId = $request->query('kategori');
+
+            if (ctype_digit((string) $kategoriId)) {
+                $query->where('kategori_produk_id', $kategoriId);
+            }
+        }
+
+        // Pencarian berdasarkan nama produk
+        if ($request->filled('cari')) {
+            $kataKunci = trim($request->query('cari'));
+
+            $query->where('nama_produk', 'like', '%' . $kataKunci . '%');
+        }
+
+        // Mengurutkan produk terbaru
+        $produk = $query->orderBy('id', 'desc')->get();
+
+        // Mengambil kategori untuk dropdown filter
+        $kategoriProduk = KategoriProduk::orderBy('nama_kategori', 'asc')
             ->get();
 
-        return view('produk.index', compact('produk'));
+        return view('produk.index', compact('produk', 'kategoriProduk'));
     }
     
     // Menampilkan detail produk berdasarkan ID
     public function show($id)
     {
-        $produk = Produk::with(['umkm', 'kategoriProduk', 'hargaProduk'])
-            ->findOrFail($id);
+        $produk = Produk::with([
+            'umkm',
+            'kategoriProduk',
+            'hargaProduk'
+        ])->findOrFail($id);
 
         return view('produk.show', compact('produk'));
     }
-
 
     // Menampilkan daftar produk untuk admin
     public function adminIndex()

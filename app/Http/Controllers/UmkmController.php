@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Umkm;
+use App\Models\KategoriUmkm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -12,11 +13,35 @@ class UmkmController extends Controller
     /**
      * Menampilkan daftar UMKM untuk pengunjung.
      */
-    public function index()
+   
+    public function index(Request $request)
     {
-        $umkm = Umkm::orderBy('nama_umkm', 'asc')->get();
+        // Menyiapkan query daftar UMKM
+        $query = Umkm::query();
 
-        return view('umkm.index', compact('umkm'));
+        // Filter berdasarkan kategori UMKM
+        if ($request->filled('kategori')) {
+            $kategoriId = $request->query('kategori');
+
+            if (ctype_digit((string) $kategoriId)) {
+                $query->where('kategori_umkm_id', $kategoriId);
+            }
+        }
+
+        // Pencarian berdasarkan nama UMKM
+        if ($request->filled('cari')) {
+            $kataKunci = trim($request->query('cari'));
+
+            $query->where('nama_umkm', 'like', '%' . $kataKunci . '%');
+        }
+        
+        // Mengurutkan nama UMKM secara alfabetis
+        $umkm = $query->orderBy('nama_umkm', 'asc')->get();
+
+        // Mengambil daftar kategori untuk pilihan filter
+        $kategoriUmkm = KategoriUmkm::orderBy('nama_kategori', 'asc')->get();
+
+        return view('umkm.index', compact('umkm', 'kategoriUmkm'));
     }
 
     /**
