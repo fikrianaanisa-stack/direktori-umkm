@@ -29,3 +29,6 @@ Thumbs.db
 
 # Backup database
 *.sql
+
+# Backup file routing
+/routes/web.backup.php
