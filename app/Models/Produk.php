@@ -15,8 +15,6 @@ class Produk extends Model
         'kategori_produk_id',
         'nama_produk',
         'deskripsi',
-        'harga',
-        'foto',
     ];
 
     public function umkm(): BelongsTo
@@ -33,5 +31,26 @@ class Produk extends Model
     public function hargaProduk(): HasMany
     {
         return $this->hasMany(HargaProduk::class, 'produk_id');
+    }
+
+    // Semua ulasan yang diberikan kepada produk
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(Ulasan::class, 'produk_id');
+    }
+
+    // Ulasan produk yang sudah disetujui admin
+    public function ulasanDisetujui(): HasMany
+    {
+        return $this->hasMany(Ulasan::class, 'produk_id')
+            ->where('status', 'approved');
+    }
+
+    // Satu produk memiliki banyak foto
+    public function fotoProduk(): HasMany
+    {
+        return $this->hasMany(FotoProduk::class, 'produk_id')
+            ->orderBy('urutan', 'asc')
+            ->orderBy('id', 'asc');
     }
 }

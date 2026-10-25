@@ -1,130 +1,382 @@
 @extends('layouts.admin')
 
+@section('title', 'Data Produk')
+
+{{-- CSS Data Produk --}}
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin-produk.css') }}">
+@endpush
+
 @section('content')
-<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
-    <div>
-        <h2 style="margin:0;">Daftar Produk</h2>
-        <p style="color:#64748b;margin:6px 0 0;">
-            Kelola katalog produk UMKM Kota Ambon.
-        </p>
+
+    {{-- Header Halaman --}}
+    <div class="produk-header">
+        <div>
+            <h1>Data Produk</h1>
+            <p>Kelola katalog produk UMKM Kota Ambon.</p>
+        </div>
+
+        {{-- Tombol Header --}}
+        <div class="produk-header-actions">
+
+            {{-- PDF Semua Data --}}
+            <a href="{{ route('admin.produk.export.pdf', ['mode' => 'semua']) }}"
+               target="_blank"
+               rel="noopener"
+               class="produk-btn produk-btn-pdf">
+                <i class="bi bi-file-earmark-pdf"></i>
+                PDF Semua Data
+            </a>
+
+            {{-- PDF Hasil Pencarian --}}
+            <a href="{{ route('admin.produk.export.pdf', ['mode' => 'filter']) }}"
+               id="pdf-hasil-produk"
+               target="_blank"
+               rel="noopener"
+               class="produk-btn produk-btn-filter">
+                <i class="bi bi-file-earmark-pdf"></i>
+                PDF Hasil Pencarian
+            </a>
+
+            {{-- Tambah Produk --}}
+            <a href="{{ route('produk.create') }}"
+               class="produk-btn produk-btn-tambah">
+                <i class="bi bi-plus-lg"></i>
+                Tambah Produk
+            </a>
+        </div>
     </div>
 
-    <a href="{{ route('produk.create') }}"
-       style="background:#2563eb;color:white;padding:10px 16px;border-radius:8px;text-decoration:none;">
-        + Tambah Produk
-    </a>
-</div>
+    {{-- Notifikasi Berhasil --}}
+    @if (session('success'))
+        <div class="produk-alert-success">
+            <i class="bi bi-check-circle"></i>
+            {{ session('success') }}
+        </div>
+    @endif
 
-@if (session('success'))
-    <div style="background:#dcfce7;color:#166534;padding:12px;border-radius:8px;margin-bottom:16px;">
-        {{ session('success') }}
-    </div>
-@endif
+    {{-- Kartu Data Produk --}}
+    <div class="produk-table-wrapper">
 
-<div style="background:white;border:1px solid #e2e8f0;border-radius:10px;overflow-x:auto;">
-    <table style="width:100%;border-collapse:collapse;text-align:left;">
-        <thead style="background:#f1f5f9;">
-            <tr>
-                <th style="padding:12px;">No.</th>
-                <th style="padding:12px;">Foto</th>
-                <th style="padding:12px;">Nama Produk</th>
-                <th style="padding:12px;">UMKM</th>
-                <th style="padding:12px;">Kategori</th>
-                <th style="padding:12px;">Harga</th>
-                <th style="padding:12px;">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($produk as $item)
-                <tr style="border-top:1px solid #e2e8f0;">
-                    <td style="padding:12px;">{{ $loop->iteration }}</td>
-                    <td style="padding:12px;">
-                        @if ($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}"
-                                 alt="{{ $item->nama_produk }}"
-                                 style="width:65px;height:65px;object-fit:cover;border-radius:6px;">
-                        @else
-                            <span style="color:#94a3b8;">Tidak ada foto</span>
-                        @endif
-                    </td>
-                    <td style="padding:12px;">{{ $item->nama_produk }}</td>
-                    <td style="padding:12px;">{{ $item->umkm?->nama_umkm ?? '-' }}</td>
-                    <td style="padding:12px;">{{ $item->kategoriProduk?->nama_kategori ?? '-' }}</td>
-                    
-                    <td style="padding:12px;">
-                        @php
-                            // Ambil pilihan harga produk
-                            $pilihanHarga = $item->hargaProduk;
-                            $jumlahPilihan = $pilihanHarga->count();
-                            $hargaTerendah = $pilihanHarga->min('harga_min');
-                        @endphp
+        {{-- Form Live Search --}}
+        <form action="{{ route('admin.produk.index') }}"
+              method="GET"
+              id="form-cari-produk"
+              class="produk-search-form">
 
-                        @if ($jumlahPilihan === 0)
-                            <span style="color:#64748b;">
-                                Hubungi UMKM
-                            </span>
+            <div class="produk-search">
+                <i class="bi bi-search"></i>
 
-                        @elseif ($jumlahPilihan === 1)
-                            @php
-                                $pilihan = $pilihanHarga->first();
-                            @endphp
+                <input type="text"
+                       name="cari"
+                       id="cari-produk"
+                       value="{{ request('cari') }}"
+                       placeholder="Cari nama produk, UMKM, atau kategori..."
+                       autocomplete="off"
+                       aria-label="Cari data produk">
 
-                            <strong>
-                                Rp {{ number_format($pilihan->harga_min, 0, ',', '.') }}
+                {{-- Tombol Hapus Pencarian --}}
+                <button type="button"
+                        id="hapus-cari-produk"
+                        class="produk-search-clear"
+                        aria-label="Hapus pencarian"
+                        title="Hapus pencarian">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </form>
 
-                                @if ($pilihan->harga_max !== null && $pilihan->harga_max > $pilihan->harga_min)
-                                    – Rp {{ number_format($pilihan->harga_max, 0, ',', '.') }}
+        {{-- Area Hasil Pencarian AJAX --}}
+        <div id="hasil-produk">
+
+            {{-- Tabel Data Produk --}}
+            <table class="produk-table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Foto</th>
+                        <th>Nama Produk</th>
+                        <th>UMKM</th>
+                        <th>Kategori</th>
+                        <th>Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse ($produk as $item)
+                        <tr>
+                            <td>{{ $produk->firstItem() + $loop->index }}</td>
+
+                            {{-- Foto Produk --}}
+                            <td>
+                                @php
+                                    $fotoUtama = $item->fotoProduk->first();
+                                @endphp
+
+                                @if ($fotoUtama)
+                                    <img src="{{ asset('storage/' . $fotoUtama->foto) }}"
+                                        alt="{{ $item->nama_produk }}"
+                                        class="produk-foto">
+                                @else
+                                    <span class="produk-teks-kosong">-</span>
                                 @endif
-                            </strong>
+                            </td>
+                            
+                            <td>
+                                <a href="{{ route('admin.produk.show', $item->id) }}"
+                                class="produk-nama-link">
+                                    {{ $item->nama_produk }}
+                                </a>
+                            </td>
+                            <td>{{ $item->umkm?->nama_umkm ?? '-' }}</td>
+                            <td>{{ $item->kategoriProduk?->nama_kategori ?? '-' }}</td>
 
-                            @if ($pilihan->satuan)
-                                <div style="font-size:12px;color:#64748b;margin-top:4px;">
-                                    Untuk
-                                    {{ rtrim(rtrim(number_format($pilihan->jumlah_satuan, 2, ',', '.'), '0'), ',') }}
-                                    {{ $pilihan->satuan }}
+                            {{-- Harga Produk --}}
+                            <td>
+                                @php
+                                    // Mengambil pilihan harga produk
+                                    $pilihanHarga = $item->hargaProduk;
+                                    $jumlahPilihan = $pilihanHarga->count();
+                                    $hargaTerendah = $pilihanHarga->min('harga_min');
+                                @endphp
+
+                                @if ($jumlahPilihan === 0)
+                                    <span class="produk-teks-muted">
+                                        Hubungi UMKM
+                                    </span>
+
+                                @elseif ($jumlahPilihan === 1)
+                                    @php
+                                        $pilihan = $pilihanHarga->first();
+                                    @endphp
+
+                                    <strong>
+                                        Rp {{ number_format($pilihan->harga_min, 0, ',', '.') }}
+
+                                        @if ($pilihan->harga_max !== null && $pilihan->harga_max > $pilihan->harga_min)
+                                            – Rp {{ number_format($pilihan->harga_max, 0, ',', '.') }}
+                                        @endif
+                                    </strong>
+
+                                    @if ($pilihan->satuan)
+                                        <div class="produk-harga-info">
+                                            Untuk
+                                            {{ rtrim(rtrim(number_format($pilihan->jumlah_satuan, 2, ',', '.'), '0'), ',') }}
+                                            {{ $pilihan->satuan }}
+                                        </div>
+                                    @endif
+
+                                @else
+                                    <strong class="produk-harga-mulai">
+                                        Mulai Rp {{ number_format($hargaTerendah, 0, ',', '.') }}
+                                    </strong>
+
+                                    <div class="produk-harga-info">
+                                        {{ $jumlahPilihan }} pilihan harga
+                                    </div>
+                                @endif
+                            </td>
+
+                            {{-- Tombol Aksi --}}
+                            <td>
+                                <div class="produk-aksi">
+
+                                    {{-- Edit Produk --}}
+                                    <a href="{{ route('produk.edit', $item->id) }}"
+                                       class="produk-aksi-edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Edit
+                                    </a>
+
+                                    {{-- Hapus Produk --}}
+                                    <form action="{{ route('produk.destroy', $item->id) }}"
+                                          method="POST"
+                                          onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="produk-aksi-hapus">
+                                            <i class="bi bi-trash"></i>
+                                            Hapus
+                                        </button>
+                                    </form>
                                 </div>
-                            @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="produk-empty">
+                                Belum ada produk yang ditambahkan.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
 
-                        @else
-                            <strong style="color:#2563eb;">
-                                Mulai Rp {{ number_format($hargaTerendah, 0, ',', '.') }}
-                            </strong>
+            {{-- Pagination --}}
+            <div class="produk-pagination">
+                {{ $produk->links('pagination::bootstrap-5') }}
+            </div>
 
-                            <div style="font-size:12px;color:#64748b;margin-top:4px;">
-                                {{ $jumlahPilihan }} pilihan harga
-                            </div>
-                        @endif
-                    </td>
+        </div>
+        {{-- Akhir Area Hasil Pencarian AJAX --}}
 
-                    <td style="padding:12px;">
-                        <div style="display:flex;gap:8px;align-items:center;">
-                            <a href="{{ route('produk.edit', $item->id) }}"
-                               style="color:#2563eb;text-decoration:none;">
-                                Edit
-                            </a>
+    </div>
+    {{-- Akhir Kartu Data Produk --}}
 
-                            <form action="{{ route('produk.destroy', $item->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        style="border:none;background:none;color:#dc2626;cursor:pointer;padding:0;">
-                                    Hapus
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7"
-                        style="padding:24px;text-align:center;color:#64748b;">
-                        Belum ada produk yang ditambahkan.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
 @endsection
+
+{{-- JavaScript Live Search Data Produk --}}
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Mengambil elemen pencarian dan hasil produk
+            const formCari = document.getElementById('form-cari-produk');
+            const inputCari = document.getElementById('cari-produk');
+            const hasilProduk = document.getElementById('hasil-produk');
+
+            // Mengambil elemen PDF dan tombol hapus pencarian
+            const tombolPdfHasil = document.getElementById('pdf-hasil-produk');
+            const tombolHapus = document.getElementById('hapus-cari-produk');
+
+            // Menampilkan atau menyembunyikan tombol X
+            function tampilkanTombolHapus() {
+                tombolHapus.style.display = inputCari.value ? 'inline-flex' : 'none';
+            }
+
+            tampilkanTombolHapus();
+
+            inputCari.addEventListener('input', tampilkanTombolHapus);
+
+            // Menghapus kata kunci pencarian
+            tombolHapus.addEventListener('click', function () {
+                inputCari.value = '';
+                inputCari.dispatchEvent(new Event('input', { bubbles: true }));
+                inputCari.focus();
+            });
+
+            // Menyesuaikan PDF dengan hasil pencarian
+            tombolPdfHasil.addEventListener('click', function () {
+                const url = new URL(tombolPdfHasil.href);
+                const kataKunci = inputCari.value.trim();
+
+                url.searchParams.set('mode', 'filter');
+
+                if (kataKunci !== '') {
+                    url.searchParams.set('cari', kataKunci);
+                } else {
+                    url.searchParams.delete('cari');
+                }
+
+                tombolPdfHasil.href = url.toString();
+            });
+
+            // Menyimpan timer dan permintaan pencarian
+            let timerPencarian;
+            let controllerPencarian;
+
+            // Mengambil hasil pencarian tanpa reload halaman
+            async function cariProduk(url) {
+
+                // Membatalkan permintaan sebelumnya
+                if (controllerPencarian) {
+                    controllerPencarian.abort();
+                }
+
+                controllerPencarian = new AbortController();
+
+                try {
+                    const response = await fetch(url, {
+                        signal: controllerPencarian.signal,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Gagal mengambil data produk.');
+                    }
+
+                    // Mengubah respons HTML menjadi dokumen
+                    const html = await response.text();
+                    const dokumen = new DOMParser().parseFromString(html, 'text/html');
+
+                    // Mengambil tabel dan pagination terbaru
+                    const hasilBaru = dokumen.getElementById('hasil-produk');
+
+                    if (hasilBaru) {
+                        hasilProduk.innerHTML = hasilBaru.innerHTML;
+
+                        // Memperbarui URL browser tanpa reload
+                        window.history.replaceState({}, '', url);
+                    }
+
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.error('Live Search Produk:', error);
+                    }
+                }
+            }
+
+            // Live Search otomatis saat pengguna mengetik
+            inputCari.addEventListener('input', function () {
+                clearTimeout(timerPencarian);
+
+                timerPencarian = setTimeout(function () {
+                    const url = new URL(formCari.action);
+                    const kataKunci = inputCari.value.trim();
+
+                    if (kataKunci !== '') {
+                        url.searchParams.set('cari', kataKunci);
+                    }
+
+                    // Kembali ke halaman pertama
+                    url.searchParams.delete('page');
+
+                    cariProduk(url.toString());
+                }, 350);
+            });
+
+            // Pagination tanpa reload halaman
+            hasilProduk.addEventListener('click', function (event) {
+                const link = event.target.closest('.produk-pagination a');
+
+                if (!link) {
+                    return;
+                }
+
+                event.preventDefault();
+                clearTimeout(timerPencarian);
+
+                const url = new URL(link.href);
+                const kataKunci = inputCari.value.trim();
+
+                // Mempertahankan kata kunci pencarian
+                if (kataKunci !== '') {
+                    url.searchParams.set('cari', kataKunci);
+                } else {
+                    url.searchParams.delete('cari');
+                }
+
+                cariProduk(url.toString());
+            });
+
+            // Mencegah reload saat Enter ditekan
+            formCari.addEventListener('submit', function (event) {
+                event.preventDefault();
+                clearTimeout(timerPencarian);
+
+                const url = new URL(formCari.action);
+                const kataKunci = inputCari.value.trim();
+
+                if (kataKunci !== '') {
+                    url.searchParams.set('cari', kataKunci);
+                }
+
+                cariProduk(url.toString());
+            });
+        });
+    </script>
+@endpush

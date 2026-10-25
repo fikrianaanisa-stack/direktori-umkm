@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div style="max-width:750px;">
+<div style="max-width:750px;margin:0 auto;">
     <div style="margin-bottom:20px;">
         <h2 style="margin:0;">Tambah Produk</h2>
         <p style="color:#64748b;margin:6px 0 0;">
@@ -95,19 +95,53 @@
                 </button>
             </div>
 
+            <!-- Foto utama produk -->
             <div style="margin-bottom:24px;">
                 <label for="foto" style="display:block;font-weight:600;margin-bottom:7px;">
-                    Foto Produk
+                    Foto Utama Produk
                 </label>
+
                 <input type="file" id="foto" name="foto"
-                       accept=".jpg,.jpeg,.png,.webp"
-                       style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;box-sizing:border-box;">
+                    accept=".jpg,.jpeg,.png,.webp"
+                    style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;box-sizing:border-box;">
+
                 <small style="display:block;color:#64748b;margin-top:6px;">
+                    Foto utama yang ditampilkan pertama kali.
                     Format JPG, PNG, atau WebP. Maksimal 2 MB.
                 </small>
+
                 @error('foto')
                     <small style="color:#dc2626;">{{ $message }}</small>
                 @enderror
+            </div>
+
+            <!-- Foto tambahan produk -->
+            <div style="margin-bottom:24px;">
+                <label for="foto_tambahan" style="display:block;font-weight:600;margin-bottom:7px;">
+                    Foto Tambahan Produk
+                </label>
+
+                <input type="file"
+                    id="foto_tambahan"
+                    name="foto_tambahan[]"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    multiple
+                    style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;box-sizing:border-box;">
+
+                <small style="display:block;color:#64748b;margin-top:6px;">
+                    Opsional. Bisa memilih beberapa foto sekaligus.
+                    Setiap foto maksimal 2 MB.
+                    Tahan Ctrl untuk memilih beberapa file.
+                </small>
+
+                @error('foto_tambahan')
+                    <small style="color:#dc2626;">{{ $message }}</small>
+                @enderror
+
+                @error('foto_tambahan.*')
+                    <small style="color:#dc2626;">{{ $message }}</small>
+                @enderror
+
             </div>
 
             <div style="display:flex;gap:12px;align-items:center;">
@@ -117,8 +151,10 @@
                 </button>
 
                 <a href="{{ route('admin.produk.index') }}"
-                   style="color:#475569;text-decoration:none;padding:11px;">
-                    Kembali
+                    id="btn-batal-produk"
+                style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#e2e8f0;color:#334155;border-radius:6px;text-decoration:none;font-weight:600;">
+                    <i class="bi bi-x-circle"></i>
+                    Batal
                 </a>
             </div>
         </form>
@@ -197,3 +233,50 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form[action="{{ route('produk.store') }}"]');
+    const tombolBatal = document.getElementById('btn-batal-produk');
+
+    if (!form || !tombolBatal) return;
+
+    let adaPerubahan = false;
+    let sedangMenyimpan = false;
+
+    form.addEventListener('input', function () {
+        adaPerubahan = true;
+    });
+
+    form.addEventListener('change', function () {
+        adaPerubahan = true;
+    });
+
+    tombolBatal.addEventListener('click', function (event) {
+        if (!adaPerubahan) return;
+
+        const yakin = confirm(
+            'Ada perubahan yang belum disimpan. Apakah Anda yakin ingin membatalkan?'
+        );
+
+        if (!yakin) {
+            event.preventDefault();
+            return;
+        }
+
+        sedangMenyimpan = true;
+    });
+
+    form.addEventListener('submit', function () {
+        sedangMenyimpan = true;
+    });
+
+    window.addEventListener('beforeunload', function (event) {
+        if (adaPerubahan && !sedangMenyimpan) {
+            event.preventDefault();
+            event.returnValue = '';
+        }
+    });
+});
+</script>
+

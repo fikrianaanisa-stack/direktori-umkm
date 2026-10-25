@@ -6,162 +6,63 @@
 
     <title>@yield('title', 'Direktori UMKM Kota Ambon')</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    {{-- Bootstrap Icons --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.6;
-        }
-        
-        /* Header Publik */
-        .public-header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-        }
+    {{-- CSS layout publik --}}
+    <link rel="stylesheet" href="{{ asset('css/public-layout.css') }}">
 
-        /* Navigasi Utama */
-        .public-navbar {
-            max-width: 1150px;
-            margin: 0 auto;
-            padding: 18px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        /* Nama Website */
-        .public-brand {
-            color: #0f766e;
-            font-size: 21px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        /* Menu Navigasi */
-        .public-nav-links {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 25px;
-        }
-
-        /* Tautan Navigasi */
-        .public-nav-links a {
-            color: #334155;
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        /* Efek Hover Navigasi */
-        .public-nav-links a:hover {
-            color: #0f766e;
-        }
-
-        /* Menu Navigasi Aktif */
-        .public-nav-links a.active {
-            color: #0f766e;
-            font-weight: 700;
-            text-decoration: underline;
-            text-underline-offset: 6px;
-            text-decoration-thickness: 2px;
-        }
-        
-        /* Penanda Menu Navigasi Aktif */
-        .public-nav-links a.active {
-            font-weight: 700;
-            text-decoration: underline;
-            text-underline-offset: 6px;
-            text-decoration-thickness: 2px;
-        }
-
-        /* Area konten */
-        .public-content {
-            max-width: 1150px;
-            margin: 35px auto;
-            padding: 0 24px;
-            min-height: 60vh;
-        }
-        
-        /* Footer Publik */
-        .public-footer {
-            background: #ffffff;
-            border-top: 1px solid #e2e8f0;
-            padding: 35px 24px;
-            text-align: center;
-        }
-
-        /* Nama Website */
-        .public-footer-brand {
-            color: #0f766e;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        /* Deskripsi Footer */
-        .public-footer-description {
-            color: #64748b;
-            font-size: 14px;
-            margin: 0 0 16px;
-        }
-
-        /* Navigasi Footer */
-        .public-footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .public-footer-links a {
-            color: #334155;
-            font-size: 14px;
-            text-decoration: none;
-        }
-
-        .public-footer-links a:hover {
-            color: #0f766e;
-        }
-
-        /* Hak Cipta */
-        .public-footer-copyright {
-            color: #64748b;
-            font-size: 13px;
-            margin: 0;
-        }
-
-        @media (max-width: 600px) {
-            .public-navbar {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .public-nav-links {
-                gap: 14px;
-            }
-
-            .public-content {
-                margin: 24px auto;
-                padding: 0 16px;
-            }
-        }
-    </style>
-
+    {{-- CSS tambahan setiap halaman --}}
     @stack('styles')
+
 </head>
 <body>
 
+    {{-- Notifikasi global halaman publik --}}
+    @if (session('success') || session('error') || $errors->any())
+        @php
+            $toastType = session('success') ? 'success' : 'error';
+
+            $toastTitle = $toastType === 'success'
+                ? 'Berhasil'
+                : 'Validasi Gagal';
+
+            $toastMessage = session('success')
+                ?? session('error')
+                ?? 'Periksa kembali data yang dimasukkan.';
+
+            if ($errors->any()) {
+                $toastType = 'error';
+                $toastTitle = 'Validasi Gagal';
+                $toastMessage = $errors->first();
+            }
+        @endphp
+
+        <div id="public-toast"
+             class="public-toast {{ $toastType === 'success' ? 'public-toast-success' : 'public-toast-error' }}"
+             data-type="{{ $toastType }}"
+             role="{{ $toastType === 'error' ? 'alert' : 'status' }}">
+
+            <div class="public-toast-content">
+                <div>
+                    <strong>{{ $toastTitle }}</strong>
+
+                    <p class="public-toast-message">
+                        {{ $toastMessage }}
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="public-toast-close"
+                        aria-label="Tutup notifikasi">
+                    &times;
+                </button>
+            </div>
+        </div>
+    @endif
+
     <!-- Header dan navigasi -->
+
     <header class="public-header">
         <nav class="public-navbar" aria-label="Navigasi utama">
 
@@ -189,10 +90,96 @@
                 @if(request()->routeIs('produk.*')) aria-current="page" @endif>
                     Katalog Produk
                 </a>
-                
-                <a href="{{ route('login') }}">
-                    Login
+
+                <a href="{{ route('kontak') }}"
+                class="{{ request()->routeIs('kontak') ? 'active' : '' }}"
+                @if(request()->routeIs('kontak')) aria-current="page" @endif>
+                    Kontak
                 </a>
+                
+                {{-- Menu akun berdasarkan status login --}}
+                @guest
+                    <a href="{{ route('login') }}">
+                        Login
+                    </a>
+
+                    <a href="{{ route('register') }}">
+                        Daftar
+                    </a>
+                @else
+                    {{-- Dropdown akun pengguna --}}
+                    <div class="public-account-dropdown">
+
+                        {{-- Tombol nama pengguna --}}
+                        <button type="button"
+                                class="public-account-toggle"
+                                id="publicAccountToggle"
+                                aria-expanded="false"
+                                aria-controls="publicAccountMenu">
+
+                            <i class="bi bi-person-circle"></i>
+
+                            <span>{{ auth()->user()->name }}</span>
+
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                        {{-- Daftar menu akun --}}
+                        <div class="public-account-menu"
+                            id="publicAccountMenu">
+
+                            {{-- Menu khusus pengunjung --}}
+                            @if (auth()->user()->role === 'pengunjung')
+
+                                <a href="{{ route('pengunjung.profile.index') }}">
+                                    <i class="bi bi-person"></i>
+                                    Profil Saya
+                                </a>
+
+                                {{-- Akan diaktifkan setelah fitur ubah password dibuat --}}
+                                <a href="{{ route('pengunjung.password.edit') }}">
+                                    <i class="bi bi-key"></i> Ubah Password
+                                </a>
+
+                            @endif
+
+                            {{-- Menu khusus admin --}}
+                            @if (auth()->user()->role === 'admin')
+
+                                <a href="{{ route('admin.dashboard') }}">
+                                    <i class="bi bi-speedometer2"></i>
+                                    Dashboard Admin
+                                </a>
+
+                                <a href="{{ route('admin.profile.edit') }}">
+                                    <i class="bi bi-person"></i>
+                                    Profil Saya
+                                </a>
+
+                                <a href="{{ route('admin.password.edit') }}">
+                                    <i class="bi bi-key"></i>
+                                    Ubah Password
+                                </a>
+
+                            @endif
+
+                            <div class="public-account-divider"></div>
+
+                            {{-- Logout --}}
+                            <form method="POST"
+                                action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit"
+                                        class="public-account-logout">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    Logout
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                @endguest
 
             </div>
         </nav>
@@ -218,13 +205,19 @@
             <a href="{{ route('home') }}">Beranda</a>
             <a href="{{ route('umkm.index') }}">Direktori UMKM</a>
             <a href="{{ route('produk.index') }}">Katalog Produk</a>
+            <a href="{{ route('kontak') }}">Kontak</a>
         </nav>
 
         <p class="public-footer-copyright">
             &copy; {{ date('Y') }} Direktori UMKM Kota Ambon.
             Hak cipta dilindungi.
         </p>
-
     </footer>
+
+{{-- JavaScript layout publik --}}
+<script src="{{ asset('js/public-layout.js') }}" defer></script>
+
+{{-- JavaScript tambahan setiap halaman --}}
+@stack('scripts')
 </body>
 </html>

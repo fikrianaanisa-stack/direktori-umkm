@@ -1,0 +1,308 @@
+/* Header */
+.produk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.produk-header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.produk-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Tombol Header */
+.produk-header-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.produk-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.produk-btn:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.produk-btn-pdf {
+    background: #dc2626;
+}
+
+.produk-btn-pdf:hover {
+    background: #b91c1c;
+}
+
+.produk-btn-filter {
+    background: #475569;
+}
+
+.produk-btn-filter:hover {
+    background: #334155;
+    color: #ffffff;
+}
+
+.produk-btn-tambah {
+    background: #2563eb;
+}
+
+.produk-btn-tambah:hover {
+    background: #1d4ed8;
+}
+
+/* Pencarian */
+.produk-search-form {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.produk-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+.produk-search:focus-within {
+    border-color: #2563eb;
+}
+
+.produk-search > i {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.produk-search input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #334155;
+    font-size: 14px;
+}
+
+.produk-search input::placeholder {
+    color: #94a3b8;
+}
+
+/* Hapus pencarian */
+.produk-search-clear {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.produk-search-clear:hover {
+    color: #dc2626;
+}
+
+
+/* Tabel */
+.produk-table-wrapper {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    overflow-x: auto;
+}
+
+.produk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #334155;
+}
+
+.produk-table th,
+.produk-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.produk-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.produk-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.produk-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.produk-table th:first-child,
+.produk-table td:first-child,
+.produk-table th:nth-child(2),
+.produk-table td:nth-child(2),
+.produk-table th:nth-child(7),
+.produk-table td:nth-child(7) {
+    text-align: center;
+}
+
+/* Foto produk */
+.produk-foto {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Harga */
+.produk-harga-info {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+
+/* Aksi */
+.produk-aksi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.produk-aksi form {
+    margin: 0;
+}
+
+.produk-aksi a,
+.produk-aksi button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.produk-aksi-edit {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.produk-aksi-edit:hover {
+    background: #fde68a;
+    color: #92400e;
+}
+
+.produk-aksi-hapus {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.produk-aksi-hapus:hover {
+    background: #fecaca;
+}
+
+/* Pagination */
+.produk-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.produk-pagination .pagination {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+}
+
+.produk-pagination nav .small {
+    display: none;
+}
+
+/* Pesan sukses */
+.produk-alert-success {
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+/* Informasi tambahan */
+.produk-teks-muted {
+    color: #64748b;
+}
+
+.produk-teks-kosong {
+    color: #94a3b8;
+}
+
+.produk-harga-mulai {
+    color: #2563eb;
+}
+
+/* Data kosong */
+.produk-empty {
+    padding: 24px;
+    text-align: center;
+    color: #64748b;
+}
+
+/* Tautan nama produk menuju halaman detail */
+.produk-nama-link {
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.produk-nama-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}

@@ -1,0 +1,491 @@
+/* Halaman riwayat aktivitas admin */
+.activity-page {
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.activity-header {
+    margin-bottom: 24px;
+}
+
+.activity-header h1 {
+    margin: 0 0 8px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.activity-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Kartu */
+.activity-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Filter */
+.activity-filters {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.activity-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.activity-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.activity-field input,
+.activity-field select {
+    width: 100%;
+    min-height: 40px;
+    padding: 9px 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: #fff;
+    color: #374151;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.activity-field input:focus,
+.activity-field select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.activity-search {
+    grid-column: span 2;
+}
+
+.activity-filter-actions {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.activity-btn-primary,
+.activity-btn-secondary,
+.activity-btn-detail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.activity-btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid #2563eb;
+}
+
+.activity-btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.activity-btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.activity-btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* Tabel */
+.activity-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.activity-table-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.activity-table-header span {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.activity-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.activity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.activity-table th {
+    padding: 13px 12px;
+    text-align: left;
+    background: #f9fafb;
+    color: #374151;
+    font-weight: 700;
+    border-bottom: 2px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.activity-table td {
+    padding: 13px 12px;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.activity-table tbody tr:hover:not(.activity-detail-row) {
+    background: #f9fafb;
+}
+
+.activity-date {
+    white-space: nowrap;
+}
+
+.activity-date small {
+    display: block;
+    margin-top: 4px;
+    color: #6b7280;
+}
+
+/* Status aktivitas */
+.activity-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.activity-create {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.activity-update {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.activity-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Detail aktivitas */
+.activity-btn-detail {
+    padding: 7px 11px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+}
+
+.activity-btn-detail:hover {
+    background: #dbeafe;
+}
+
+.activity-detail-row[hidden] {
+    display: none;
+}
+
+.activity-detail-row td {
+    background: #f8fafc;
+    padding: 20px;
+}
+
+.activity-detail-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.activity-detail-content > div {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.activity-detail-content h3 {
+    margin: 0 0 15px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.activity-detail-content dl {
+    display: grid;
+    grid-template-columns: minmax(110px, 35%) minmax(0, 1fr);
+    gap: 10px 14px;
+    margin: 0;
+    font-size: 12px;
+}
+
+.activity-detail-content dt {
+    font-weight: 600;
+    color: #6b7280;
+    overflow-wrap: anywhere;
+}
+
+/* Nilai detail aktivitas */
+.activity-detail-content dd {
+    margin: 0;
+    color: #374151;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+.activity-detail-content p {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Data kosong */
+.activity-empty {
+    text-align: center;
+    padding: 45px 15px !important;
+    color: #6b7280;
+}
+
+.activity-empty i {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 30px;
+}
+
+.activity-empty p {
+    margin: 0;
+}
+
+/* Pagination */
+.activity-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.activity-pagination nav {
+    display: flex;
+    justify-content: center;
+}
+
+.activity-pagination .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.activity-pagination .page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 36px;
+    height: 38px;
+    padding: 8px 12px;
+    background: #fff;
+    color: #2563eb;
+    border: 1px solid #dbe1e8;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.activity-pagination .page-item.active .page-link {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+}
+
+.activity-pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    color: #6b7280;
+    cursor: default;
+}
+
+.activity-pagination .page-link:hover {
+    background: #eff6ff;
+}
+
+.activity-pagination .page-item.active .page-link:hover {
+    background: #1d4ed8;
+}
+
+/* Tampilan responsif */
+@media (max-width: 1100px) {
+    .activity-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .activity-header h1 {
+        font-size: 22px;
+    }
+
+    .activity-card {
+        padding: 15px;
+    }
+
+    .activity-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .activity-search {
+        grid-column: span 1;
+    }
+
+    .activity-detail-content {
+        grid-template-columns: 1fr;
+    }
+
+    .activity-table {
+        min-width: 850px;
+    }
+
+    .activity-table-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* Tombol hapus pencarian */
+.activity-search-wrapper {
+    position: relative;
+}
+
+.activity-search-wrapper input {
+    width: 100%;
+    padding-right: 38px;
+}
+
+.activity-search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.activity-search-clear:hover {
+    color: #dc3545;
+}
+
+/* Penanda nilai yang berubah */
+.activity-value-before {
+    background-color: #fff1f2;
+    color: #be123c;
+    border-radius: 5px;
+}
+
+.activity-value-after {
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: 4px;
+}
+
+
+/* Perbaikan tata letak detail aktivitas */
+.activity-detail-content dl {
+    display: grid;
+    grid-template-columns: minmax(110px, 35%) minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 10px;
+    align-items: start;
+}
+
+/* Label dan nilai detail aktivitas */
+.activity-detail-content dt,
+.activity-detail-content dd {
+    display: block;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    text-align: left;
+    align-self: start;
+    line-height: 1.5;
+}
+
+/* Posisi label */
+.activity-detail-content dt {
+    grid-column: 1;
+}
+
+/* Posisi nilai */
+.activity-detail-content dd {
+    grid-column: 2;
+}
+
+/* Penanda perubahan */
+.activity-detail-content dd.activity-value-before {
+    background-color: #fff1f2;
+    color: #be123c;
+    border-radius: 4px;
+}
+
+.activity-detail-content dd.activity-value-after {
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: 4px;
+}
+
+/* Daftar foto produk */
+.activity-photo-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+/* Ukuran foto produk */
+.activity-photo-list .activity-photo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}

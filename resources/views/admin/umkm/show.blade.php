@@ -3,10 +3,32 @@
 @section('title', 'Detail UMKM')
 
 @push('styles')
+
 <style>
     .detail-umkm {
-        max-width: 1400px;
+        width: 100%;
+        max-width: 1100px;
         margin: 0 auto;
+    }
+
+    /* Judul dan caption Detail UMKM */
+    .detail-umkm-header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .detail-umkm-header h1 {
+        color: #243b53;
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin: 0 0 6px;
+    }
+
+    .detail-umkm-header p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
     }
 
     .detail-umkm-back {
@@ -48,33 +70,28 @@
 
 @section('content')
 
-<div style="margin-bottom: 25px;">
-    <h1 style="color: #1e293b; margin-bottom: 8px;">
-        Detail UMKM
-    </h1>
-
-    <p style="color: #64748b;">
-        Informasi lengkap UMKM Kota Ambon.
-    </p>
-</div>
-
 <div class="detail-umkm">
 
-    {{-- Memanggil informasi UMKM dari Blade Partial --}}
-    @include('umkm.partials.detail-content')
+    <div class="detail-umkm-header">
+        <h1>Detail UMKM</h1>
+        <p>Informasi lengkap UMKM dan katalog produk di Kota Ambon.</p>
+    </div>
 
-    
+    {{-- Menampilkan informasi UMKM dalam konteks dashboard admin --}}
+    {{-- Mengarahkan tautan detail produk ke halaman admin --}}
+    @include('umkm.partials.detail-content', ['isAdminView' => true])
+
     <a href="{{ route('admin.umkm.index') }}"
-    class="detail-umkm-back">
+       class="detail-umkm-back">
         ← Kembali ke Data UMKM
     </a>
 
     <a href="{{ route('umkm.edit', $umkm->id) }}"
-    class="detail-umkm-edit">
+       class="detail-umkm-edit">
         ✎ Edit UMKM
     </a>
-
 
 </div>
 
 @endsection
+

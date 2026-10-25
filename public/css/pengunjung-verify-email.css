@@ -1,0 +1,93 @@
+/* Halaman verifikasi email pengunjung */
+.verify-email-container {
+    max-width: 560px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.verify-email-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.verify-email-icon {
+    font-size: 52px;
+    color: #008577;
+    margin-bottom: 20px;
+}
+
+.verify-email-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.verify-email-description {
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.verify-email-address {
+    font-weight: 600;
+    color: #008577;
+    overflow-wrap: anywhere;
+    margin-bottom: 20px;
+}
+
+.verify-email-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.verify-email-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.verify-email-btn-primary {
+    background: #008577;
+    color: #ffffff;
+    border: 1px solid #008577;
+}
+
+.verify-email-btn-primary:hover {
+    background: #006f63;
+}
+
+.verify-email-btn-secondary {
+    background: #ffffff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.verify-email-btn-secondary:hover {
+    background: #f3f4f6;
+}
+
+@media (max-width: 576px) {
+    .verify-email-container {
+        margin: 30px auto;
+    }
+
+    .verify-email-card {
+        padding: 30px 20px;
+    }
+}

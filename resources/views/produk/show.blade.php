@@ -1,12 +1,210 @@
-
 @extends('layouts.public')
 
 @section('title', $produk->nama_produk . ' - Direktori UMKM Kota Ambon')
 
+@push('styles')
+<style>
+    /* Menyamakan posisi breadcrumb dengan kartu Detail Produk */
+    .produk-breadcrumb {
+        width: 100%;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Rating dan Ulasan Produk */
+    .ulasan-section {
+        width: 100%;
+        max-width: 1000px;
+        margin: 36px auto 0;
+        padding: 28px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+    }
+
+    .ulasan-section h2 {
+        margin: 0 0 18px;
+        font-size: 22px;
+        color: #0f172a;
+    }
+
+    .ulasan-ringkasan {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+        color: #475569;
+    }
+
+    .ulasan-ringkasan strong {
+        color: #0f172a;
+        font-size: 20px;
+    }
+
+    .ulasan-item {
+        padding: 18px 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .ulasan-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: #334155;
+    }
+
+    .ulasan-header small,
+    .ulasan-kosong {
+        color: #64748b;
+    }
+
+    .ulasan-bintang {
+        margin: 8px 0;
+        font-size: 20px;
+    }
+
+    .ulasan-item p {
+        margin: 8px 0 0;
+        color: #475569;
+        overflow-wrap: anywhere;
+    }
+
+    .ulasan-pagination {
+        margin-top: 20px;
+    }
+
+    .ulasan-aksi {
+        margin-top: 24px;
+    }
+
+    .ulasan-aksi h3 {
+        margin: 0 0 20px;
+        font-size: 19px;
+        color: #0f172a;
+    }
+
+    .ulasan-button {
+        display: inline-block;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        background: #0f766e;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .ulasan-button:hover {
+        background: #115e59;
+        color: #ffffff;
+    }
+
+    .form-ulasan {
+        max-width: 650px;
+    }
+
+    .ulasan-label {
+        display: block;
+        margin: 16px 0 10px;
+        font-weight: 600;
+        color: #334155;
+    }
+
+    .rating-input {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        gap: 5px;
+        margin-bottom: 18px;
+    }
+
+    .rating-input input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+    }
+
+    .rating-input label {
+        font-size: 36px;
+        line-height: 1;
+        color: #cbd5e1;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .rating-input label:hover,
+    .rating-input label:hover ~ label,
+    .rating-input input:checked ~ label {
+        color: #eab308;
+    }
+
+    .rating-input input:focus-visible + label {
+        outline: 2px solid #2563eb;
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    .form-ulasan textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font: inherit;
+        resize: vertical;
+    }
+
+    .form-ulasan textarea:focus {
+        outline: 2px solid #0f766e;
+        outline-offset: 1px;
+    }
+
+    .form-ulasan button.ulasan-button {
+        margin-top: 16px;
+    }
+
+    .ulasan-catatan {
+        margin-top: 12px;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .ulasan-sukses,
+    .ulasan-error {
+        padding: 12px 16px;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .ulasan-sukses {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .ulasan-error {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    @media (max-width: 600px) {
+        .ulasan-section {
+            padding: 18px;
+        }
+
+        .ulasan-header {
+            flex-wrap: wrap;
+        }
+    }
+
+</style>
+@endpush
+
 @section('content')
-
-
-<div class="produk-container">
 
     {{-- Navigasi Breadcrumb --}}
     <nav class="produk-breadcrumb" aria-label="Navigasi halaman">
@@ -17,393 +215,164 @@
         <span aria-current="page">{{ $produk->nama_produk }}</span>
     </nav>
 
-    <div class="produk-card">
+        {{-- Konten Detail Produk --}}
+    @include('produk.partials.detail-content', ['isAdminView' => false])
 
-        <div>
-            @if ($produk->foto)
-                <img src="{{ asset('storage/' . $produk->foto) }}"
-                     alt="{{ $produk->nama_produk }}"
-                     class="produk-foto">
+    {{-- Ulasan pengunjung untuk produk --}}
+    <section class="ulasan-section">
+
+        <h2>Ulasan Produk</h2>
+
+        <div class="ulasan-ringkasan">
+            @if ($jumlahUlasan > 0)
+                <strong>
+                    ⭐ {{ number_format($rataRating, 1, ',', '.') }} / 5
+                </strong>
+                <span>({{ $jumlahUlasan }} ulasan)</span>
             @else
-                <div class="produk-placeholder">
-                    Foto produk belum tersedia
-                </div>
+                <p>Belum ada penilaian untuk produk ini.</p>
             @endif
         </div>
 
-        <div class="produk-info">
-
-            <h1>{{ $produk->nama_produk }}</h1>
-
-            <p class="produk-kategori">
-                Kategori:
-                {{ $produk->kategoriProduk->nama_kategori ?? '-' }}
-            </p>
-            
-            {{-- Daftar Pilihan Harga Produk --}}
-            <div class="produk-harga">
-
-                @forelse ($produk->hargaProduk->sortBy('harga_min') as $pilihan)
-
-                    <div class="produk-harga-item">
-
-                        {{-- Nilai Harga Produk --}}
-                        <div class="produk-harga-nilai">
-                            Rp {{ number_format($pilihan->harga_min, 0, ',', '.') }}
-
-                            @if ($pilihan->harga_max !== null && $pilihan->harga_max > $pilihan->harga_min)
-                                – Rp {{ number_format($pilihan->harga_max, 0, ',', '.') }}
-                            @endif
-                        </div>
-
-                        {{-- Jumlah dan Satuan Harga --}}
-                        <div class="produk-harga-satuan">
-                            @if ($pilihan->satuan)
-                                Untuk
-                                {{ rtrim(rtrim(number_format($pilihan->jumlah_satuan, 2, ',', '.'), '0'), ',') }}
-                                {{ $pilihan->satuan }}
-                            @else
-                                Jumlah:
-                                {{ rtrim(rtrim(number_format($pilihan->jumlah_satuan, 2, ',', '.'), '0'), ',') }}
-                            @endif
-                        </div>
-
+        <div class="ulasan-list">
+            @forelse ($ulasan as $item)
+                <article class="ulasan-item">
+                    <div class="ulasan-header">
+                        <strong>{{ $item->user?->name ?? 'Pengunjung' }}</strong>
+                        <small>{{ $item->created_at->format('d/m/Y') }}</small>
                     </div>
 
-                @empty
+                    <div class="ulasan-bintang">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <span style="color: {{ $i <= $item->rating ? '#eab308' : '#cbd5e1' }}">
+                                ★
+                            </span>
+                        @endfor
+                    </div>
 
-                    <span class="produk-harga-kosong">
-                        Hubungi UMKM untuk informasi harga
-                    </span>
-
-                @endforelse
-
-                {{-- Catatan Harga --}}
-                <p class="produk-harga-catatan">
-                    Harga dapat berubah sewaktu-waktu.
+                    <p>{{ $item->komentar }}</p>
+                </article>
+            @empty
+                <p class="ulasan-kosong">
+                    Belum ada ulasan. Jadilah yang pertama memberikan ulasan.
                 </p>
-
-            </div>
-
-            {{-- Deskripsi Produk --}}
-            <section class="produk-section">
-                <h3>Deskripsi Produk</h3>
-
-                <p class="produk-deskripsi">
-                    {{ $produk->deskripsi ?: 'Deskripsi produk belum tersedia.' }}
-                </p>
-            </section>
-            
-            {{-- Informasi UMKM Penyedia --}}
-            <section class="produk-section">
-                <h3>UMKM Penyedia</h3>
-
-                @if ($produk->umkm)
-                    <p class="produk-umkm-nama">
-                        {{ $produk->umkm->nama_umkm }}
-                    </p>
-
-                    <a href="{{ route('umkm.show', $produk->umkm->id) }}"
-                    class="produk-link">
-                        Lihat Profil UMKM →
-                    </a>
-                @else
-                    <p class="produk-umkm-nama produk-umkm-kosong">
-                        Informasi UMKM belum tersedia.
-                    </p>
-                @endif
-            </section>
+            @endforelse
         </div>
-    </div>
-</div>
+
+        @if ($ulasan->hasPages())
+            <div class="ulasan-pagination">
+                {{ $ulasan->links() }}
+            </div>
+        @endif
+
+        {{-- Bagian aksi ulasan produk --}}
+        <div class="ulasan-aksi">
+
+            {{-- Pengunjung belum login --}}
+            @guest
+                <a href="{{ route('login', ['redirect' => route('produk.show', $produk->id)]) }}"
+                class="ulasan-button">
+                    Login untuk Menulis Ulasan
+                </a>
+
+            @else
+
+                {{-- Hanya akun pengunjung yang dapat memberikan ulasan --}}
+                @if (auth()->user()->role === 'pengunjung')
+
+                    {{-- Pengunjung belum memverifikasi email --}}
+                    @if (!auth()->user()->hasVerifiedEmail())
+
+                        <div class="ulasan-verifikasi">
+                            <h3>
+                                <i class="bi bi-envelope-exclamation"></i>
+                                Verifikasi Email Diperlukan
+                            </h3>
+
+                            <p>
+                                Untuk memberikan rating dan ulasan produk,
+                                silakan verifikasi alamat email Anda terlebih dahulu.
+                            </p>
+
+                            <a href="{{ route('pengunjung.verification.notice') }}"
+                            class="ulasan-button">
+                                <i class="bi bi-envelope-check"></i>
+                                Verifikasi Email
+                            </a>
+                        </div>
+
+                    @else
+
+                        {{-- Formulir untuk pengunjung dengan email terverifikasi --}}
+                        <h3>Tulis Ulasan Anda</h3>
+
+                        <form method="POST"
+                            action="{{ route('ulasan.store') }}"
+                            class="form-ulasan">
+                            @csrf
+
+                            <input type="hidden"
+                                name="produk_id"
+                                value="{{ $produk->id }}">
+
+                            {{-- Rating produk --}}
+                            <label class="ulasan-label">
+                                Berikan Rating
+                            </label>
+
+                            <div class="rating-input">
+                                @for ($i = 5; $i >= 1; $i--)
+                                    <input type="radio"
+                                        name="rating"
+                                        id="rating-produk-{{ $i }}"
+                                        value="{{ $i }}"
+                                        {{ old('rating') == $i ? 'checked' : '' }}
+                                        required>
+
+                                    <label for="rating-produk-{{ $i }}"
+                                        title="{{ $i }} bintang">★</label>
+                                @endfor
+                            </div>
+
+                            {{-- Komentar produk --}}
+                            <label for="komentar-produk" class="ulasan-label">
+                                Tulis Ulasan
+                            </label>
+
+                            <textarea id="komentar-produk"
+                                    name="komentar"
+                                    rows="4"
+                                    maxlength="2000"
+                                    placeholder="Ceritakan pengalaman Anda dengan produk ini..."
+                                    required>{{ old('komentar') }}</textarea>
+
+                            {{-- Tombol pengiriman ulasan --}}
+                            <button type="submit" class="ulasan-button">
+                                Kirim Ulasan
+                            </button>
+
+                            <p class="ulasan-catatan">
+                                Ulasan akan ditampilkan setelah disetujui admin.
+                            </p>
+                        </form>
+
+                    @endif
+
+                @else
+
+                    {{-- Admin tidak dapat memberikan ulasan --}}
+                    <p class="ulasan-catatan">
+                        Formulir ulasan hanya tersedia untuk akun pengunjung.
+                    </p>
+
+                @endif
+
+            @endguest
+
+        </div>
+
+        </div>
+
+    </section>
+
 @endsection
-@push('styles')
- <style>
-        .produk-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        /* Kartu Detail Produk */
-        .produk-card {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            align-items: start;
-            gap: 30px;
-            padding: 25px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-        }
-
-        /* Mencegah konten melebar keluar dari kolom */
-        .produk-card > div {
-            min-width: 0;
-        }
-
-        /* Menyesuaikan teks informasi produk */
-        .produk-info {
-            min-width: 0;
-            overflow-wrap: anywhere;
-        }
-
-        /* Foto Detail Produk */
-        .produk-foto {
-            display: block;
-            width: 100%;
-            height: 350px;
-            max-height: 350px;
-            object-fit: contain;
-            object-position: center;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-        }
-
-        .produk-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 350px;
-            background: #f1f5f9;
-            color: #94a3b8;
-            border-radius: 10px;
-        }
-
-        .produk-info h1 {
-            margin-top: 0;
-            font-size: 26px;
-        }
-
-        .produk-kategori {
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        
-        /* Daftar Harga Produk */
-        .produk-harga {
-            margin: 20px 0;
-            color: #0f766e;
-            font-size: 16px;
-            font-weight: normal;
-        }
-
-        /* Nilai Harga pada Setiap Pilihan */
-        .produk-harga-nilai {
-            color: #0f766e;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        /* Kartu Pilihan Harga */
-        .produk-harga-item {
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            transition: border-color 0.2s ease;
-        }
-
-        /* Efek saat kursor diarahkan ke kartu harga */
-        .produk-harga-item:hover {
-            border-color: #5eead4;
-        }
-
-        /* Keterangan Jumlah dan Satuan Harga */
-        .produk-harga-satuan {
-            margin-top: 6px;
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        /* Informasi Jika Harga Belum Tersedia */
-        .produk-harga-kosong {
-            color: #64748b;
-            font-size: 15px;
-        }
-
-        /* Catatan Perubahan Harga */
-        .produk-harga-catatan {
-            margin-top: 10px;
-            color: #64748b;
-            font-size: 12px;
-            font-weight: normal;
-        }
-
-        .produk-deskripsi {
-            line-height: 1.7;
-            color: #475569;
-            white-space: pre-line;
-        }
-
-        /* Tombol Lihat Profil UMKM */
-        .produk-link {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 11px 16px;
-            background: #0f766e;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background 0.2s ease;
-        }
-
-        .produk-link:hover {
-            background: #115e59;
-            color: #ffffff;
-        }
-        
-        /* Tampilan Tablet dan HP */
-        @media (max-width: 768px) {
-            .produk-card {
-                grid-template-columns: 1fr;
-                gap: 24px;
-                padding: 20px;
-            }
-
-            .produk-foto {
-                height: 300px;
-                max-height: 300px;
-            }
-
-            .produk-placeholder {
-                min-height: 300px;
-            }
-
-            .produk-info h1 {
-                font-size: 24px;
-            }
-        }
-
-        /* Tampilan HP dengan Layar Kecil */
-        @media (max-width: 480px) {
-            .produk-card {
-                gap: 20px;
-                padding: 16px;
-            }
-
-            .produk-foto {
-                height: 240px;
-                max-height: 240px;
-            }
-
-            .produk-placeholder {
-                min-height: 240px;
-            }
-
-            .produk-info h1 {
-                font-size: 22px;
-            }
-
-            .produk-harga-nilai {
-                font-size: 18px;
-            }
-
-            .produk-harga-item {
-                padding: 12px;
-            }
-
-            .produk-link {
-                max-width: 100%;
-                text-align: center;
-            }
-        }
-        
-        /* Kartu Pilihan Harga */
-        .produk-harga-item {
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            transition: border-color 0.2s ease;
-        }
-
-        /* Efek Hover Kartu Harga */
-        .produk-harga-item:hover {
-            border-color: #5eead4;
-        }
-
-        /* Keterangan Jumlah dan Satuan */
-        .produk-harga-satuan {
-            margin-top: 6px;
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        /* Informasi Harga Belum Tersedia */
-        .produk-harga-kosong {
-            color: #64748b;
-            font-size: 15px;
-        }
-
-        /* Catatan Perubahan Harga */
-        .produk-harga-catatan {
-            margin-top: 10px;
-            color: #64748b;
-            font-size: 12px;
-            font-weight: normal;
-        }
-        
-        /* Bagian Informasi Produk */
-        .produk-section {
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        /* Judul Bagian Informasi */
-        .produk-section h3 {
-            margin: 0 0 14px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f766e;
-        }
-
-        /* Nama UMKM Penyedia */
-        .produk-umkm-nama {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        /* Keterangan Jika UMKM Tidak Tersedia */
-        .produk-umkm-kosong {
-            color: #64748b;
-            font-weight: 400;
-        }
-
-        
-        /* Navigasi Breadcrumb Detail Produk */
-        .produk-breadcrumb {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 22px;
-            font-size: 14px;
-            color: #64748b;
-        }
-
-        /* Tautan Breadcrumb */
-        .produk-breadcrumb a {
-            color: #0f766e;
-            text-decoration: none;
-        }
-
-        /* Efek Hover Breadcrumb */
-        .produk-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        /* Nama Produk pada Breadcrumb */
-        .produk-breadcrumb [aria-current="page"] {
-            overflow-wrap: anywhere;
-        }
-    </style>
-@endpush
-

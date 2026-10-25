@@ -16,7 +16,7 @@ class AdminUserSeeder extends Seeder
             [
                 'name' => 'Fikriana Anisa',
                 'email' => 'fikrianaanisa@gmail.com',
-                'role' => 'super_admin',
+                'role' => 'admin',
             ],
             [
                 'name' => 'Aeni Salsabila',

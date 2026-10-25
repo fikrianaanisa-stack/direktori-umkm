@@ -1,0 +1,574 @@
+/* Pengaturan umum */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+.btn {
+    display: inline-block;
+    background: #0f766e;
+    color: white;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.btn-outline {
+    background: white;
+    color: #0f766e;
+    border: 1px solid #0f766e;
+}
+
+
+/* Hero banner */
+
+.hero {
+    padding: 90px 8%;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+.home-hero {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.home-hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
+/* Pendaftaran UMKM */
+
+.home-daftar-umkm {
+    padding: 20px 20px 0;
+    text-align: center;
+}
+
+.home-daftar-umkm p {
+    margin: 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.home-daftar-umkm strong {
+    color: #0f766e;
+}
+
+.home-daftar-link {
+    color: #0f766e;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.home-daftar-link:hover {
+    color: #115e59;
+}
+
+.home-daftar-link:focus-visible {
+    outline: 2px solid #0f766e;
+    outline-offset: 3px;
+}
+
+
+/* Live Search dan navigasi beranda */
+
+.home-explore {
+    padding: 35px 24px 55px;
+    text-align: center;
+}
+
+.home-search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto 25px;
+}
+
+.home-search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+/* Ikon pencarian */
+
+.home-search-form .home-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    right: auto;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: #0f766e;
+    font-size: 19px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.home-search-form input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 15px 45px 15px 52px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #1e293b;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.home-search-form input:focus {
+    outline: none;
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+
+/* Dropdown hasil pencarian */
+
+.home-search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    max-height: 420px;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+    text-align: left;
+}
+
+
+/* Sembunyikan dropdown */
+
+.home-search-results[hidden] {
+    display: none;
+}
+
+
+/* Kelompok hasil pencarian */
+
+.home-search-section {
+    padding: 10px 0;
+}
+
+.home-search-section + .home-search-section {
+    border-top: 1px solid #e2e8f0;
+}
+
+
+/* Judul kelompok pencarian */
+
+.home-search-section h3 {
+    margin: 0;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f766e;
+    background: #f0fdfa;
+}
+
+
+/* Item hasil pencarian */
+
+.home-search-item {
+    display: block;
+    padding: 13px 18px;
+    color: #1e293b;
+    font-size: 14px;
+    line-height: 1.5;
+    text-decoration: none;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+}
+
+.home-search-item:last-child {
+    border-bottom: none;
+}
+
+.home-search-item:hover,
+.home-search-item:focus {
+    background: #f0fdfa;
+    color: #0f766e;
+    outline: none;
+}
+
+
+/* Pesan hasil pencarian kosong */
+
+.home-search-empty {
+    padding: 18px;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    color: #64748b;
+}
+
+
+/* Navigasi beranda */
+
+.home-explore-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+
+/* Statistik */
+
+.statistik {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 20px 8% 70px;
+    flex-wrap: wrap;
+}
+
+.statistik-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px 40px;
+    text-align: center;
+    min-width: 220px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.statistik-card h2 {
+    color: #0f766e;
+    font-size: 36px;
+    margin: 0 0 10px;
+}
+
+.statistik-card p {
+    color: #64748b;
+    margin: 0;
+}
+
+
+/* Kategori UMKM */
+
+.kategori-section {
+    padding: 60px 8%;
+    background: #f8fafc;
+}
+
+.kategori-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.kategori-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px 14px;
+    text-align: center;
+    text-decoration: none;
+    color: #1e293b;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kategori-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: #0f766e;
+}
+
+.kategori-icon {
+    font-size: 36px;
+    margin-bottom: 14px;
+}
+
+.kategori-card h3 {
+    font-size: 16px;
+    margin: 0 0 10px;
+}
+
+.kategori-card p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+
+/* Daftar UMKM terbaru */
+
+.umkm-section {
+    padding: 60px 8%;
+    background: #ffffff;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.section-heading p {
+    color: #64748b;
+}
+
+.umkm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.umkm-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.umkm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.umkm-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.umkm-card-body {
+    padding: 20px;
+}
+
+.umkm-card-body h3 {
+    margin: 0 0 10px;
+}
+
+.umkm-card-body p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.umkm-detail-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: #0f766e;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.umkm-detail-link:hover {
+    text-decoration: underline;
+}
+
+.umkm-all-link {
+    text-align: center;
+    margin-top: 35px;
+}
+
+
+/* Katalog produk */
+
+.produk-section {
+    padding: 60px 8%;
+    background: #f8fafc;
+}
+
+.produk-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.produk-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.produk-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.produk-card img,
+.produk-placeholder {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.produk-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e2e8f0;
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+    padding: 15px;
+}
+
+.produk-card-body {
+    padding: 18px;
+}
+
+.produk-card-body h3 {
+    font-size: 17px;
+    margin: 0 0 10px;
+}
+
+.produk-umkm {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.produk-detail-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: #0f766e;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.produk-detail-link:hover {
+    text-decoration: underline;
+}
+
+.produk-all-link {
+    text-align: center;
+    margin-top: 35px;
+}
+
+
+/* Tampilan tablet */
+
+@media (max-width: 1000px) {
+    .produk-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .kategori-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .umkm-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* Tampilan layar kecil */
+
+@media (max-width: 650px) {
+    .hero {
+        padding: 60px 6%;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+}
+
+
+/* Tampilan mobile */
+
+@media (max-width: 600px) {
+
+    /* Pendaftaran UMKM */
+
+    .home-daftar-umkm {
+        padding: 18px 16px 0;
+    }
+
+    .home-daftar-umkm p {
+        font-size: 14px;
+    }
+
+    /* Live Search */
+
+    .home-explore {
+        padding: 25px 16px 40px;
+    }
+
+    .home-search-form {
+        width: 100%;
+    }
+
+    .home-search-form input {
+        padding: 13px 38px 13px 44px;
+        font-size: 14px;
+    }
+
+    .home-search-form .home-search-icon {
+        left: 15px;
+        font-size: 17px;
+    }
+
+    .home-search-results {
+        max-height: 350px;
+    }
+
+    /* Daftar UMKM */
+
+    .umkm-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Katalog produk */
+
+    .produk-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Kategori UMKM */
+
+    .kategori-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

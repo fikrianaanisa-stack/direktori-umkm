@@ -1,0 +1,307 @@
+/* Header */
+.wilayah-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.wilayah-header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.wilayah-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Tombol header */
+.wilayah-header-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Tombol tambah wilayah */
+.wilayah-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.wilayah-btn:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+/* Tombol PDF */
+.wilayah-btn-pdf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 15px;
+    background: #dc2626;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
+
+.wilayah-btn-pdf:hover {
+    background: #b91c1c;
+    color: #ffffff;
+}
+
+/* Tombol PDF nonaktif */
+.wilayah-btn-pdf.disabled {
+    background: #475569;
+    color: #ffffff;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Kontainer tabel */
+.wilayah-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+/* Pencarian */
+.wilayah-search-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.wilayah-search-box {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+}
+
+.wilayah-search-box input {
+    width: 100%;
+    padding: 11px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.wilayah-search-box input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Ikon pencarian */
+.wilayah-search-box .bi-search {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+/* Tombol hapus pencarian */
+.wilayah-search-box button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.wilayah-search-box button:hover {
+    color: #dc2626;
+}
+
+.wilayah-search-box button[hidden] {
+    display: none;
+}
+
+/* Sembunyikan tombol hapus bawaan browser */
+.wilayah-search-box input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Tabel wilayah */
+.wilayah-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.wilayah-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #334155;
+}
+
+.wilayah-table th,
+.wilayah-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.wilayah-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.wilayah-table td {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.wilayah-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.wilayah-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Kolom No. dan Aksi */
+.wilayah-table th:first-child,
+.wilayah-table td:first-child,
+.wilayah-table th:nth-child(5),
+.wilayah-table td:nth-child(5) {
+    text-align: center;
+}
+
+/* Tabel kosong */
+.wilayah-table .wilayah-empty {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+}
+
+/* Tombol aksi */
+.wilayah-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.wilayah-actions form {
+    margin: 0;
+}
+
+.wilayah-actions .btn-aksi-edit,
+.wilayah-actions .btn-aksi-hapus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Tombol Edit */
+.wilayah-actions .btn-aksi-edit {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.wilayah-actions .btn-aksi-edit:hover {
+    background: #fde68a;
+    color: #92400e;
+}
+
+/* Tombol Hapus */
+.wilayah-actions .btn-aksi-hapus {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.wilayah-actions .btn-aksi-hapus:hover:not(:disabled) {
+    background: #fecaca;
+    color: #b91c1c;
+}
+
+/* Tombol Hapus nonaktif */
+.wilayah-actions .btn-aksi-hapus:disabled {
+    background: #f1f5f9;
+    color: #94a3b8;
+    border-color: #e2e8f0;
+    cursor: not-allowed;
+}
+
+/* Pagination */
+.wilayah-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.wilayah-pagination .pagination {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+}
+
+.wilayah-pagination nav .small {
+    display: none;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .wilayah-header-actions {
+        width: 100%;
+    }
+
+    .wilayah-search-box {
+        max-width: 100%;
+    }
+}

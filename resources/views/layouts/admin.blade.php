@@ -3,376 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>@yield('title', 'Panel Administrasi') - Direktori UMKM Kota Ambon</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    {{-- Bootstrap CSS --}}
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f6fa;
-            color: #1e293b;
-        }
+    {{-- Bootstrap Icons --}}
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
 
-        .app {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    {{-- CSS utama admin --}}
+    <link rel="stylesheet" href="{{ asset('css/admin-layout.css') }}">
 
-        .header {
-            background: #1e40af;
-            color: white;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .brand {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .user-menu {
-            position: relative;
-        }
-
-        .user-menu summary {
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-menu summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .user-menu summary::after {
-            content: "⌄";
-            font-size: 18px;
-        }
-
-        .user-name {
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .user-role {
-            font-size: 12px;
-            opacity: 0.85;
-            margin-top: 4px;
-        }
-
-        .dropdown {
-            position: absolute;
-            right: 0;
-            top: calc(100% + 12px);
-            background: white;
-            color: #1e293b;
-            width: 220px;
-            border-radius: 8px;
-            padding: 8px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
-            z-index: 100;
-        }
-
-        .dropdown a,
-        .dropdown button,
-        .dropdown .disabled-item {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 11px;
-            border: none;
-            background: none;
-            font-size: 14px;
-            color: #334155;
-            text-decoration: none;
-        }
-
-        .dropdown button {
-            cursor: pointer;
-            color: #dc2626;
-        }
-
-        .dropdown a:hover,
-        .dropdown button:hover {
-            background: #f1f5f9;
-            border-radius: 5px;
-        }
-
-        .dropdown .disabled-item {
-            color: #94a3b8;
-        }
-
-        .main-layout {
-            display: flex;
-            flex: 1;
-            min-height: 0;
-        }
-
-        .sidebar {
-            width: 240px;
-            flex-shrink: 0;
-            background: white;
-            border-right: 1px solid #e2e8f0;
-            padding: 25px 15px;
-        }
-
-        .sidebar-title {
-            font-size: 12px;
-            color: #64748b;
-            font-weight: bold;
-            margin: 0 12px 15px;
-        }
-
-        .sidebar a,
-        .sidebar .menu-disabled {
-            display: block;
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: #334155;
-            font-size: 14px;
-        }
-
-        .sidebar a:hover {
-            background: #eff6ff;
-        }
-
-        .sidebar a.active {
-                background-color: #dbeafe;
-                color: #1d4ed8;
-                font-weight: 600;
-                border-left: 4px solid #2563eb;
-        }
-
-        .sidebar .menu-disabled {
-            color: #94a3b8;
-            cursor: default;
-        }
-
-        .content {
-            flex: 1;
-            min-width: 0;
-            padding: 30px;
-        }
-
-        .footer {
-            background: #1e293b;
-            color: white;
-            padding: 18px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            font-size: 13px;
-        }
-
-        .footer-description {
-            color: #cbd5e1;
-            margin-top: 5px;
-        }
-        
-        /* Header bagian kiri */
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* Tombol hamburger disembunyikan pada desktop */
-        .menu-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 25px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        /* Tampilan browser 1024px atau kurang */
-        @media (max-width: 1024px) {
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .main-layout {
-                flex-direction: column;
-            }
-
-            
-            .sidebar {
-                display: block;
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #e2e8f0;
-                padding: 0 12px;
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
-                visibility: hidden;
-                transition:
-                    max-height 0.45s ease-in-out,
-                    opacity 0.3s ease,
-                    visibility 0s linear 0.45s;
-            }
-
-            .sidebar.show {
-                max-height: 700px;
-                opacity: 1;
-                visibility: visible;
-                padding: 12px;
-                transition:
-                    max-height 0.55s ease-in-out,
-                    opacity 0.3s ease,
-                    visibility 0s;
-            }
-
-
-            .content {
-                padding: 20px 15px;
-            }
-        }
-
-        /* Tampilan smartphone */
-        @media (max-width: 768px) {
-
-            .header {
-                padding: 15px;
-            }
-
-            .brand {
-                font-size: 15px;
-            }
-
-            .user-name {
-                font-size: 12px;
-            }
-
-            .user-role {
-                font-size: 11px;
-            }
-        }
-
-        
-        /* Animasi bergelombang untuk menu hamburger */
-        @keyframes menuWave {
-            0% {
-                opacity: 0;
-                transform: translateY(-18px) scale(0.96);
-            }
-
-            65% {
-                opacity: 1;
-                transform: translateY(5px) scale(1.02);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* Hanya aktif pada tampilan responsive */
-        @media (max-width: 1024px) {
-
-            .sidebar.show > a,
-            .sidebar.show > .menu-disabled {
-                animation: menuWave 0.5s ease-out both;
-            }
-
-            .sidebar.show > :nth-child(2) {
-                animation-delay: 0.05s;
-            }
-
-            .sidebar.show > :nth-child(3) {
-                animation-delay: 0.10s;
-            }
-
-            .sidebar.show > :nth-child(4) {
-                animation-delay: 0.15s;
-            }
-
-            .sidebar.show > :nth-child(5) {
-                animation-delay: 0.20s;
-            }
-
-            .sidebar.show > :nth-child(6) {
-                animation-delay: 0.25s;
-            }
-
-            .sidebar.show > :nth-child(7) {
-                animation-delay: 0.30s;
-            }
-
-            .sidebar.show > :nth-child(8) {
-                animation-delay: 0.35s;
-            }
-
-            .sidebar.show > :nth-child(9) {
-                animation-delay: 0.40s;
-            }
-        }
-
-        /* Aksesibilitas animasi */
-        @media (prefers-reduced-motion: reduce) {
-            .sidebar.show > a,
-            .sidebar.show > .menu-disabled {
-                animation: none;
-            }
-        }
-
-        
-        /* Animasi bergelombang saat menu ditutup */
-        @keyframes menuWaveOut {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar.closing > a,
-            .sidebar.closing > .menu-disabled {
-                animation: menuWaveOut 0.2s ease-in both;
-            }
-
-            .sidebar.closing > :nth-child(9) { animation-delay: 0s; }
-            .sidebar.closing > :nth-child(8) { animation-delay: 0.04s; }
-            .sidebar.closing > :nth-child(7) { animation-delay: 0.08s; }
-            .sidebar.closing > :nth-child(6) { animation-delay: 0.12s; }
-            .sidebar.closing > :nth-child(5) { animation-delay: 0.16s; }
-            .sidebar.closing > :nth-child(4) { animation-delay: 0.20s; }
-            .sidebar.closing > :nth-child(3) { animation-delay: 0.24s; }
-            .sidebar.closing > :nth-child(2) { animation-delay: 0.28s; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .sidebar.closing > a,
-            .sidebar.closing > .menu-disabled {
-                animation: none;
-            }
-        }
-
-    </style>
-
+    {{-- CSS khusus halaman --}}
     @stack('styles')
 </head>
 
@@ -395,35 +42,23 @@
         @endphp
 
         <div id="admin-toast"
+            class="admin-toast {{ $toastType === 'success' ? 'admin-toast-success' : 'admin-toast-error' }}"
             data-type="{{ $toastType }}"
-            role="{{ $toastType === 'error' ? 'alert' : 'status' }}"
-            style="
-                position:fixed;
-                top:20px;
-                right:20px;
-                z-index:9999;
-                width:calc(100% - 40px);
-                max-width:360px;
-                padding:16px;
-                border-radius:10px;
-                background:{{ $toastType === 'success' ? '#f0fdf4' : '#fef2f2' }};
-                border:1px solid {{ $toastType === 'success' ? '#86efac' : '#fca5a5' }};
-                color:{{ $toastType === 'success' ? '#166534' : '#991b1b' }};
-                box-shadow:0 8px 24px rgba(0,0,0,0.15);
-            ">
+            role="{{ $toastType === 'error' ? 'alert' : 'status' }}">
 
-            <div style="display:flex;justify-content:space-between;gap:12px;">
+            <div class="admin-toast-content">
                 <div>
                     <strong>{{ $toastTitle }}</strong>
-                    <p style="margin:8px 0 0;font-size:14px;line-height:1.5;">
+
+                    <p class="admin-toast-message">
                         {{ $toastMessage }}
                     </p>
                 </div>
 
                 <button type="button"
+                        class="admin-toast-close"
                         onclick="document.getElementById('admin-toast').remove()"
-                        aria-label="Tutup notifikasi"
-                        style="background:none;border:none;color:inherit;cursor:pointer;font-size:20px;align-self:flex-start;">
+                        aria-label="Tutup notifikasi">
                     &times;
                 </button>
             </div>
@@ -462,33 +97,29 @@
                     </div>
 
                     <div class="user-role">
-                        {{ auth()->user()->role === 'super_admin'
-                            ? 'Super Admin'
-                            : 'Admin' }}
+                        Admin
                     </div>
                 </div>
             </summary>
 
             <div class="dropdown">
-                <div class="disabled-item">
-                    Profil Saya (segera hadir)
-                </div>
+            <a href="{{ route('admin.profile.edit') }}">
+                <i class="bi bi-person-circle"></i> Profil Saya
+            </a>
 
-                <div class="disabled-item">
-                    Ubah Password (segera hadir)
-                </div>
+            <a href="{{ route('admin.password.edit') }}">
+                <i class="bi bi-shield-lock"></i> Ubah Password
+            </a>
 
-                <a href="{{ route('admin.dashboard') }}">
-                    Dashboard
-                </a>
+            <hr>
 
-                <hr>
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
+            </form>
+        </div>
         </details>
     </header>
 
@@ -498,30 +129,60 @@
         <aside class="sidebar" id="adminSidebar">
             <p class="sidebar-title">MENU UTAMA</p>
 
+            {{-- Menu Dashboard --}}
             <a href="{{ route('admin.dashboard') }}"
-               class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                Dashboard
+            class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <i class="bi bi-grid-1x2"></i>Dashboard
             </a>
 
+            {{-- Menu Data UMKM --}}
             <a href="{{ route('admin.umkm.index') }}"
-            class="{{ request()->routeIs('admin.umkm.*', 'umkm.create', 'umkm.edit', 'umkm.show') ? 'active' : '' }}">
-                Data UMKM
+            class="{{ request()->routeIs('admin.umkm.*', 'umkm.*') ? 'active' : '' }}">
+                <i class="bi bi-shop"></i>Data UMKM
             </a>
 
+            {{-- Menu Data Produk --}}
             <a href="{{ route('admin.produk.index') }}"
-            class="{{ request()->routeIs('admin.produk.*', 'produk.create', 'produk.edit') ? 'active' : '' }}">
-                Data Produk
+            class="{{ request()->routeIs('admin.produk.*', 'produk.*') ? 'active' : '' }}">
+                <i class="bi bi-box-seam"></i>Data Produk
             </a>
 
-            {{-- Menu berikut akan diaktifkan setelah CRUD dibuat --}}
-            <div class="menu-disabled">Kategori UMKM</div>
-            <div class="menu-disabled">Kategori Produk</div>
-            <div class="menu-disabled">Data Wilayah</div>
-            <div class="menu-disabled">Ulasan</div>
+            {{-- Menu Kategori UMKM --}}
+            <a href="{{ route('admin.kategori-umkm.index') }}"
+            class="{{ request()->routeIs('admin.kategori-umkm.*') ? 'active' : '' }}">
+                <i class="bi bi-tags"></i>Kategori UMKM
+            </a>
 
-            @if (auth()->user()->role === 'super_admin')
-                <div class="menu-disabled">Kelola Admin</div>
-            @endif
+            {{-- Menu Kategori Produk --}}
+            <a href="{{ route('admin.kategori-produk.index') }}"
+            class="{{ request()->routeIs('admin.kategori-produk.*') ? 'active' : '' }}">
+                <i class="bi bi-collection"></i>Kategori Produk
+            </a>
+
+            {{-- Menu Data Wilayah --}}
+            <a href="{{ route('admin.wilayah.index') }}"
+            class="{{ request()->routeIs('admin.wilayah.*') ? 'active' : '' }}">
+                <i class="bi bi-geo-alt"></i>Data Wilayah
+            </a>
+
+            {{-- Moderasi ulasan pengunjung --}}
+            <a href="{{ route('admin.ulasan.index') }}"
+            class="{{ request()->routeIs('admin.ulasan.*') ? 'active' : '' }}">
+                <i class="bi bi-chat-left-text"></i>Ulasan
+            </a>
+
+            {{-- Riwayat aktivitas admin --}}
+            <a href="{{ route('admin.activity-logs.index') }}"
+            class="{{ request()->routeIs('admin.activity-logs.*') ? 'active' : '' }}">
+                <i class="bi bi-clock-history"></i>Riwayat Aktivitas
+            </a>
+
+            {{-- Daftar pengelola admin --}}
+            <a href="{{ route('admin.pengelola.index') }}"
+            class="{{ request()->routeIs('admin.pengelola.*') ? 'active' : '' }}">
+                <i class="bi bi-people"></i>Daftar Pengelola Admin
+            </a>
+            
         </aside>
 
         {{-- KONTEN UTAMA --}}

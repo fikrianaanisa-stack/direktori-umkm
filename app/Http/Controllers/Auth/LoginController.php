@@ -9,8 +9,18 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     // Menampilkan halaman login
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
+        // Simpan tujuan pengunjung sebelum login
+        $redirect = $request->query('redirect');
+
+        if (
+            is_string($redirect) &&
+            str_starts_with($redirect, url('/'))
+        ) {
+            $request->session()->put('url.intended', $redirect);
+        }
+
         return view('auth.login');
     }
 
@@ -27,13 +37,13 @@ class LoginController extends Controller
 
             $user = Auth::user();
 
-            // Pengelola diarahkan ke dashboard admin
-            if (in_array($user->role, ['super_admin', 'admin'])) {
-                return redirect('/admin/dashboard');
+            // Admin diarahkan ke dashboard
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
             }
 
-            // Pengunjung diarahkan ke halaman utama
-            return redirect('/');
+            // Pengunjung kembali ke halaman yang dituju sebelum login
+            return redirect()->intended(route('home'));
         }
 
         return back()

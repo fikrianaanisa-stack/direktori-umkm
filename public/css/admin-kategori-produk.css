@@ -1,0 +1,323 @@
+
+/* Header */
+.kategori-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.kategori-header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.kategori-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Tombol */
+.kategori-btn {
+    display: inline-block;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.kategori-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.kategori-header-actions .kategori-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* PDF Semua Data */
+.kategori-btn-pdf {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+/* PDF Hasil Pencarian */
+.kategori-btn-filter {
+    background: #475569 !important;
+    color: #ffffff !important;
+}
+
+/* Tabel */
+.kategori-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.kategori-table-wrap {
+    overflow-x: auto;
+}
+
+.kategori-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #334155;
+}
+
+.kategori-table th,
+.kategori-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.kategori-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.kategori-table td {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Rata tengah kolom Jumlah Produk */
+.kategori-table th:nth-child(4),
+.kategori-table td:nth-child(4) {
+    text-align: center;
+}
+
+/* Rata tengah judul kolom Aksi */
+.kategori-table th:nth-child(5) {
+    text-align: center;
+}
+
+/* Aksi */
+.kategori-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.kategori-actions form {
+    margin: 0;
+}
+
+.kategori-actions a,
+.kategori-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Tombol Edit */
+.kategori-actions a {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.kategori-actions a:hover {
+    background: #fde68a;
+    color: #92400e;
+}
+
+/* Tombol Hapus */
+.kategori-actions button {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.kategori-actions button:hover:not(:disabled) {
+    background: #fecaca;
+}
+
+/* Tombol Hapus Nonaktif */
+.kategori-actions button:disabled {
+    background: #f1f5f9;
+    color: #94a3b8;
+    border-color: #e2e8f0;
+    cursor: not-allowed;
+}
+
+/* Notifikasi */
+.kategori-alert {
+    padding: 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.kategori-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.kategori-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Pagination */
+.kategori-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.kategori-pagination nav {
+    display: flex;
+    justify-content: center;
+}
+
+.kategori-pagination .pagination {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.kategori-pagination .page-link {
+    display: block;
+    padding: 8px 13px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.kategori-pagination .active .page-link {
+    background: #2563eb;
+    color: white;
+}
+
+.kategori-pagination .disabled .page-link {
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.kategori-pagination .small {
+    display: none;
+}
+
+.kategori-pagination nav p {
+    display: none;
+}
+
+/* Data Kosong */
+.kategori-empty {
+    text-align: center !important;
+    padding: 25px !important;
+    color: #64748b;
+}
+
+/* Pencarian */
+.kategori-search-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.kategori-search-box {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+}
+
+.kategori-search-box input {
+    width: 100%;
+    padding: 11px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.kategori-search-box input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.kategori-search-box .bi-search {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+/* Tombol Hapus Pencarian */
+.kategori-search-box button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.kategori-search-box button:hover {
+    color: #dc2626;
+}
+
+.kategori-search-box button[hidden] {
+    display: none;
+}
+
+/* Sembunyikan Tombol Hapus Bawaan Browser */
+.kategori-search-box input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .kategori-search-box {
+        max-width: 100%;
+    }
+
+    .kategori-header-actions {
+        justify-content: flex-start;
+    }
+}

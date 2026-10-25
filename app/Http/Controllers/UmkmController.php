@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Umkm;
 use App\Models\KategoriUmkm;
+use App\Services\ActivityLogger;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +16,7 @@ class UmkmController extends Controller
     /**
      * Menampilkan daftar UMKM untuk pengunjung.
      */
-   
+
     public function index(Request $request)
     {
         // Menyiapkan query daftar UMKM
@@ -34,7 +37,7 @@ class UmkmController extends Controller
 
             $query->where('nama_umkm', 'like', '%' . $kataKunci . '%');
         }
-        
+
         // Mengurutkan nama UMKM secara alfabetis
         $umkm = $query->orderBy('nama_umkm', 'asc')->get();
 
@@ -45,13 +48,70 @@ class UmkmController extends Controller
     }
 
     /**
-     * Menampilkan halaman pengelolaan UMKM untuk Admin.
+     * Menampilkan daftar UMKM untuk Admin.
+     * Mendukung pencarian dan pagination.
      */
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
-        $umkm = Umkm::orderBy('nama_umkm', 'asc')->get();
+        // Menyiapkan query data UMKM
+        $query = Umkm::query();
+
+        // Melakukan pencarian jika ada kata kunci
+        if ($request->filled('cari')) {
+
+            $kataKunci = trim($request->query('cari'));
+
+            $query->where(function ($q) use ($kataKunci) {
+                $q->where('nama_umkm', 'like', '%' . $kataKunci . '%')
+                ->orWhere('alamat', 'like', '%' . $kataKunci . '%')
+                ->orWhere('telepon', 'like', '%' . $kataKunci . '%');
+            });
+        }
+
+        // Mengurutkan data dan menampilkan 10 UMKM per halaman
+        $umkm = $query
+            ->orderBy('nama_umkm', 'asc')
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.umkm.index', compact('umkm'));
+    }
+
+    /**
+     * Mengekspor laporan data UMKM ke PDF.
+     * Mendukung pilihan semua data atau hasil pencarian.
+     */
+    public function exportPdf(Request $request)
+    {
+        // Menyiapkan query data UMKM
+        $query = Umkm::query();
+
+        // Filter hanya diterapkan jika memilih hasil pencarian
+        if ($request->query('mode') === 'filter' && $request->filled('cari')) {
+
+            $kataKunci = trim($request->query('cari'));
+
+            $query->where(function ($q) use ($kataKunci) {
+                $q->where('nama_umkm', 'like', '%' . $kataKunci . '%')
+                ->orWhere('alamat', 'like', '%' . $kataKunci . '%')
+                ->orWhere('telepon', 'like', '%' . $kataKunci . '%');
+            });
+        }
+
+        // Mengambil seluruh data sesuai pilihan, tanpa pagination
+        $umkm = $query->orderBy('nama_umkm', 'asc')->get();
+
+        // Membuat dokumen PDF dari template laporan
+        $pdf = Pdf::loadView('admin.umkm.laporan', [
+            'umkm' => $umkm,
+            'tanggalCetak' => now()->format('d-m-Y H:i'),
+        ])->setPaper('a4', 'landscape');
+
+        // Mengirim laporan PDF langsung ke browser
+        return response($pdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="laporan-data-umkm.pdf"',
+        ]);
     }
 
     /**
@@ -94,7 +154,7 @@ class UmkmController extends Controller
             'facebook' => 'nullable|string|max:255',
             'tiktok' => 'nullable|string|max:255',
             'website' => 'nullable|string|max:255',
-            'jam_operasional' => 'nullable|string|max:255',
+            'keterangan_operasional' => 'nullable|string|max:100',
             'tahun_berdiri' => 'nullable|integer|between:1900,2100',
 
             // Validasi jadwal operasional harian
@@ -117,19 +177,6 @@ class UmkmController extends Controller
             'logo.uploaded' => 'Logo gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
             'foto_usaha.uploaded' => 'Foto usaha gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
         ]);
-
-        // Memastikan hari berstatus Buka memiliki jam lengkap
-        foreach ($data['jadwal'] ?? [] as $hari => $jadwal) {
-            if (($jadwal['status'] ?? '') !== 'buka') {
-                continue;
-            }
-
-            if (empty($jadwal['jam_buka']) || empty($jadwal['jam_tutup'])) {
-                throw \Illuminate\Validation\ValidationException::withMessages([
-                    'jadwal' => "Jam buka dan jam tutup hari {$hari} wajib diisi.",
-                ]);
-            }
-        }
 
         // Menyimpan logo UMKM
         if ($request->hasFile('logo')) {
@@ -179,6 +226,16 @@ class UmkmController extends Controller
             ]);
         }
 
+        // Mencatat aktivitas penambahan UMKM
+        ActivityLogger::log(
+            'UMKM',
+            'create',
+            $umkm,
+            null,
+            $umkm->getAttributes(),
+            'Menambahkan UMKM: ' . $umkm->nama_umkm
+        );
+
         return redirect()
             ->route('admin.umkm.index')
             ->with('success', 'Data UMKM berhasil ditambahkan.');
@@ -189,7 +246,11 @@ class UmkmController extends Controller
      */
     public function show(string $id)
     {
-        $umkm = Umkm::with(['produk.kategoriProduk'])->findOrFail($id);
+        $umkm = Umkm::with([
+            'produk.kategoriProduk',
+            'produk.fotoProduk',
+            'produk.hargaProduk',
+        ])->findOrFail($id);
 
         $kategori = DB::table('kategori_umkm')
             ->where('id', $umkm->kategori_umkm_id)
@@ -199,7 +260,30 @@ class UmkmController extends Controller
             ->where('id', $umkm->wilayah_id)
             ->first();
 
-        return view('umkm.show', compact('umkm', 'kategori', 'wilayah'));
+
+        // Mengambil ulasan UMKM yang sudah disetujui admin
+        $ulasan = $umkm->ulasanDisetujui()
+            ->with('user:id,name')
+            ->latest()
+            ->paginate(5);
+
+        // Menghitung jumlah dan rata-rata rating UMKM
+        $jumlahUlasan = $umkm->ulasanDisetujui()->count();
+
+        $rataRating = round(
+            (float) $umkm->ulasanDisetujui()->avg('rating'),
+            1
+        );
+
+        return view('umkm.show', compact(
+            'umkm',
+            'kategori',
+            'wilayah',
+            'ulasan',
+            'jumlahUlasan',
+            'rataRating'
+        ));
+
     }
 
     /**
@@ -250,6 +334,9 @@ class UmkmController extends Controller
     {
         $umkm = Umkm::findOrFail($id);
 
+        // Menyimpan kondisi data sebelum diperbarui
+        $oldValues = $umkm->getAttributes();
+
         // Validasi data formulir
         $data = $request->validate([
             'nama_umkm' => 'required|string|max:255',
@@ -268,7 +355,7 @@ class UmkmController extends Controller
             'facebook' => 'nullable|string|max:255',
             'tiktok' => 'nullable|string|max:255',
             'website' => 'nullable|string|max:255',
-            'jam_operasional' => 'nullable|string|max:255',
+            'keterangan_operasional' => 'nullable|string|max:100',
             'tahun_berdiri' => 'nullable|integer|between:1900,2100',
 
             // Validasi jadwal operasional harian
@@ -290,19 +377,6 @@ class UmkmController extends Controller
             'logo.uploaded' => 'Logo gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
             'foto_usaha.uploaded' => 'Foto usaha gagal diunggah. Pastikan ukuran file kurang dari 2 MB.',
         ]);
-
-        // Memastikan hari berstatus Buka memiliki jam lengkap
-        foreach ($data['jadwal'] ?? [] as $hari => $jadwal) {
-            if (($jadwal['status'] ?? '') !== 'buka') {
-                continue;
-            }
-
-            if (empty($jadwal['jam_buka']) || empty($jadwal['jam_tutup'])) {
-                throw \Illuminate\Validation\ValidationException::withMessages([
-                    'jadwal' => "Jam buka dan jam tutup hari {$hari} wajib diisi.",
-                ]);
-            }
-        }
 
         // Mengganti logo UMKM
         if ($request->hasFile('logo')) {
@@ -373,6 +447,19 @@ class UmkmController extends Controller
             );
         }
 
+        // Mengambil data UMKM setelah diperbarui
+        $newValues = $umkm->fresh()->getAttributes();
+
+        // Mencatat aktivitas perubahan UMKM
+        ActivityLogger::log(
+            'UMKM',
+            'update',
+            $umkm,
+            $oldValues,
+            $newValues,
+            'Memperbarui UMKM: ' . $umkm->nama_umkm
+        );
+
         // Respons JSON untuk penyimpanan melalui AJAX
         if ($request->expectsJson()) {
             return response()->json([
@@ -394,8 +481,28 @@ class UmkmController extends Controller
     {
         $umkm = Umkm::findOrFail($id);
 
-        // Menghapus data dari database
+        if ($umkm->produk()->exists()) {
+            return redirect()
+                ->route('admin.umkm.index')
+                ->with('error', 'UMKM tidak dapat dihapus karena masih memiliki produk. Hapus seluruh produk terkait terlebih dahulu.');
+        }
+
+        // Menyimpan data UMKM sebelum dihapus
+        $oldValues = $umkm->getAttributes();
+        $namaUmkm = $umkm->nama_umkm;
+
+        // Menghapus data UMKM dari database
         $umkm->delete();
+
+        // Mencatat aktivitas penghapusan UMKM
+        ActivityLogger::log(
+            'UMKM',
+            'delete',
+            $umkm,
+            $oldValues,
+            null,
+            'Menghapus UMKM: ' . $namaUmkm
+        );
 
         // Menghapus logo UMKM
         if ($umkm->logo && Storage::disk('public')->exists($umkm->logo)) {

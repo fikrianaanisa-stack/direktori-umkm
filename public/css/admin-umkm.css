@@ -1,0 +1,262 @@
+/* Header */
+.umkm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.umkm-header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    color: #1e293b;
+}
+
+.umkm-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Tombol */
+.umkm-header-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.umkm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.umkm-btn:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.umkm-btn-pdf {
+    background: #dc2626;
+}
+
+.umkm-btn-pdf:hover {
+    background: #b91c1c;
+}
+
+.umkm-btn-filter {
+    background: #475569;
+}
+
+.umkm-btn-filter:hover {
+    background: #334155;
+}
+
+/* Tabel */
+.umkm-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.umkm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #334155;
+}
+
+.umkm-table th,
+.umkm-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.umkm-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.umkm-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.umkm-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.umkm-table th:first-child,
+.umkm-table td:first-child,
+.umkm-table th:nth-child(5),
+.umkm-table td:nth-child(5) {
+    text-align: center;
+}
+
+/* Aksi */
+.aksi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.aksi form {
+    margin: 0;
+}
+
+.aksi a,
+.aksi button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.aksi-detail {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
+.aksi-detail:hover {
+    background: #bfdbfe;
+    color: #1d4ed8;
+}
+
+.aksi-edit {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.aksi-edit:hover {
+    background: #fde68a;
+    color: #92400e;
+}
+
+.aksi-hapus {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.aksi-hapus:hover {
+    background: #fecaca;
+}
+
+/* Notifikasi */
+.alert-success {
+    background: #dcfce7;
+    color: #166534;
+    padding: 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Pagination */
+.umkm-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.umkm-pagination .pagination {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+}
+
+.umkm-pagination nav .small {
+    display: none;
+}
+
+/* Pencarian */
+.umkm-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.umkm-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+.umkm-search:focus-within {
+    border-color: #2563eb;
+}
+
+.umkm-search > i {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.umkm-search input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #334155;
+    font-size: 14px;
+}
+
+.umkm-search input::placeholder {
+    color: #94a3b8;
+}
+
+/* Hapus pencarian */
+.umkm-search-clear {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.umkm-search-clear:hover {
+    color: #dc2626;
+}

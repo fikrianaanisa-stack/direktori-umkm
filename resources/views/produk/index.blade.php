@@ -296,9 +296,13 @@
             <div class="product-card"
                 data-nama="{{ Str::lower($item->nama_produk) }}">
 
-                @if ($item->foto)
+                @php
+                    $fotoUtama = $item->fotoProduk->first();
+                @endphp
+
+                @if ($fotoUtama)
                     <img
-                        src="{{ asset('storage/' . $item->foto) }}"
+                        src="{{ asset('storage/' . $fotoUtama->foto) }}"
                         alt="{{ $item->nama_produk }}"
                         class="product-image">
                 @else

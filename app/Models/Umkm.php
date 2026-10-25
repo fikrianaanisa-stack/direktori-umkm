@@ -24,7 +24,7 @@ class Umkm extends Model
         'facebook',
         'tiktok',
         'website',
-        'jam_operasional',
+        'keterangan_operasional',
         'tahun_berdiri',
         'logo',
         'foto_usaha',
@@ -41,9 +41,23 @@ class Umkm extends Model
         return $this->hasMany(Produk::class, 'umkm_id');
     }
 
+
     // Relasi UMKM dengan jadwal operasional per hari
     public function jamOperasionalHarian()
     {
         return $this->hasMany(JamOperasionalUmkm::class, 'umkm_id');
+    }
+
+    // Semua ulasan yang diberikan kepada UMKM
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(Ulasan::class, 'umkm_id');
+    }
+
+    // Ulasan UMKM yang sudah disetujui admin
+    public function ulasanDisetujui(): HasMany
+    {
+        return $this->hasMany(Ulasan::class, 'umkm_id')
+            ->where('status', 'approved');
     }
 }

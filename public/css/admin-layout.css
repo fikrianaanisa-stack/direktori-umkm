@@ -1,0 +1,443 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fa;
+    color: #1e293b;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    background: #ffffff;
+    color: #1e293b;
+    padding: 16px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+/* Menu pengguna */
+.user-menu {
+    position: relative;
+}
+
+.user-menu summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.user-menu summary::after {
+    content: "⌄";
+    font-size: 18px;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.user-role {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 4px;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    background: white;
+    color: #1e293b;
+    width: 220px;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+}
+
+.dropdown a,
+.dropdown button,
+.dropdown .disabled-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 11px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: #334155;
+    text-decoration: none;
+}
+
+.dropdown button {
+    cursor: pointer;
+    color: #dc2626;
+}
+
+.dropdown a:hover,
+.dropdown button:hover {
+    background: #f1f5f9;
+    border-radius: 5px;
+}
+
+/* Hover khusus tombol Logout */
+.dropdown .btn-logout:hover {
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 5px;
+}
+
+/* Layout utama */
+.main-layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    padding: 28px 16px;
+}
+
+.sidebar-title {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 12px 18px;
+}
+
+.sidebar a,
+.sidebar .menu-disabled {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 14px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar a:hover {
+    background: #f1f5f9;
+    color: #1d4ed8;
+}
+
+.sidebar a.active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+    border-left: 3px solid #2563eb;
+}
+
+.sidebar a i,
+.sidebar .menu-disabled i {
+    display: inline-block;
+    width: 22px;
+    font-size: 16px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.sidebar .menu-disabled {
+    color: #94a3b8;
+    cursor: default;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+    padding: 32px;
+    background: #f8fafc;
+}
+
+/* Footer */
+.footer {
+    background: #1e293b;
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 13px;
+}
+
+.footer-description {
+    color: #cbd5e1;
+    margin-top: 5px;
+}
+
+/* Tombol menu mobile */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #1e293b;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Responsif tablet */
+@media (max-width: 1024px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: block;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0 12px;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition:
+            max-height 0.45s ease-in-out,
+            opacity 0.3s ease,
+            visibility 0s linear 0.45s;
+    }
+
+    .sidebar.show {
+        max-height: 700px;
+        opacity: 1;
+        visibility: visible;
+        padding: 12px;
+        transition:
+            max-height 0.55s ease-in-out,
+            opacity 0.3s ease,
+            visibility 0s;
+    }
+
+    .content {
+        padding: 20px 15px;
+    }
+}
+
+/* Responsif smartphone */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px;
+    }
+
+    .brand {
+        font-size: 15px;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .user-role {
+        font-size: 11px;
+    }
+}
+
+/* Animasi membuka sidebar */
+@keyframes menuWave {
+    0% {
+        opacity: 0;
+        transform: translateY(-18px) scale(0.96);
+    }
+
+    65% {
+        opacity: 1;
+        transform: translateY(5px) scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 1024px) {
+    .sidebar.show > a,
+    .sidebar.show > .menu-disabled {
+        animation: menuWave 0.5s ease-out both;
+    }
+
+    .sidebar.show > :nth-child(2) {
+        animation-delay: 0.05s;
+    }
+
+    .sidebar.show > :nth-child(3) {
+        animation-delay: 0.10s;
+    }
+
+    .sidebar.show > :nth-child(4) {
+        animation-delay: 0.15s;
+    }
+
+    .sidebar.show > :nth-child(5) {
+        animation-delay: 0.20s;
+    }
+
+    .sidebar.show > :nth-child(6) {
+        animation-delay: 0.25s;
+    }
+
+    .sidebar.show > :nth-child(7) {
+        animation-delay: 0.30s;
+    }
+
+    .sidebar.show > :nth-child(8) {
+        animation-delay: 0.35s;
+    }
+
+    .sidebar.show > :nth-child(9) {
+        animation-delay: 0.40s;
+    }
+}
+
+/* Animasi menutup sidebar */
+@keyframes menuWaveOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .sidebar.closing > a,
+    .sidebar.closing > .menu-disabled {
+        animation: menuWaveOut 0.2s ease-in both;
+    }
+
+    .sidebar.closing > :nth-child(9) {
+        animation-delay: 0s;
+    }
+
+    .sidebar.closing > :nth-child(8) {
+        animation-delay: 0.04s;
+    }
+
+    .sidebar.closing > :nth-child(7) {
+        animation-delay: 0.08s;
+    }
+
+    .sidebar.closing > :nth-child(6) {
+        animation-delay: 0.12s;
+    }
+
+    .sidebar.closing > :nth-child(5) {
+        animation-delay: 0.16s;
+    }
+
+    .sidebar.closing > :nth-child(4) {
+        animation-delay: 0.20s;
+    }
+
+    .sidebar.closing > :nth-child(3) {
+        animation-delay: 0.24s;
+    }
+
+    .sidebar.closing > :nth-child(2) {
+        animation-delay: 0.28s;
+    }
+}
+
+/* Aksesibilitas animasi */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar.show > a,
+    .sidebar.show > .menu-disabled,
+    .sidebar.closing > a,
+    .sidebar.closing > .menu-disabled {
+        animation: none;
+    }
+}
+
+/* Notifikasi global Admin */
+.admin-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: calc(100% - 40px);
+    max-width: 360px;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.admin-toast-success {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+}
+
+.admin-toast-error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+}
+
+.admin-toast-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.admin-toast-message {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.admin-toast-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 20px;
+    align-self: flex-start;
+}

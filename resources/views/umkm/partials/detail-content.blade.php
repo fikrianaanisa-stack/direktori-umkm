@@ -84,15 +84,16 @@
         line-height: 1.8;
         overflow-wrap: anywhere;
     }
-
+  
     /* Foto Tempat Usaha */
     .umkm-detail-photo {
         display: block;
         width: 100%;
-        max-width: 650px;
-        max-height: 320px;
-        height: auto;
+        max-width: 700px;
+        height: 340px;
+        max-height: 45vw;
         margin: 0 auto;
+        padding: 12px;
         object-fit: contain;
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -103,7 +104,7 @@
     .umkm-detail-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        align-items: start;
+        align-items: stretch;
         gap: 20px;
     }
 
@@ -116,8 +117,10 @@
     .umkm-detail-info {
         display: grid;
         grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
-        gap: 12px;
-        padding: 12px 0;
+        align-items: start;
+        column-gap: 16px;
+        row-gap: 6px;
+        padding: 11px 0;
         border-bottom: 1px solid #e2e8f0;
         line-height: 1.6;
     }
@@ -200,9 +203,11 @@
     }
 
     /* Grid Katalog Produk UMKM */
+ 
     .umkm-produk-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: stretch;
         gap: 16px;
     }
 
@@ -234,14 +239,15 @@
     }
 
     /* Informasi Produk */
-    .umkm-produk-body {
+   .umkm-produk-body {
         display: flex;
         flex-direction: column;
         flex: 1;
         padding: 18px;
         min-width: 0;
+        text-align: center;
+        align-items: center;
     }
-
     /* Nama Produk */
     .umkm-produk-body h4 {
         margin: 0 0 8px;
@@ -265,7 +271,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        align-self: flex-start;
+        align-self: center;
         margin-top: auto;
         padding: 10px 16px;
         background: #0f766e;
@@ -406,11 +412,13 @@
                         $keterangan = 'Belum Diatur';
                     } elseif (!$jadwal->is_buka) {
                         $keterangan = 'Tutup';
-                    } else {
+                    } elseif ($jadwal->jam_buka && $jadwal->jam_tutup) {
                         $keterangan = substr($jadwal->jam_buka, 0, 5)
                             . '–'
                             . substr($jadwal->jam_tutup, 0, 5)
                             . ' WIT';
+                    } else {
+                        $keterangan = 'Buka (jam tidak ditentukan)';
                     }
 
                     $jumlahKelompok = count($kelompokJadwal);
@@ -466,13 +474,25 @@
                             </div>
                         @endforeach
 
-                    @else
+                        @else
 
-                        {{ $umkm->jam_operasional ?: 'Belum tersedia' }}
+                            <span>Belum tersedia</span>
 
-                    @endif
+                        @endif
+                    </div>
                 </div>
-            </div>
+
+                @if (filled($umkm->keterangan_operasional))
+                    <div class="umkm-detail-info">
+                        <span class="umkm-detail-label">
+                            Keterangan Operasional
+                        </span>
+
+                        <span class="umkm-detail-value">
+                            {{ $umkm->keterangan_operasional }}
+                        </span>
+                    </div>
+                @endif
         </div>
 
         {{-- Kontak dan Media Sosial --}}
@@ -591,9 +611,13 @@
                 @foreach ($umkm->produk as $produk)
                     <div class="umkm-produk-item">
 
-                        @if ($produk->foto)
+                       @php
+                            $fotoUtama = $produk->fotoProduk->first();
+                        @endphp
+
+                        @if ($fotoUtama)
                             <img
-                                src="{{ asset('storage/' . $produk->foto) }}"
+                                src="{{ asset('storage/' . $fotoUtama->foto) }}"
                                 alt="{{ $produk->nama_produk }}"
                                 class="umkm-produk-foto">
                         @else
@@ -611,16 +635,22 @@
                             </p>
 
                             <p class="umkm-produk-harga">
-                                @if ($produk->harga === null)
+                                @php
+                                    $hargaTerendah = $produk->hargaProduk->min('harga_min');
+                                @endphp
+
+                                @if ($hargaTerendah === null)
                                     <span style="color:#64748b;font-size:14px;">
                                         Hubungi UMKM untuk informasi harga
                                     </span>
                                 @else
-                                    Rp {{ number_format($produk->harga, 0, ',', '.') }}
+                                    Rp {{ number_format($hargaTerendah, 0, ',', '.') }}
                                 @endif
                             </p>
                             
-                            <a href="{{ route('produk.show', $produk->id) }}"
+                            <a href="{{ ($isAdminView ?? false)
+                                ? route('admin.produk.show', $produk->id)
+                                : route('produk.show', $produk->id) }}"
                             class="umkm-produk-link">
                                 Lihat Detail Produk →
                             </a>
