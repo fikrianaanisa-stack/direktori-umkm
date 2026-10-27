@@ -1,11 +1,15 @@
 @extends('layouts.admin')
 
-@section('content')
-<div class="container py-4" style="max-width: 800px;">
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin-profile.css') }}">
+@endpush
 
-    <h4 class="mb-4">
+@section('content')
+<div class="container py-4 admin-profile-page">
+
+    <h2 class="mb-4">
         <i class="bi bi-person-circle"></i> Profil Saya
-    </h4>
+    </h2>
 
     <div class="card shadow-sm">
         <div class="card-body p-4">
@@ -90,43 +94,5 @@
 @endsection
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formProfil');
-    const btnBatal = document.getElementById('btnBatal');
-
-    const dataAwal = new URLSearchParams(new FormData(form)).toString();
-    let sedangMenyimpan = false;
-
-    function adaPerubahan() {
-        return new URLSearchParams(new FormData(form)).toString() !== dataAwal;
-    }
-
-    form.addEventListener('submit', function (event) {
-        if (!confirm('Yakin ingin menyimpan perubahan profil?')) {
-            event.preventDefault();
-            return;
-        }
-
-        sedangMenyimpan = true;
-    });
-
-    btnBatal.addEventListener('click', function (event) {
-        if (adaPerubahan()) {
-            if (!confirm('Perubahan belum disimpan. Yakin ingin membatalkan?')) {
-                event.preventDefault();
-            } else {
-                sedangMenyimpan = true;
-            }
-        }
-    });
-
-    window.addEventListener('beforeunload', function (event) {
-        if (adaPerubahan() && !sedangMenyimpan) {
-            event.preventDefault();
-            event.returnValue = '';
-        }
-    });
-});
-</script>
+    <script src="{{ asset('js/admin-profile.js') }}" defer></script>
 @endpush

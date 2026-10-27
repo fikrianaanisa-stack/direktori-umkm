@@ -48,13 +48,6 @@
         </div>
     </div>
 
-    {{-- Notifikasi Berhasil --}}
-    @if (session('success'))
-        <div class="kategori-alert kategori-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     {{-- Notifikasi Kesalahan --}}
     @if (session('error'))
         <div class="kategori-alert kategori-error">
@@ -147,7 +140,6 @@
                                         <form
                                             method="POST"
                                             action="{{ route('admin.kategori-produk.destroy', $kategori->id) }}"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori produk ini?');"
                                         >
                                             @csrf
                                             @method('DELETE')
@@ -192,124 +184,7 @@
     {{-- Akhir Kontainer Data Kategori Produk --}}
 
 @endsection
-
-{{-- JavaScript Live Search AJAX Kategori Produk --}}
+{{-- JavaScript Kategori Produk --}}
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const input = document.getElementById('kategoriSearch');
-    const form = document.getElementById('kategoriSearchForm');
-    const hasil = document.getElementById('hasil-kategori-produk');
-    const tombolHapus = document.getElementById('kategoriSearchClear');
-    const tombolPdfFilter = document.getElementById('pdf-hasil-kategori-produk');
-
-    if (!input || !form || !hasil || !tombolHapus || !tombolPdfFilter) {
-        return;
-    }
-
-    let timer;
-    let controller;
-
-    // Memperbarui link PDF sesuai kata kunci pencarian
-    function perbaruiLinkPdf() {
-        const url = new URL(tombolPdfFilter.href);
-
-        url.searchParams.set('mode', 'filter');
-        url.searchParams.set('cari', input.value.trim());
-
-        tombolPdfFilter.href = url.toString();
-    }
-
-    // Menampilkan atau menyembunyikan tombol X
-    function tampilkanTombolHapus() {
-        tombolHapus.hidden = input.value === '';
-    }
-
-    // Mengambil hasil pencarian tanpa refresh halaman
-    async function cariKategori(url) {
-        if (controller) {
-            controller.abort();
-        }
-
-        controller = new AbortController();
-
-        try {
-            const response = await fetch(url, {
-                signal: controller.signal,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Gagal mengambil data kategori produk');
-            }
-
-            const html = await response.text();
-            const dokumen = new DOMParser().parseFromString(html, 'text/html');
-            const hasilBaru = dokumen.getElementById('hasil-kategori-produk');
-
-            if (hasilBaru) {
-                hasil.innerHTML = hasilBaru.innerHTML;
-                window.history.replaceState({}, '', url);
-            }
-        } catch (error) {
-            if (error.name !== 'AbortError') {
-                console.error(error);
-            }
-        }
-    }
-
-    // Pencarian otomatis setelah berhenti mengetik
-    input.addEventListener('input', function () {
-        perbaruiLinkPdf();
-        tampilkanTombolHapus();
-
-        clearTimeout(timer);
-
-        timer = setTimeout(function () {
-            const url = new URL(form.action);
-            url.searchParams.set('cari', input.value);
-
-            cariKategori(url.toString());
-        }, 350);
-    });
-
-    // Menghapus pencarian
-    tombolHapus.addEventListener('click', function () {
-        input.value = '';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.focus();
-    });
-
-    // Pagination tanpa refresh halaman
-    hasil.addEventListener('click', function (event) {
-        const link = event.target.closest('.pagination a');
-
-        if (!link) {
-            return;
-        }
-
-        event.preventDefault();
-        clearTimeout(timer);
-
-        cariKategori(link.href);
-    });
-
-    // Pencarian menggunakan tombol Enter
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        clearTimeout(timer);
-
-        const url = new URL(form.action);
-        url.searchParams.set('cari', input.value);
-
-        cariKategori(url.toString());
-    });
-
-    // Pengaturan awal saat halaman dibuka
-    perbaruiLinkPdf();
-    tampilkanTombolHapus();
-});
-</script>
+    <script src="{{ asset('js/admin-kategori-produk.js') }}"></script>
 @endpush

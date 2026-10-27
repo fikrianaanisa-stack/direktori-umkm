@@ -1,33 +1,25 @@
 @extends('layouts.public')
 
-{{-- CSS khusus halaman Profil Pengunjung --}}
-@push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-@endpush
-
 @section('title', 'Profil Saya')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pengunjung-profile.css') }}">
+@endpush
 
 @section('content')
 <div class="container py-4">
 
-    <h2 class="mb-4">Profil Saya</h2>
+    <h2 class="h4 fw-semibold mb-4">
+        <i class="bi bi-person me-2"></i>
+        Profil Saya
+    </h2>
 
     <div class="card shadow-sm">
         <div class="card-body">
 
             <h5 class="card-title mb-4">Informasi Akun</h5>
 
-            {{-- Notifikasi berhasil --}}
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            {{-- Form perubahan profil --}}
-            <form method="POST"
-                  action="{{ route('pengunjung.profile.update') }}">
+            <form method="POST" action="{{ route('pengunjung.profile.update') }}">
                 @csrf
                 @method('PUT')
 
@@ -87,9 +79,8 @@
                     </div>
                 </div>
 
-                {{-- Tombol simpan --}}
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-floppy"></i>
+                <button type="submit" class="btn btn-brand">
+                    <i class="bi bi-floppy me-1"></i>
                     Simpan Perubahan
                 </button>
 

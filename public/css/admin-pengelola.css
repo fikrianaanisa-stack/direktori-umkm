@@ -1,0 +1,23 @@
+/* Tipografi halaman daftar pengelola admin */
+.admin-pengelola-page h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.admin-pengelola-page > .mb-4 > p {
+    font-size: 14px;
+}
+
+.admin-pengelola-page .table {
+    font-size: 14px;
+}
+
+.admin-pengelola-page .badge {
+    font-size: 12px;
+}
+
+/* Lebar kolom nomor tabel pengelola */
+.pengelola-kolom-nomor {
+    width: 70px;
+}

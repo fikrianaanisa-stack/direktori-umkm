@@ -1,0 +1,137 @@
+.kategori-produk-edit {
+    max-width: 800px;
+    width: 100%;
+}
+
+.kategori-produk-edit .form-heading {
+    margin-bottom: 25px;
+}
+
+.kategori-produk-edit .form-heading h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.kategori-produk-edit .form-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.kategori-produk-edit .form-container {
+    background: #ffffff;
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.kategori-produk-edit .form-group {
+    margin-bottom: 20px;
+}
+
+.kategori-produk-edit .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #334155;
+}
+
+.kategori-produk-edit .form-control {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.kategori-produk-edit .form-control:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.kategori-produk-edit textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.kategori-produk-edit .form-required,
+.kategori-produk-edit .form-error {
+    color: #dc2626;
+}
+
+.kategori-produk-edit .form-error {
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.kategori-produk-edit .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.kategori-produk-edit .form-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.kategori-produk-edit .btn-save {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.kategori-produk-edit .btn-save:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.kategori-produk-edit .btn-cancel {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.kategori-produk-edit .btn-cancel:hover {
+    background: #cbd5e1;
+    color: #334155;
+}
+
+@media (max-width: 576px) {
+    .kategori-produk-edit .form-container {
+        padding: 18px;
+    }
+
+    .kategori-produk-edit .form-heading h1 {
+        font-size: 21px;
+    }
+
+    .kategori-produk-edit .form-actions {
+        flex-direction: column;
+    }
+
+    .kategori-produk-edit .form-btn {
+        width: 100%;
+    }
+}

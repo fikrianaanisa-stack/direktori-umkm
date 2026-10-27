@@ -1,54 +1,43 @@
-/* Pengaturan umum */
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-}
-
-.btn {
-    display: inline-block;
-    background: #0f766e;
-    color: white;
-    text-decoration: none;
+/* Pengaturan tombol Beranda */
+.home-btn-primary,
+.home-btn-outline {
     padding: 13px 24px;
     border-radius: 8px;
-    margin: 5px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.btn-outline {
-    background: white;
-    color: #0f766e;
-    border: 1px solid #0f766e;
+/* Tombol utama */
+.home-btn-primary {
+    background-color: var(--public-primary);
+    border: 1px solid var(--public-primary);
+    color: #ffffff;
 }
 
-
-/* Hero banner */
-
-.hero {
-    padding: 90px 8%;
-    text-align: center;
+.home-btn-primary:hover,
+.home-btn-primary:focus-visible {
+    background-color: #115e59;
+    border-color: #115e59;
+    color: #ffffff;
 }
 
-.hero h1 {
-    font-size: 38px;
-    margin-bottom: 18px;
+/* Tombol outline */
+.home-btn-outline {
+    background-color: #ffffff;
+    border: 1px solid var(--public-primary);
+    color: var(--public-primary);
 }
 
-.hero p {
-    font-size: 18px;
-    color: #64748b;
-    margin-bottom: 30px;
+.home-btn-outline:hover,
+.home-btn-outline:focus-visible {
+    background-color: var(--public-primary-light);
+    border-color: var(--public-primary);
+    color: var(--public-primary);
 }
 
+/* Banner utama Beranda */
 .home-hero {
     width: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
@@ -58,12 +47,9 @@ body {
     height: auto;
 }
 
-
-/* Pendaftaran UMKM */
-
+/* Informasi pendaftaran UMKM */
 .home-daftar-umkm {
     padding: 20px 20px 0;
-    text-align: center;
 }
 
 .home-daftar-umkm p {
@@ -73,12 +59,9 @@ body {
     line-height: 1.7;
 }
 
-.home-daftar-umkm strong {
-    color: #0f766e;
-}
-
+/* Tautan informasi pendaftaran */
 .home-daftar-link {
-    color: #0f766e;
+    color: var(--public-primary);
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -88,19 +71,12 @@ body {
     color: #115e59;
 }
 
-.home-daftar-link:focus-visible {
-    outline: 2px solid #0f766e;
-    outline-offset: 3px;
-}
-
-
-/* Live Search dan navigasi beranda */
-
+/* Area pencarian Beranda */
 .home-explore {
     padding: 35px 24px 55px;
-    text-align: center;
 }
 
+/* Pembungkus Live Search */
 .home-search-wrapper {
     position: relative;
     width: 100%;
@@ -108,6 +84,7 @@ body {
     margin: 0 auto 25px;
 }
 
+/* Form pencarian */
 .home-search-form {
     position: relative;
     display: flex;
@@ -115,48 +92,43 @@ body {
     width: 100%;
 }
 
-
 /* Ikon pencarian */
-
-.home-search-form .home-search-icon {
+.home-search-icon {
     position: absolute;
     top: 50%;
     left: 18px;
-    right: auto;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
     width: 20px;
     height: 20px;
-    color: #0f766e;
+    color: var(--public-primary);
     font-size: 19px;
     pointer-events: none;
     z-index: 2;
 }
 
-.home-search-form input {
-    display: block;
+/* Input Live Search */
+.home-search-input {
     width: 100%;
     min-width: 0;
     padding: 15px 45px 15px 52px;
     border: 1px solid #cbd5e1;
     border-radius: 10px;
-    background: #ffffff;
-    color: #1e293b;
+    background-color: #ffffff;
+    color: var(--public-text);
     font-family: inherit;
     font-size: 15px;
 }
 
-.home-search-form input:focus {
-    outline: none;
-    border-color: #0f766e;
+/* Fokus input pencarian */
+.home-search-input:focus {
+    border-color: var(--public-primary);
     box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
 }
 
-
 /* Dropdown hasil pencarian */
-
 .home-search-results {
     position: absolute;
     top: calc(100% + 8px);
@@ -164,236 +136,221 @@ body {
     width: 100%;
     max-height: 420px;
     overflow-y: auto;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    border: 1px solid var(--public-border);
     border-radius: 12px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     z-index: 100;
     text-align: left;
 }
 
-
-/* Sembunyikan dropdown */
-
+/* Menyembunyikan hasil pencarian */
 .home-search-results[hidden] {
     display: none;
 }
 
-
 /* Kelompok hasil pencarian */
-
 .home-search-section {
     padding: 10px 0;
 }
 
 .home-search-section + .home-search-section {
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--public-border);
 }
 
-
-/* Judul kelompok pencarian */
-
+/* Judul kelompok hasil */
 .home-search-section h3 {
     margin: 0;
     padding: 10px 18px;
+    background-color: var(--public-primary-light);
+    color: var(--public-primary);
     font-size: 14px;
     font-weight: 700;
-    color: #0f766e;
-    background: #f0fdfa;
 }
 
-
 /* Item hasil pencarian */
-
 .home-search-item {
     display: block;
     padding: 13px 18px;
-    color: #1e293b;
+    color: var(--public-text);
     font-size: 14px;
     line-height: 1.5;
     text-decoration: none;
     border-bottom: 1px solid #f1f5f9;
-    transition: background 0.2s;
+    transition: background-color 0.2s;
 }
 
 .home-search-item:last-child {
     border-bottom: none;
 }
 
+/* Hover hasil pencarian */
 .home-search-item:hover,
 .home-search-item:focus {
-    background: #f0fdfa;
-    color: #0f766e;
+    background-color: var(--public-primary-light);
+    color: var(--public-primary);
     outline: none;
 }
 
-
-/* Pesan hasil pencarian kosong */
-
+/* Pesan pencarian kosong */
 .home-search-empty {
     padding: 18px;
     margin: 0;
-    text-align: center;
+    color: var(--public-text-muted);
     font-size: 14px;
-    color: #64748b;
-}
-
-
-/* Navigasi beranda */
-
-.home-explore-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-
-/* Statistik */
-
-.statistik {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    padding: 20px 8% 70px;
-    flex-wrap: wrap;
-}
-
-.statistik-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 28px 40px;
     text-align: center;
-    min-width: 220px;
+}
+
+/* Statistik UMKM dan produk */
+.statistik {
+    padding: 20px 8% 70px;
+}
+
+/* Kartu statistik */
+.statistik-card {
+    min-width: 0;
+    padding: 28px 40px;
+    background-color: #ffffff;
+    border: 1px solid var(--public-border);
+    border-radius: 14px;
+    text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
 }
 
+/* Angka statistik */
 .statistik-card h2 {
-    color: #0f766e;
-    font-size: 36px;
     margin: 0 0 10px;
+    color: var(--public-primary);
+    font-size: 36px;
 }
 
+/* Keterangan statistik */
 .statistik-card p {
-    color: #64748b;
     margin: 0;
+    color: var(--public-text-muted);
 }
 
-
-/* Kategori UMKM */
-
+/* Bagian kategori UMKM */
 .kategori-section {
     padding: 60px 8%;
-    background: #f8fafc;
+    background-color: var(--public-background);
 }
 
-.kategori-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 18px;
-}
-
+/* Kartu kategori */
 .kategori-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
     padding: 28px 14px;
+    background-color: #ffffff;
+    border: 1px solid var(--public-border);
+    border-radius: 14px;
+    color: var(--public-text);
     text-align: center;
     text-decoration: none;
-    color: #1e293b;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Hover kartu kategori */
 .kategori-card:hover {
     transform: translateY(-5px);
+    border-color: var(--public-primary);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    border-color: #0f766e;
 }
 
+/* Ikon kategori */
 .kategori-icon {
-    font-size: 36px;
     margin-bottom: 14px;
+    font-size: 36px;
 }
 
+/* Nama kategori */
 .kategori-card h3 {
-    font-size: 16px;
     margin: 0 0 10px;
+    font-size: 16px;
 }
 
+/* Jumlah UMKM per kategori */
 .kategori-card p {
-    color: #64748b;
-    font-size: 14px;
     margin: 0;
+    color: var(--public-text-muted);
+    font-size: 14px;
 }
 
-
-/* Daftar UMKM terbaru */
-
+/* Bagian UMKM terbaru */
 .umkm-section {
     padding: 60px 8%;
-    background: #ffffff;
+    background-color: #ffffff;
 }
 
+/* Judul setiap bagian */
 .section-heading {
-    text-align: center;
     margin-bottom: 35px;
+    text-align: center;
 }
 
 .section-heading h2 {
-    font-size: 30px;
     margin-bottom: 12px;
+    font-size: 30px;
 }
 
 .section-heading p {
-    color: #64748b;
+    color: var(--public-text-muted);
 }
 
-.umkm-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-}
-
+/* Kartu UMKM */
 .umkm-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--public-border);
     border-radius: 14px;
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Hover kartu UMKM */
 .umkm-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.umkm-card img {
+/* Foto utama UMKM */
+.umkm-card-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
+/* Placeholder foto UMKM */
+.umkm-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    padding: 15px;
+    background-color: #e2e8f0;
+    color: var(--public-text-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Isi kartu UMKM */
 .umkm-card-body {
     padding: 20px;
 }
 
 .umkm-card-body h3 {
     margin: 0 0 10px;
+    font-size: 20px;
 }
 
 .umkm-card-body p {
-    color: #64748b;
+    color: var(--public-text-muted);
     font-size: 14px;
     line-height: 1.6;
 }
 
+/* Tautan detail UMKM */
 .umkm-detail-link {
     display: inline-block;
-    margin-top: 12px;
-    color: #0f766e;
-    font-weight: bold;
+    color: var(--public-primary);
+    font-weight: 700;
     text-decoration: none;
 }
 
@@ -401,76 +358,75 @@ body {
     text-decoration: underline;
 }
 
+/* Tombol semua UMKM */
 .umkm-all-link {
-    text-align: center;
     margin-top: 35px;
+    text-align: center;
 }
 
-
-/* Katalog produk */
-
+/* Bagian produk terbaru */
 .produk-section {
     padding: 60px 8%;
-    background: #f8fafc;
+    background-color: var(--public-background);
 }
 
-.produk-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
-}
-
+/* Kartu produk */
 .produk-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--public-border);
     border-radius: 14px;
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Hover kartu produk */
 .produk-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.produk-card img,
-.produk-placeholder {
+/* Foto utama produk */
+.produk-card-image {
     width: 100%;
     height: 190px;
     object-fit: cover;
 }
 
+/* Placeholder produk */
 .produk-placeholder {
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #e2e8f0;
-    color: #64748b;
+    justify-content: center;
+    width: 100%;
+    height: 190px;
+    padding: 15px;
+    background-color: #e2e8f0;
+    color: var(--public-text-muted);
     font-size: 13px;
     text-align: center;
-    padding: 15px;
 }
 
+/* Isi kartu produk */
 .produk-card-body {
     padding: 18px;
 }
 
 .produk-card-body h3 {
-    font-size: 17px;
     margin: 0 0 10px;
+    font-size: 17px;
 }
 
+/* Nama UMKM penyedia produk */
 .produk-umkm {
-    font-size: 13px;
-    color: #64748b;
     margin-bottom: 12px;
+    color: var(--public-text-muted);
+    font-size: 13px;
 }
 
+/* Tautan detail produk */
 .produk-detail-link {
     display: inline-block;
-    margin-top: 12px;
-    color: #0f766e;
-    font-weight: bold;
+    color: var(--public-primary);
+    font-weight: 700;
     text-decoration: none;
 }
 
@@ -478,50 +434,16 @@ body {
     text-decoration: underline;
 }
 
+/* Tombol semua produk */
 .produk-all-link {
-    text-align: center;
     margin-top: 35px;
+    text-align: center;
 }
-
-
-/* Tampilan tablet */
-
-@media (max-width: 1000px) {
-    .produk-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .kategori-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 900px) {
-    .umkm-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-
-/* Tampilan layar kecil */
-
-@media (max-width: 650px) {
-    .hero {
-        padding: 60px 6%;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-    }
-}
-
 
 /* Tampilan mobile */
+@media (max-width: 575.98px) {
 
-@media (max-width: 600px) {
-
-    /* Pendaftaran UMKM */
-
+    /* Informasi pendaftaran */
     .home-daftar-umkm {
         padding: 18px 16px 0;
     }
@@ -530,45 +452,30 @@ body {
         font-size: 14px;
     }
 
-    /* Live Search */
-
+    /* Area pencarian */
     .home-explore {
         padding: 25px 16px 40px;
     }
 
-    .home-search-form {
-        width: 100%;
-    }
-
-    .home-search-form input {
+    /* Input pencarian */
+    .home-search-input {
         padding: 13px 38px 13px 44px;
         font-size: 14px;
     }
 
-    .home-search-form .home-search-icon {
+    /* Ikon pencarian */
+    .home-search-icon {
         left: 15px;
         font-size: 17px;
     }
 
+    /* Dropdown pencarian */
     .home-search-results {
         max-height: 350px;
     }
 
-    /* Daftar UMKM */
-
-    .umkm-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Katalog produk */
-
-    .produk-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Kategori UMKM */
-
-    .kategori-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Judul bagian */
+    .section-heading h2 {
+        font-size: 25px;
     }
 }

@@ -1,360 +1,301 @@
-/* Pengaturan dasar */
-* {
-    box-sizing: border-box;
+/* Variabel warna dan ukuran utama */
+:root {
+    --public-primary: #0f766e;
+    --public-primary-light: #f0fdfa;
+    --public-primary-hover: #ccfbf1;
+
+    --public-background: #f8fafc;
+    --public-white: #ffffff;
+
+    --public-text: #1e293b;
+    --public-text-secondary: #334155;
+    --public-text-muted: #64748b;
+
+    --public-border: #e2e8f0;
+
+    --public-success: #166534;
+    --public-error: #991b1b;
+
+    --public-max-width: 1150px;
 }
 
+/* Pengaturan dasar halaman */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
+    background-color: var(--public-background);
+    color: var(--public-text);
     line-height: 1.6;
 }
 
-/* Notifikasi Toast Publik */
-.public-toast {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    width: 360px;
-    max-width: calc(100% - 32px);
-    padding: 16px 18px;
-    border-radius: 10px;
-    border: 1px solid;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    z-index: 9999;
-    animation: publicToastMasuk 0.3s ease-out;
+/* Container utama publik */
+.public-container {
+    max-width: var(--public-max-width);
 }
 
-.public-toast-success {
-    background: #dcfce7;
-    border-color: #86efac;
-    color: #166534;
-}
-
-.public-toast-error {
-    background: #fee2e2;
-    border-color: #fca5a5;
-    color: #991b1b;
-}
-
-.public-toast-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-}
-
-.public-toast-content strong {
-    display: block;
-    font-size: 15px;
-    margin-bottom: 6px;
-}
-
-.public-toast-message {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-.public-toast-close {
-    background: transparent;
-    border: none;
-    color: inherit;
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
-}
-
-.public-toast-close:hover {
-    opacity: 0.7;
-}
-
-.public-toast-close:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
-}
-
-@keyframes publicToastMasuk {
-    from {
-        opacity: 0;
-        transform: translateY(-12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Header Publik */
+/* Header publik */
 .public-header {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    z-index: 1030;
+    background-color: var(--public-white);
+    border-bottom: 1px solid var(--public-border);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Header saat halaman di-scroll */
 .public-header.scrolled {
-    background: #f0fdfa;
+    background-color: var(--public-primary-light);
     box-shadow: 0 3px 12px rgba(15, 118, 110, 0.10);
 }
 
-/* Navigasi Utama */
+/* Navigasi utama */
 .public-navbar {
-    max-width: 1150px;
-    margin: 0 auto;
-    padding: 24px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
+    padding-top: 24px;
+    padding-bottom: 24px;
     transition: padding 0.3s ease;
 }
 
-/* Navigasi lebih ramping saat scroll */
+/* Navigasi mengecil saat scroll */
 .public-header.scrolled .public-navbar {
     padding-top: 11px;
     padding-bottom: 11px;
 }
 
-/* Navigasi lebih ramping saat scroll */
-.public-header.scrolled .public-navbar {
-    padding-top: 11px;
-    padding-bottom: 11px;
-}
-
-/* Nama Website */
-.public-brand {
-    color: #0f766e;
+/* Nama website */
+.public-navbar .public-brand {
+    color: var(--public-primary);
     font-size: 21px;
     font-weight: 700;
     text-decoration: none;
 }
 
-/* Animasi toast saat ditutup */
-.public-toast.hiding {
-    opacity: 0;
-    transform: translateY(-12px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+.public-navbar .public-brand:hover {
+    color: var(--public-primary);
 }
 
-/* Menu Navigasi */
+/* Jarak antarmenu navigasi */
 .public-nav-links {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 25px;
 }
 
-/* Tautan Navigasi */
-.public-nav-links a {
-    color: #334155;
+/* Tautan navigasi */
+.public-nav-links .nav-link {
+    color: var(--public-text-secondary);
     font-size: 14px;
     font-weight: 500;
-    text-decoration: none;
+    padding: 8px 0;
 }
 
-.public-nav-links a:hover {
-    color: #0f766e;
+.public-nav-links .nav-link:hover {
+    color: var(--public-primary);
 }
 
-/* Menu Navigasi Aktif */
-.public-nav-links a.active {
-    color: #0f766e;
+/* Menu navigasi aktif */
+.public-nav-links .nav-link.active {
+    color: var(--public-primary);
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 6px;
     text-decoration-thickness: 2px;
 }
 
-/* Dropdown akun pengguna */
-.public-account-dropdown {
-    position: relative;
-}
-
-/* Tombol nama pengguna */
+/* Tombol dropdown akun */
 .public-account-toggle {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 9px 12px;
-    background: #f0fdfa;
-    color: #0f766e;
+    background-color: var(--public-primary-light);
+    color: var(--public-primary);
     border: 1px solid #99f6e4;
     border-radius: 8px;
-    font-family: inherit;
     font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
 }
 
-.public-account-toggle:hover {
-    background: #ccfbf1;
+/* Hover dan fokus tombol akun */
+.public-account-toggle:hover,
+.public-account-toggle:focus,
+.public-account-toggle.show {
+    background-color: var(--public-primary-hover);
+    color: var(--public-primary);
+    border-color: #99f6e4;
 }
 
-/* Menu dropdown */
+/* Menu dropdown akun */
 .public-account-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 12px);
-    width: 220px;
+    min-width: 220px;
     padding: 8px;
-    background: #ffffff;
-    color: #1e293b;
+    margin-top: 12px;
+    background-color: var(--public-white);
+    border: 1px solid var(--public-border);
     border-radius: 8px;
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-    z-index: 100;
 }
 
-/* Dropdown aktif */
-.public-account-dropdown.open .public-account-menu {
-    display: block;
-}
-
-/* Tautan dan tombol dropdown */
-.public-nav-links .public-account-menu a,
-.public-account-menu button,
-.public-account-menu .public-account-menu-disabled {
-    display: block;
-    width: 100%;
+/* Item dropdown */
+.public-account-menu .dropdown-item {
     padding: 11px;
-    border: none;
-    background: none;
-    color: #334155;
-    font-family: inherit;
+    color: var(--public-text-secondary);
     font-size: 14px;
-    font-weight: 400;
-    text-align: left;
-    text-decoration: none;
-}
-
-/* Hover menu dropdown */
-.public-nav-links .public-account-menu a:hover,
-.public-account-menu button:hover {
-    background: #f1f5f9;
     border-radius: 5px;
 }
 
-/* Menu belum aktif */
-.public-account-menu .public-account-menu-disabled {
-    color: #94a3b8;
-    cursor: not-allowed;
-}
-
-/* Garis pemisah */
-.public-account-divider {
-    height: 1px;
-    margin: 8px 0;
-    background: #e2e8f0;
-}
-
-/* Form logout */
-.public-account-menu form {
-    margin: 0;
+/* Hover item dropdown */
+.public-account-menu .dropdown-item:hover {
+    background-color: #f1f5f9;
 }
 
 /* Tombol logout */
 .public-account-menu .public-account-logout {
-    cursor: pointer;
     color: #dc2626;
 }
 
-/* Hover khusus tombol Logout */
+/* Hover tombol logout */
 .public-account-menu .public-account-logout:hover {
-    background: #fef2f2;
+    background-color: #fef2f2;
     color: #dc2626;
-    border-radius: 5px;
 }
 
-/* Area konten */
+/* Area konten utama */
 .public-content {
-    max-width: 1150px;
+    max-width: var(--public-max-width);
+    min-height: 60vh;
     margin: 35px auto;
     padding: 0 24px;
-    min-height: 60vh;
 }
 
-/* Footer Publik */
+/* Footer publik */
 .public-footer {
-    background: #ffffff;
-    border-top: 1px solid #e2e8f0;
     padding: 35px 24px;
-    text-align: center;
+    background-color: var(--public-white);
+    border-top: 1px solid var(--public-border);
 }
 
-/* Nama Website pada Footer */
+/* Nama website pada footer */
 .public-footer-brand {
-    color: #0f766e;
+    margin-bottom: 8px;
+    color: var(--public-primary);
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 8px;
 }
 
-/* Deskripsi Footer */
+/* Deskripsi footer */
 .public-footer-description {
-    color: #64748b;
+    margin-bottom: 16px;
+    color: var(--public-text-muted);
     font-size: 14px;
-    margin: 0 0 16px;
 }
 
-/* Navigasi Footer */
+/* Navigasi footer */
 .public-footer-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
     margin-bottom: 20px;
 }
 
+/* Tautan footer */
 .public-footer-links a {
-    color: #334155;
+    color: var(--public-text-secondary);
     font-size: 14px;
     text-decoration: none;
 }
 
 .public-footer-links a:hover {
-    color: #0f766e;
+    color: var(--public-primary);
 }
 
-/* Hak Cipta */
+/* Hak cipta */
 .public-footer-copyright {
-    color: #64748b;
-    font-size: 13px;
     margin: 0;
+    color: var(--public-text-muted);
+    font-size: 13px;
 }
 
-/* Tampilan Mobile */
-@media (max-width: 600px) {
-    .public-toast {
-        top: 16px;
-        right: 16px;
-    }
+/* Notifikasi toast */
+.public-toast {
+    width: 360px;
+    max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
 
-    .public-navbar {
-        align-items: flex-start;
-        flex-direction: column;
-    }
+/* Toast berhasil */
+.public-toast-success {
+    background-color: #dcfce7;
+    border: 1px solid #86efac;
+    color: var(--public-success);
+}
 
+/* Toast kesalahan */
+.public-toast-error {
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: var(--public-error);
+}
+
+/* Header toast */
+.public-toast .toast-header {
+    background-color: transparent;
+    color: inherit;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Isi pesan toast */
+.public-toast .toast-body {
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* Tombol tutup toast */
+.public-toast .btn-close {
+    margin-left: auto;
+}
+
+/* Tampilan tablet dan mobile */
+@media (max-width: 991.98px) {
+
+    /* Mengatur jarak navigasi mobile */
     .public-nav-links {
-        gap: 14px;
+        gap: 5px;
+        padding-top: 16px;
     }
 
+    /* Memberikan ruang pada tautan */
+    .public-nav-links .nav-link {
+        padding: 10px 0;
+    }
+
+    /* Mengatur dropdown akun mobile */
+    .public-account-menu {
+        min-width: 220px;
+        max-width: 100%;
+    }
+
+    /* Mengatur area konten */
     .public-content {
         margin: 24px auto;
         padding: 0 16px;
     }
+}
 
-    .public-account-menu {
-        right: auto;
-        left: 0;
-        max-width: calc(100vw - 32px);
+/* Tampilan layar kecil */
+@media (max-width: 575.98px) {
+
+    /* Mengatur jarak navbar */
+    .public-navbar {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    /* Mengatur ukuran nama website */
+    .public-navbar .public-brand {
+        font-size: 19px;
+    }
+
+    /* Mengatur jarak toast */
+    .toast-container {
+        width: 100%;
     }
 }

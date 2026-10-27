@@ -1,0 +1,22 @@
+/* Tata letak halaman profil admin */
+.admin-profile-page {
+    max-width: 800px;
+}
+
+/* Tipografi halaman profil admin */
+.admin-profile-page h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.admin-profile-page h5 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.admin-profile-page .form-label,
+.admin-profile-page .form-control,
+.admin-profile-page .btn {
+    font-size: 14px;
+}

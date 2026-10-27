@@ -111,7 +111,6 @@ body {
     border-radius: 5px;
 }
 
-/* Hover khusus tombol Logout */
 .dropdown .btn-logout:hover {
     background: #fef2f2;
     color: #dc2626;
@@ -180,6 +179,7 @@ body {
     cursor: default;
 }
 
+/* Konten utama */
 .content {
     flex: 1;
     min-width: 0;
@@ -216,187 +216,7 @@ body {
     padding: 5px;
 }
 
-/* Responsif tablet */
-@media (max-width: 1024px) {
-    .menu-toggle {
-        display: block;
-    }
-
-    .main-layout {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        display: block;
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #e2e8f0;
-        padding: 0 12px;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        visibility: hidden;
-        transition:
-            max-height 0.45s ease-in-out,
-            opacity 0.3s ease,
-            visibility 0s linear 0.45s;
-    }
-
-    .sidebar.show {
-        max-height: 700px;
-        opacity: 1;
-        visibility: visible;
-        padding: 12px;
-        transition:
-            max-height 0.55s ease-in-out,
-            opacity 0.3s ease,
-            visibility 0s;
-    }
-
-    .content {
-        padding: 20px 15px;
-    }
-}
-
-/* Responsif smartphone */
-@media (max-width: 768px) {
-    .header {
-        padding: 15px;
-    }
-
-    .brand {
-        font-size: 15px;
-    }
-
-    .user-name {
-        font-size: 12px;
-    }
-
-    .user-role {
-        font-size: 11px;
-    }
-}
-
-/* Animasi membuka sidebar */
-@keyframes menuWave {
-    0% {
-        opacity: 0;
-        transform: translateY(-18px) scale(0.96);
-    }
-
-    65% {
-        opacity: 1;
-        transform: translateY(5px) scale(1.02);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@media (max-width: 1024px) {
-    .sidebar.show > a,
-    .sidebar.show > .menu-disabled {
-        animation: menuWave 0.5s ease-out both;
-    }
-
-    .sidebar.show > :nth-child(2) {
-        animation-delay: 0.05s;
-    }
-
-    .sidebar.show > :nth-child(3) {
-        animation-delay: 0.10s;
-    }
-
-    .sidebar.show > :nth-child(4) {
-        animation-delay: 0.15s;
-    }
-
-    .sidebar.show > :nth-child(5) {
-        animation-delay: 0.20s;
-    }
-
-    .sidebar.show > :nth-child(6) {
-        animation-delay: 0.25s;
-    }
-
-    .sidebar.show > :nth-child(7) {
-        animation-delay: 0.30s;
-    }
-
-    .sidebar.show > :nth-child(8) {
-        animation-delay: 0.35s;
-    }
-
-    .sidebar.show > :nth-child(9) {
-        animation-delay: 0.40s;
-    }
-}
-
-/* Animasi menutup sidebar */
-@keyframes menuWaveOut {
-    0% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-}
-
-@media (max-width: 1024px) {
-    .sidebar.closing > a,
-    .sidebar.closing > .menu-disabled {
-        animation: menuWaveOut 0.2s ease-in both;
-    }
-
-    .sidebar.closing > :nth-child(9) {
-        animation-delay: 0s;
-    }
-
-    .sidebar.closing > :nth-child(8) {
-        animation-delay: 0.04s;
-    }
-
-    .sidebar.closing > :nth-child(7) {
-        animation-delay: 0.08s;
-    }
-
-    .sidebar.closing > :nth-child(6) {
-        animation-delay: 0.12s;
-    }
-
-    .sidebar.closing > :nth-child(5) {
-        animation-delay: 0.16s;
-    }
-
-    .sidebar.closing > :nth-child(4) {
-        animation-delay: 0.20s;
-    }
-
-    .sidebar.closing > :nth-child(3) {
-        animation-delay: 0.24s;
-    }
-
-    .sidebar.closing > :nth-child(2) {
-        animation-delay: 0.28s;
-    }
-}
-
-/* Aksesibilitas animasi */
-@media (prefers-reduced-motion: reduce) {
-    .sidebar.show > a,
-    .sidebar.show > .menu-disabled,
-    .sidebar.closing > a,
-    .sidebar.closing > .menu-disabled {
-        animation: none;
-    }
-}
-
-/* Notifikasi global Admin */
+/* Notifikasi admin */
 .admin-toast {
     position: fixed;
     top: 20px;
@@ -440,4 +260,203 @@ body {
     cursor: pointer;
     font-size: 20px;
     align-self: flex-start;
+}
+
+.admin-toast-fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Animasi membuka sidebar */
+@keyframes menuWave {
+    0% {
+        opacity: 0;
+        transform: translateY(-18px) scale(0.96);
+    }
+
+    65% {
+        opacity: 1;
+        transform: translateY(5px) scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animasi menutup sidebar */
+@keyframes menuWaveOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+}
+
+/* Responsif tablet */
+@media (max-width: 1024px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: block;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0 12px;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition:
+            max-height 0.45s ease-in-out,
+            opacity 0.3s ease,
+            visibility 0s linear 0.45s;
+    }
+
+    .sidebar.show {
+        max-height: 700px;
+        opacity: 1;
+        visibility: visible;
+        padding: 12px;
+        transition:
+            max-height 0.55s ease-in-out,
+            opacity 0.3s ease,
+            visibility 0s;
+    }
+
+    .content {
+        padding: 20px 15px;
+    }
+
+    /* Animasi membuka menu */
+    .sidebar.show > a,
+    .sidebar.show > .menu-disabled {
+        animation: menuWave 0.5s ease-out both;
+    }
+
+    .sidebar.show > :nth-child(2) {
+        animation-delay: 0.05s;
+    }
+
+    .sidebar.show > :nth-child(3) {
+        animation-delay: 0.10s;
+    }
+
+    .sidebar.show > :nth-child(4) {
+        animation-delay: 0.15s;
+    }
+
+    .sidebar.show > :nth-child(5) {
+        animation-delay: 0.20s;
+    }
+
+    .sidebar.show > :nth-child(6) {
+        animation-delay: 0.25s;
+    }
+
+    .sidebar.show > :nth-child(7) {
+        animation-delay: 0.30s;
+    }
+
+    .sidebar.show > :nth-child(8) {
+        animation-delay: 0.35s;
+    }
+
+    .sidebar.show > :nth-child(9) {
+        animation-delay: 0.40s;
+    }
+
+    .sidebar.show > :nth-child(10) {
+        animation-delay: 0.45s;
+    }
+
+    .sidebar.show > :nth-child(11) {
+        animation-delay: 0.50s;
+    }
+
+    /* Animasi menutup menu */
+    .sidebar.closing > a,
+    .sidebar.closing > .menu-disabled {
+        animation: menuWaveOut 0.2s ease-in both;
+    }
+
+    .sidebar.closing > :nth-child(11) {
+        animation-delay: 0s;
+    }
+
+    .sidebar.closing > :nth-child(10) {
+        animation-delay: 0.04s;
+    }
+
+    .sidebar.closing > :nth-child(9) {
+        animation-delay: 0.08s;
+    }
+
+    .sidebar.closing > :nth-child(8) {
+        animation-delay: 0.12s;
+    }
+
+    .sidebar.closing > :nth-child(7) {
+        animation-delay: 0.16s;
+    }
+
+    .sidebar.closing > :nth-child(6) {
+        animation-delay: 0.20s;
+    }
+
+    .sidebar.closing > :nth-child(5) {
+        animation-delay: 0.24s;
+    }
+
+    .sidebar.closing > :nth-child(4) {
+        animation-delay: 0.28s;
+    }
+
+    .sidebar.closing > :nth-child(3) {
+        animation-delay: 0.32s;
+    }
+
+    .sidebar.closing > :nth-child(2) {
+        animation-delay: 0.36s;
+    }
+}
+
+/* Responsif smartphone */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px;
+    }
+
+    .brand {
+        font-size: 15px;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .user-role {
+        font-size: 11px;
+    }
+}
+
+/* Aksesibilitas animasi */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar.show > a,
+    .sidebar.show > .menu-disabled,
+    .sidebar.closing > a,
+    .sidebar.closing > .menu-disabled {
+        animation: none;
+    }
 }

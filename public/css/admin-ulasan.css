@@ -1,0 +1,45 @@
+/* Pengaturan lebar kolom tabel ulasan */
+.ulasan-kolom-aksi {
+    min-width: 125px;
+}
+
+.ulasan-kolom-komentar {
+    min-width: 220px;
+}
+
+/* Tipografi halaman moderasi ulasan */
+.admin-ulasan-page h2 {
+    font-size: 28px;
+}
+
+.admin-ulasan-page > p {
+    font-size: 14px;
+}
+
+.admin-ulasan-page .card .text-muted {
+    font-size: 14px;
+}
+
+.admin-ulasan-page .btn {
+    font-size: 14px;
+}
+
+.admin-ulasan-page .table {
+    font-size: 14px;
+}
+
+/* Tipografi halaman moderasi ulasan */
+.admin-ulasan-page h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.admin-ulasan-page > p {
+    color: #64748b !important;
+}
+
+.admin-ulasan-page .table thead th {
+    color: #334155;
+    font-weight: 600;
+}

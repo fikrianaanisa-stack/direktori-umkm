@@ -47,14 +47,6 @@
         </div>
     </div>
 
-    {{-- Notifikasi Berhasil --}}
-    @if (session('success'))
-        <div class="produk-alert-success">
-            <i class="bi bi-check-circle"></i>
-            {{ session('success') }}
-        </div>
-    @endif
-
     {{-- Kartu Data Produk --}}
     <div class="produk-table-wrapper">
 
@@ -191,8 +183,8 @@
 
                                     {{-- Hapus Produk --}}
                                     <form action="{{ route('produk.destroy', $item->id) }}"
-                                          method="POST"
-                                          onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
+                                    method="POST"
+                                    data-confirm-delete>
                                         @csrf
                                         @method('DELETE')
 
@@ -214,7 +206,7 @@
                 </tbody>
             </table>
 
-            {{-- Pagination --}}
+           {{-- Pagination --}}
             <div class="produk-pagination">
                 {{ $produk->links('pagination::bootstrap-5') }}
             </div>
@@ -227,156 +219,6 @@
 
 @endsection
 
-{{-- JavaScript Live Search Data Produk --}}
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            // Mengambil elemen pencarian dan hasil produk
-            const formCari = document.getElementById('form-cari-produk');
-            const inputCari = document.getElementById('cari-produk');
-            const hasilProduk = document.getElementById('hasil-produk');
-
-            // Mengambil elemen PDF dan tombol hapus pencarian
-            const tombolPdfHasil = document.getElementById('pdf-hasil-produk');
-            const tombolHapus = document.getElementById('hapus-cari-produk');
-
-            // Menampilkan atau menyembunyikan tombol X
-            function tampilkanTombolHapus() {
-                tombolHapus.style.display = inputCari.value ? 'inline-flex' : 'none';
-            }
-
-            tampilkanTombolHapus();
-
-            inputCari.addEventListener('input', tampilkanTombolHapus);
-
-            // Menghapus kata kunci pencarian
-            tombolHapus.addEventListener('click', function () {
-                inputCari.value = '';
-                inputCari.dispatchEvent(new Event('input', { bubbles: true }));
-                inputCari.focus();
-            });
-
-            // Menyesuaikan PDF dengan hasil pencarian
-            tombolPdfHasil.addEventListener('click', function () {
-                const url = new URL(tombolPdfHasil.href);
-                const kataKunci = inputCari.value.trim();
-
-                url.searchParams.set('mode', 'filter');
-
-                if (kataKunci !== '') {
-                    url.searchParams.set('cari', kataKunci);
-                } else {
-                    url.searchParams.delete('cari');
-                }
-
-                tombolPdfHasil.href = url.toString();
-            });
-
-            // Menyimpan timer dan permintaan pencarian
-            let timerPencarian;
-            let controllerPencarian;
-
-            // Mengambil hasil pencarian tanpa reload halaman
-            async function cariProduk(url) {
-
-                // Membatalkan permintaan sebelumnya
-                if (controllerPencarian) {
-                    controllerPencarian.abort();
-                }
-
-                controllerPencarian = new AbortController();
-
-                try {
-                    const response = await fetch(url, {
-                        signal: controllerPencarian.signal,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Gagal mengambil data produk.');
-                    }
-
-                    // Mengubah respons HTML menjadi dokumen
-                    const html = await response.text();
-                    const dokumen = new DOMParser().parseFromString(html, 'text/html');
-
-                    // Mengambil tabel dan pagination terbaru
-                    const hasilBaru = dokumen.getElementById('hasil-produk');
-
-                    if (hasilBaru) {
-                        hasilProduk.innerHTML = hasilBaru.innerHTML;
-
-                        // Memperbarui URL browser tanpa reload
-                        window.history.replaceState({}, '', url);
-                    }
-
-                } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        console.error('Live Search Produk:', error);
-                    }
-                }
-            }
-
-            // Live Search otomatis saat pengguna mengetik
-            inputCari.addEventListener('input', function () {
-                clearTimeout(timerPencarian);
-
-                timerPencarian = setTimeout(function () {
-                    const url = new URL(formCari.action);
-                    const kataKunci = inputCari.value.trim();
-
-                    if (kataKunci !== '') {
-                        url.searchParams.set('cari', kataKunci);
-                    }
-
-                    // Kembali ke halaman pertama
-                    url.searchParams.delete('page');
-
-                    cariProduk(url.toString());
-                }, 350);
-            });
-
-            // Pagination tanpa reload halaman
-            hasilProduk.addEventListener('click', function (event) {
-                const link = event.target.closest('.produk-pagination a');
-
-                if (!link) {
-                    return;
-                }
-
-                event.preventDefault();
-                clearTimeout(timerPencarian);
-
-                const url = new URL(link.href);
-                const kataKunci = inputCari.value.trim();
-
-                // Mempertahankan kata kunci pencarian
-                if (kataKunci !== '') {
-                    url.searchParams.set('cari', kataKunci);
-                } else {
-                    url.searchParams.delete('cari');
-                }
-
-                cariProduk(url.toString());
-            });
-
-            // Mencegah reload saat Enter ditekan
-            formCari.addEventListener('submit', function (event) {
-                event.preventDefault();
-                clearTimeout(timerPencarian);
-
-                const url = new URL(formCari.action);
-                const kataKunci = inputCari.value.trim();
-
-                if (kataKunci !== '') {
-                    url.searchParams.set('cari', kataKunci);
-                }
-
-                cariProduk(url.toString());
-            });
-        });
-    </script>
+    <script src="{{ asset('js/admin-produk.js') }}"></script>
 @endpush

@@ -1,0 +1,306 @@
+/* Container detail produk */
+.produk-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Kartu detail produk */
+.produk-card {
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.produk-card .row > div {
+    min-width: 0;
+}
+
+/* Foto produk */
+.produk-foto {
+    display: block;
+    width: 100%;
+    height: 350px;
+    max-height: 350px;
+    object-fit: contain;
+    object-position: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.produk-foto[hidden] {
+    display: none !important;
+}
+
+/* Galeri foto */
+.produk-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Tombol navigasi foto */
+.produk-slider-prev,
+.produk-slider-next {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    transform: translateY(-50%);
+    background: rgba(15, 23, 42, 0.65);
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.produk-slider-prev {
+    left: 12px;
+}
+
+.produk-slider-next {
+    right: 12px;
+}
+
+.produk-slider-prev:hover,
+.produk-slider-next:hover {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.produk-slider-prev:focus-visible,
+.produk-slider-next:focus-visible {
+    outline: 2px solid #0f766e;
+    outline-offset: 2px;
+}
+
+/* Indikator foto */
+.produk-slider-indikator {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    z-index: 2;
+    padding: 6px 14px;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.7);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Foto belum tersedia */
+.produk-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+    padding: 20px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    color: #94a3b8;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Informasi produk */
+.produk-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.produk-info h1 {
+    margin-top: 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.produk-kategori {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Daftar harga */
+.produk-harga {
+    margin: 20px 0;
+    color: #0f766e;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.produk-harga-item {
+    margin-bottom: 10px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    transition: border-color 0.2s ease;
+}
+
+.produk-harga-item:hover {
+    border-color: #5eead4;
+}
+
+.produk-harga-nilai {
+    color: #0f766e;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.produk-harga-satuan {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.produk-harga-kosong {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.produk-harga-catatan {
+    margin-top: 10px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* Bagian informasi */
+.produk-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.produk-section h3 {
+    margin: 0 0 14px;
+    color: #0f766e;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Deskripsi produk */
+.produk-deskripsi {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+/* Informasi UMKM */
+.produk-umkm-nama {
+    margin: 0;
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.produk-umkm-kosong {
+    color: #64748b;
+    font-weight: 400;
+}
+
+/* Tombol profil UMKM */
+.produk-link {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 11px 16px;
+    background: #0f766e;
+    border: 1px solid #0f766e;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.produk-link:hover {
+    background: #115e59;
+    border-color: #115e59;
+    color: #ffffff;
+}
+
+/* Tablet dan HP */
+@media (max-width: 767.98px) {
+    .produk-card {
+        padding: 20px;
+    }
+
+    .produk-foto {
+        height: 300px;
+        max-height: 300px;
+    }
+
+    .produk-placeholder {
+        min-height: 300px;
+    }
+
+    .produk-info h1 {
+        font-size: 20px;
+    }
+}
+
+/* HP kecil */
+@media (max-width: 480px) {
+    .produk-card {
+        padding: 16px;
+    }
+
+    .produk-foto {
+        height: 240px;
+        max-height: 240px;
+    }
+
+    .produk-placeholder {
+        min-height: 240px;
+    }
+
+    .produk-info h1 {
+        font-size: 20px;
+    }
+
+    .produk-harga-nilai {
+        font-size: 18px;
+    }
+
+    .produk-harga-item {
+        padding: 12px;
+    }
+
+    .produk-link {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .produk-slider-prev,
+    .produk-slider-next {
+        width: 34px;
+        height: 34px;
+        font-size: 18px;
+    }
+
+    .produk-slider-prev {
+        left: 8px;
+    }
+
+    .produk-slider-next {
+        right: 8px;
+    }
+
+    .produk-slider-indikator {
+        bottom: 10px;
+        font-size: 12px;
+    }
+}

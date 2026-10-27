@@ -1,149 +1,95 @@
+@extends('layouts.public')
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Direktori UMKM Kota Ambon</title>
+@section('title', 'Login - Direktori UMKM Kota Ambon')
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/auth-login.css') }}">
+@endpush
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f6fa;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+@section('content')
+<section class="login-section d-flex align-items-center justify-content-center">
 
-        .login-card {
-            background: white;
-            width: 100%;
-            max-width: 420px;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        }
+    <div class="card login-card border-0 shadow">
+        <div class="card-body p-4 p-sm-5">
 
-        h1 {
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 8px;
-            color: #1e293b;
-        }
+            {{-- Judul login --}}
+            <h1 class="text-center fw-bold mb-2">
+                Masuk ke Akun
+            </h1>
 
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
+            <p class="text-center text-secondary small mb-4">
+                Direktori UMKM Kota Ambon
+            </p>
 
-        label {
-            display: block;
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
+            {{-- Formulir login --}}
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
 
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">
+                        Alamat Email
+                    </label>
 
-        input:focus {
-            outline: 2px solid #2563eb;
-            border-color: transparent;
-        }
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}"
+                        placeholder="Masukkan email"
+                        autocomplete="email"
+                        required
+                        autofocus
+                    >
+                </div>
 
-        button {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 6px;
-            background: #2563eb;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+                <div class="mb-4">
+                    <label for="password" class="form-label fw-semibold">
+                        Password
+                    </label>
 
-        button:hover {
-            background: #1d4ed8;
-        }
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control @error('password') is-invalid @enderror"
+                        placeholder="Masukkan password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
 
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+                {{-- Tautan lupa password --}}
+                <div class="text-end mb-3">
+                    <a
+                        href="{{ route('password.request') }}"
+                        class="small text-decoration-none"
+                    >
+                        Lupa Password?
+                    </a>
+                </div>
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 22px;
-            font-size: 14px;
-            color: #2563eb;
-            text-decoration: none;
-        }
-    </style>
-</head>
+                <button
+                    type="submit"
+                    class="btn btn-primary w-100 py-2 fw-semibold"
+                >
+                    Masuk
+                </button>
+            </form>
 
-<body>
-    <div class="login-card">
-        <h1>Direktori UMKM</h1>
-        <p class="subtitle">Kota Ambon - Masuk ke Akun Anda</p>
+            {{-- Tautan registrasi --}}
+            <p class="text-center text-secondary small mt-4 mb-0">
+                Belum punya akun?
+                <a
+                    href="{{ route('register') }}"
+                    class="fw-semibold text-decoration-none"
+                >
+                    Daftar di sini
+                </a>
+            </p>
 
-        @if ($errors->any())
-            <div class="error">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <label for="email">Alamat Email</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value="{{ old('email') }}"
-                placeholder="Masukkan email"
-                autocomplete="email"
-                required
-                autofocus
-            >
-
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Masukkan password"
-                autocomplete="current-password"
-                required
-            >
-
-            <button type="submit">Masuk</button>
-        </form>
-
-        <a href="{{ url('/') }}" class="back-link">
-            Kembali ke Halaman Utama
-        </a>
+        </div>
     </div>
-</body>
-</html>
+
+</section>
+@endsection

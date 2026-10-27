@@ -1,0 +1,302 @@
+/* Area halaman katalog produk */
+.produk-index-page {
+    max-width: 1200px;
+    padding-top: 35px;
+    padding-bottom: 45px;
+}
+
+/* Judul halaman */
+.produk-page-header {
+    margin-bottom: 25px;
+}
+
+.produk-page-header h1 {
+    margin: 0 0 8px;
+    color: #0f172a;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.produk-page-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* Formulir filter */
+.produk-filter {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.produk-filter .form-label {
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.produk-filter .form-select,
+.produk-filter .form-control {
+    min-height: 45px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.produk-filter .form-select:focus,
+.produk-filter .form-control:focus {
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+/* Tombol filter */
+.produk-filter-button {
+    min-height: 45px;
+    padding: 10px 16px;
+    background: #0f766e;
+    border: 1px solid #0f766e;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.produk-filter-button:hover,
+.produk-filter-button:focus-visible {
+    background: #115e59;
+    border-color: #115e59;
+    color: #ffffff;
+}
+
+/* Tombol reset */
+.produk-reset-button {
+    min-height: 45px;
+    padding: 10px 16px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.produk-reset-button:hover {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+/* Informasi jumlah hasil */
+.produk-jumlah-hasil {
+    margin: 0 0 20px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Kartu produk */
+.produk-card {
+    min-width: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.produk-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+/* Foto produk */
+.produk-image {
+    display: block;
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+    background: #f8fafc;
+}
+
+/* Placeholder foto */
+.produk-no-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.produk-no-image i {
+    font-size: 30px;
+}
+
+/* Isi kartu */
+.produk-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+}
+
+/* Kategori produk */
+.produk-category {
+    margin: 0 0 10px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* Nama produk */
+.produk-name {
+    margin: 0 0 12px;
+    color: #0f172a;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+/* Harga produk */
+.produk-price {
+    margin-bottom: 12px;
+    color: #0f766e;
+    font-size: 19px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* Harga belum tersedia */
+.produk-price-empty {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Satuan harga */
+.produk-price-unit {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Jumlah pilihan harga */
+.produk-price-options {
+    display: block;
+    margin-top: 5px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+/* Nama UMKM */
+.produk-business-name {
+    margin: 0 0 15px;
+    color: #475569;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+/* Area tombol kartu */
+.produk-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+/* Tombol detail produk */
+.produk-detail-button {
+    padding: 10px 14px;
+    background: #0f766e;
+    border: 1px solid #0f766e;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.produk-detail-button:hover {
+    background: #115e59;
+    border-color: #115e59;
+    color: #ffffff;
+}
+
+/* Tombol lihat UMKM */
+.produk-umkm-button {
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid #0f766e;
+    border-radius: 7px;
+    color: #0f766e;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.produk-umkm-button:hover {
+    background: #ccfbf1;
+    border-color: #0f766e;
+    color: #115e59;
+}
+
+/* Pesan katalog kosong */
+.produk-empty-message,
+.produk-pencarian-kosong {
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    color: #64748b;
+    text-align: center;
+}
+
+.produk-empty-message i,
+.produk-pencarian-kosong i {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 30px;
+}
+
+.produk-empty-message p,
+.produk-pencarian-kosong p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.produk-pencarian-kosong h3 {
+    margin: 0 0 10px;
+    color: #334155;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Pesan pencarian tersembunyi */
+.produk-pencarian-kosong[hidden],
+.produk-list-item[hidden] {
+    display: none !important;
+}
+
+/* Tampilan HP */
+@media (max-width: 767.98px) {
+    .produk-index-page {
+        padding-top: 25px;
+        padding-bottom: 35px;
+    }
+
+    .produk-page-header h1 {
+        font-size: 23px;
+    }
+
+    .produk-filter {
+        padding: 16px;
+    }
+
+    .produk-image {
+        height: 220px;
+    }
+}

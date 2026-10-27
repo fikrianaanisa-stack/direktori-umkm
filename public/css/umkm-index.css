@@ -1,0 +1,190 @@
+/* Area utama halaman Direktori UMKM */
+.umkm-index-page {
+    max-width: 1200px;
+    padding-top: 35px;
+    padding-bottom: 45px;
+}
+
+/* Judul halaman */
+.umkm-page-title {
+    margin-bottom: 25px;
+}
+
+.umkm-page-title h2 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.umkm-page-title p {
+    margin: 0;
+    color: #64748b;
+}
+
+/* Formulir filter UMKM */
+.umkm-filter-form {
+    margin-bottom: 25px;
+    padding: 18px 20px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+/* Label formulir */
+.umkm-filter-form .form-label {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Input dan pilihan kategori */
+.umkm-filter-form .form-control,
+.umkm-filter-form .form-select {
+    min-height: 45px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+/* Fokus input dan pilihan kategori */
+.umkm-filter-form .form-control:focus,
+.umkm-filter-form .form-select:focus {
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+/* Tombol utama Direktori UMKM */
+.umkm-btn-primary {
+    padding: 10px 14px;
+    background-color: #0f766e;
+    border: 1px solid #0f766e;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Hover tombol utama */
+.umkm-btn-primary:hover,
+.umkm-btn-primary:focus-visible {
+    background-color: #115e59;
+    border-color: #115e59;
+    color: #ffffff;
+}
+
+/* Tombol pada formulir filter */
+.umkm-filter-form .btn {
+    min-height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* Informasi jumlah hasil */
+.umkm-jumlah-hasil {
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Kartu UMKM */
+.umkm-list-card {
+    padding: 6px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover kartu UMKM */
+.umkm-list-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Nama UMKM */
+.umkm-list-name {
+    margin: 0 0 16px;
+    color: #1e293b;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+/* Informasi UMKM */
+.umkm-list-info {
+    margin-bottom: 12px;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Label informasi */
+.umkm-list-info strong {
+    color: #334155;
+}
+
+/* Pesan ketika belum tersedia data */
+.umkm-empty-message {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    color: #64748b;
+    text-align: center;
+}
+
+/* Pesan ketika pencarian tidak menemukan hasil */
+.umkm-pencarian-kosong {
+    margin-top: 15px;
+    padding: 35px 20px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* Judul pesan pencarian kosong */
+.umkm-pencarian-kosong h3 {
+    margin: 0 0 10px;
+    color: #334155;
+    font-size: 20px;
+}
+
+/* Isi pesan pencarian kosong */
+.umkm-pencarian-kosong p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Menyembunyikan elemen hasil filter */
+.umkm-list-item[hidden],
+.umkm-pencarian-kosong[hidden] {
+    display: none !important;
+}
+
+/* Penyesuaian tampilan mobile */
+@media (max-width: 575.98px) {
+
+    /* Jarak halaman */
+    .umkm-index-page {
+        padding-top: 25px;
+        padding-bottom: 35px;
+    }
+
+    /* Ukuran judul */
+    .umkm-page-title h2 {
+        font-size: 25px;
+    }
+
+    /* Tombol filter pada layar kecil */
+    .umkm-filter-form .btn {
+        flex: 1;
+    }
+}

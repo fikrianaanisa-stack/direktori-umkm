@@ -1,194 +1,123 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi - Direktori UMKM Kota Ambon</title>
+@extends('layouts.public')
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+@section('title', 'Registrasi - Direktori UMKM Kota Ambon')
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f6fa;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/auth-register.css') }}">
+@endpush
 
-        .register-card {
-            background: white;
-            width: 100%;
-            max-width: 420px;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        }
+@section('content')
+<section class="register-section d-flex align-items-center justify-content-center">
 
-        h1 {
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 8px;
-            color: #1e293b;
-        }
+    <div class="card register-card border-0 shadow">
+        <div class="card-body p-4 p-sm-5">
 
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
+            <h1 class="text-center fw-bold mb-2">
+                Daftar Akun
+            </h1>
 
-        label {
-            display: block;
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
+            <p class="text-center text-secondary small mb-4">
+                Direktori UMKM Kota Ambon
+            </p>
 
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+            <form method="POST" action="{{ route('register.store') }}">
+                @csrf
 
-        input:focus {
-            outline: 2px solid #2563eb;
-            border-color: transparent;
-        }
+                {{-- Nama lengkap --}}
+                <div class="mb-3">
+                    <label for="name" class="form-label fw-semibold">
+                        Nama Lengkap
+                    </label>
 
-        button {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 6px;
-            background: #2563eb;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="form-control @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}"
+                        placeholder="Masukkan nama lengkap"
+                        autocomplete="name"
+                        maxlength="255"
+                        required
+                        autofocus
+                    >
+                </div>
 
-        button:hover {
-            background: #1d4ed8;
-        }
+                {{-- Email --}}
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">
+                        Alamat Email
+                    </label>
 
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}"
+                        placeholder="Masukkan alamat email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #2563eb;
-            text-decoration: none;
-        }
+                {{-- Password --}}
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">
+                        Password
+                    </label>
 
-        .login-text {
-            text-align: center;
-            font-size: 14px;
-            color: #64748b;
-            margin-top: 22px;
-        }
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control @error('password') is-invalid @enderror"
+                        placeholder="Minimal 8 karakter"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                </div>
 
-        .login-text a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
-</head>
+                {{-- Konfirmasi password --}}
+                <div class="mb-4">
+                    <label for="password_confirmation" class="form-label fw-semibold">
+                        Konfirmasi Password
+                    </label>
 
-<body>
-    <div class="register-card">
-        <h1>Daftar Akun</h1>
-        <p class="subtitle">
-            Direktori UMKM Kota Ambon
-        </p>
+                    <input
+                        type="password"
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        class="form-control"
+                        placeholder="Ulangi password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                </div>
 
-        @if ($errors->any())
-            <div class="error">
-                {{ $errors->first() }}
-            </div>
-        @endif
+                <button
+                    type="submit"
+                    class="btn btn-primary w-100 py-2 fw-semibold"
+                >
+                    Daftar Sekarang
+                </button>
 
-        <form method="POST" action="{{ route('register.store') }}">
-            @csrf
+            </form>
 
-            <label for="name">Nama Lengkap</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value="{{ old('name') }}"
-                placeholder="Masukkan nama lengkap"
-                autocomplete="name"
-                maxlength="255"
-                required
-                autofocus
-            >
+            <p class="text-center text-secondary small mt-4 mb-0">
+                Sudah punya akun?
+                <a
+                    href="{{ route('login') }}"
+                    class="fw-semibold text-decoration-none"
+                >
+                    Masuk di sini
+                </a>
+            </p>
 
-            <label for="email">Alamat Email</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value="{{ old('email') }}"
-                placeholder="Masukkan alamat email"
-                autocomplete="email"
-                required
-            >
-
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Minimal 8 karakter"
-                autocomplete="new-password"
-                minlength="8"
-                required
-            >
-
-            <label for="password_confirmation">
-                Konfirmasi Password
-            </label>
-            <input
-                type="password"
-                id="password_confirmation"
-                name="password_confirmation"
-                placeholder="Ulangi password"
-                autocomplete="new-password"
-                minlength="8"
-                required
-            >
-
-            <button type="submit">Daftar Sekarang</button>
-        </form>
-
-        <p class="login-text">
-            Sudah punya akun?
-            <a href="{{ route('login') }}">Masuk di sini</a>
-        </p>
-
-        <a href="{{ route('home') }}" class="back-link">
-            Kembali ke Halaman Utama
-        </a>
+        </div>
     </div>
-</body>
-</html>
+
+</section>
+@endsection

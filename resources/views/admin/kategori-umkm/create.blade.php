@@ -2,96 +2,88 @@
 
 @section('title', 'Tambah Kategori UMKM')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin-kategori-umkm-create.css') }}">
+@endpush
+
 @section('content')
+<div class="container-fluid admin-kategori-umkm-create">
 
-<div style="max-width: 800px;">
-
-    <div style="margin-bottom: 25px;">
-        <h1 style="font-size: 24px; margin-bottom: 8px;">
-            Tambah Kategori UMKM
-        </h1>
-
-        <p style="color: #64748b; font-size: 14px;">
+    <div class="mb-4">
+        <h2 class="mb-2">Tambah Kategori UMKM</h2>
+        <p class="text-muted mb-0">
             Tambahkan kategori baru untuk mengelompokkan usaha UMKM.
         </p>
     </div>
 
-    <div style="background: white; padding: 25px;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
 
-        <form action="{{ route('admin.kategori-umkm.store') }}"
-              method="POST"
-              onsubmit="return confirm('Apakah data kategori UMKM yang Anda isi sudah benar dan ingin disimpan?');">
+            <form id="formKategoriUmkm"
+                  action="{{ route('admin.kategori-umkm.store') }}"
+                  method="POST">
 
-            @csrf
+                @csrf
 
-            <div style="margin-bottom: 20px;">
-                <label for="nama_kategori"
-                       style="display: block; margin-bottom: 8px;">
-                    Nama Kategori <span style="color: red;">*</span>
-                </label>
+                <div class="mb-3">
+                    <label for="nama_kategori" class="form-label">
+                        Nama Kategori <span class="text-danger">*</span>
+                    </label>
 
-                <input type="text"
-                       id="nama_kategori"
-                       name="nama_kategori"
-                       value="{{ old('nama_kategori') }}"
-                       maxlength="100"
-                       required
-                       style="width: 100%; padding: 12px;
-                              border: 1px solid #cbd5e1;
-                              border-radius: 6px;">
+                    <input type="text"
+                           id="nama_kategori"
+                           name="nama_kategori"
+                           class="form-control @error('nama_kategori') is-invalid @enderror"
+                           value="{{ old('nama_kategori') }}"
+                           maxlength="100"
+                           required>
 
-                @error('nama_kategori')
-                    <div style="color: #dc2626; margin-top: 6px;">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
+                    @error('nama_kategori')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-            <div style="margin-bottom: 25px;">
-                <label for="deskripsi"
-                       style="display: block; margin-bottom: 8px;">
-                    Deskripsi
-                </label>
+                <div class="mb-4">
+                    <label for="deskripsi" class="form-label">
+                        Deskripsi
+                    </label>
 
-                <textarea id="deskripsi"
-                          name="deskripsi"
-                          rows="4"
-                          style="width: 100%; padding: 12px;
-                                 border: 1px solid #cbd5e1;
-                                 border-radius: 6px;">{{ old('deskripsi') }}</textarea>
+                    <textarea id="deskripsi"
+                              name="deskripsi"
+                              rows="4"
+                              class="form-control @error('deskripsi') is-invalid @enderror">{{ old('deskripsi') }}</textarea>
 
-                @error('deskripsi')
-                    <div style="color: #dc2626; margin-top: 6px;">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
+                    @error('deskripsi')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-            <div style="display: flex; gap: 12px;">
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i>
+                        Simpan Kategori
+                    </button>
 
-                <button type="submit"
-                        style="background: #2563eb; color: white;
-                               border: none; padding: 12px 20px;
-                               border-radius: 6px; cursor: pointer;">
-                    Simpan Kategori
-                </button>
+                    <a href="{{ route('admin.kategori-umkm.index') }}"
+                       id="btnBatalKategoriUmkm"
+                       class="btn btn-secondary">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Batal
+                    </a>
+                </div>
 
-                <a href="{{ route('admin.kategori-umkm.index') }}"
-                   style="background: #e2e8f0; color: #334155;
-                          padding: 12px 20px; border-radius: 6px;
-                          text-decoration: none;"
-                    onclick="return confirm('Apakah Anda yakin ingin membatalkan penambahan kategori UMKM? Data yang sudah diisi tidak akan disimpan.');">
-                    Batal
-                </a>
+            </form>
 
-            </div>
-
-        </form>
-
+        </div>
     </div>
 
 </div>
-
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/admin-kategori-umkm-create.js') }}" defer></script>
+@endpush

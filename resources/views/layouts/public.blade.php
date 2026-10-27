@@ -6,26 +6,35 @@
 
     <title>@yield('title', 'Direktori UMKM Kota Ambon')</title>
 
-    {{-- Bootstrap Icons --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    {{-- Bootstrap CSS --}}
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-    {{-- CSS layout publik --}}
+    {{-- Bootstrap Icons --}}
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
+
+    {{-- CSS utama halaman publik --}}
     <link rel="stylesheet" href="{{ asset('css/public-layout.css') }}">
 
     {{-- CSS tambahan setiap halaman --}}
     @stack('styles')
-
 </head>
+
 <body>
 
-    {{-- Notifikasi global halaman publik --}}
+    {{-- Notifikasi global --}}
     @if (session('success') || session('error') || $errors->any())
         @php
             $toastType = session('success') ? 'success' : 'error';
 
             $toastTitle = $toastType === 'success'
                 ? 'Berhasil'
-                : 'Validasi Gagal';
+                : 'Terjadi Kesalahan';
 
             $toastMessage = session('success')
                 ?? session('error')
@@ -38,186 +47,307 @@
             }
         @endphp
 
-        <div id="public-toast"
-             class="public-toast {{ $toastType === 'success' ? 'public-toast-success' : 'public-toast-error' }}"
-             data-type="{{ $toastType }}"
-             role="{{ $toastType === 'error' ? 'alert' : 'status' }}">
+        <div class="toast-container position-fixed top-0 end-0 p-3">
 
-            <div class="public-toast-content">
-                <div>
-                    <strong>{{ $toastTitle }}</strong>
+            <div
+                id="public-toast"
+                class="toast public-toast public-toast-{{ $toastType }}"
+                role="{{ $toastType === 'error' ? 'alert' : 'status' }}"
+                aria-live="{{ $toastType === 'error' ? 'assertive' : 'polite' }}"
+                aria-atomic="true"
+                data-bs-autohide="{{ $toastType === 'success' ? 'true' : 'false' }}"
+                data-bs-delay="5000"
+            >
 
-                    <p class="public-toast-message">
-                        {{ $toastMessage }}
-                    </p>
+                <div class="toast-header">
+
+                    <i class="bi {{ $toastType === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill' }} me-2"></i>
+
+                    <strong class="me-auto">
+                        {{ $toastTitle }}
+                    </strong>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Tutup notifikasi"
+                    ></button>
+
                 </div>
 
-                <button type="button"
-                        class="public-toast-close"
-                        aria-label="Tutup notifikasi">
-                    &times;
-                </button>
+                <div class="toast-body">
+                    {{ $toastMessage }}
+                </div>
+
             </div>
+
         </div>
     @endif
 
-    <!-- Header dan navigasi -->
-
+    {{-- Header dan navigasi publik --}}
     <header class="public-header">
-        <nav class="public-navbar" aria-label="Navigasi utama">
 
-            <a href="{{ route('home') }}" class="public-brand">
-                UMKM Kota Ambon
-            </a>
-            
-            {{-- Menu Navigasi Publik --}}
-            <div class="public-nav-links">
+        <nav class="navbar navbar-expand-lg public-navbar" aria-label="Navigasi utama">
 
-                <a href="{{ route('home') }}"
-                class="{{ request()->routeIs('home') ? 'active' : '' }}"
-                @if(request()->routeIs('home')) aria-current="page" @endif>
-                    Beranda
+            <div class="container public-container">
+
+                {{-- Nama website --}}
+                <a class="navbar-brand public-brand" href="{{ route('home') }}">
+                    UMKM Kota Ambon
                 </a>
 
-                <a href="{{ route('umkm.index') }}"
-                class="{{ request()->routeIs('umkm.*') ? 'active' : '' }}"
-                @if(request()->routeIs('umkm.*')) aria-current="page" @endif>
-                    Direktori UMKM
-                </a>
+                {{-- Tombol navigasi mobile --}}
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#publicNavbar"
+                    aria-controls="publicNavbar"
+                    aria-expanded="false"
+                    aria-label="Buka navigasi"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <a href="{{ route('produk.index') }}"
-                class="{{ request()->routeIs('produk.*') ? 'active' : '' }}"
-                @if(request()->routeIs('produk.*')) aria-current="page" @endif>
-                    Katalog Produk
-                </a>
+                {{-- Menu navigasi --}}
+                <div class="collapse navbar-collapse" id="publicNavbar">
 
-                <a href="{{ route('kontak') }}"
-                class="{{ request()->routeIs('kontak') ? 'active' : '' }}"
-                @if(request()->routeIs('kontak')) aria-current="page" @endif>
-                    Kontak
-                </a>
-                
-                {{-- Menu akun berdasarkan status login --}}
-                @guest
-                    <a href="{{ route('login') }}">
-                        Login
-                    </a>
+                    <ul class="navbar-nav ms-auto align-items-lg-center public-nav-links">
 
-                    <a href="{{ route('register') }}">
-                        Daftar
-                    </a>
-                @else
-                    {{-- Dropdown akun pengguna --}}
-                    <div class="public-account-dropdown">
+                        <li class="nav-item">
+                            <a
+                                href="{{ route('home') }}"
+                                class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
+                                @if (request()->routeIs('home')) aria-current="page" @endif
+                            >
+                                Beranda
+                            </a>
+                        </li>
 
-                        {{-- Tombol nama pengguna --}}
-                        <button type="button"
-                                class="public-account-toggle"
-                                id="publicAccountToggle"
-                                aria-expanded="false"
-                                aria-controls="publicAccountMenu">
+                        <li class="nav-item">
+                            <a
+                                href="{{ route('umkm.index') }}"
+                                class="nav-link {{ request()->routeIs('umkm.*') ? 'active' : '' }}"
+                                @if (request()->routeIs('umkm.*')) aria-current="page" @endif
+                            >
+                                Direktori UMKM
+                            </a>
+                        </li>
 
-                            <i class="bi bi-person-circle"></i>
+                        <li class="nav-item">
+                            <a
+                                href="{{ route('produk.index') }}"
+                                class="nav-link {{ request()->routeIs('produk.*') ? 'active' : '' }}"
+                                @if (request()->routeIs('produk.*')) aria-current="page" @endif
+                            >
+                                Katalog Produk
+                            </a>
+                        </li>
 
-                            <span>{{ auth()->user()->name }}</span>
+                        <li class="nav-item">
+                            <a
+                                href="{{ route('kontak') }}"
+                                class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}"
+                                @if (request()->routeIs('kontak')) aria-current="page" @endif
+                            >
+                                Kontak
+                            </a>
+                        </li>
 
-                            <i class="bi bi-chevron-down"></i>
-                        </button>
+                        {{-- Menu pengguna belum login --}}
+                        @guest
 
-                        {{-- Daftar menu akun --}}
-                        <div class="public-account-menu"
-                            id="publicAccountMenu">
-
-                            {{-- Menu khusus pengunjung --}}
-                            @if (auth()->user()->role === 'pengunjung')
-
-                                <a href="{{ route('pengunjung.profile.index') }}">
-                                    <i class="bi bi-person"></i>
-                                    Profil Saya
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="nav-link">
+                                    Login
                                 </a>
+                            </li>
 
-                                {{-- Akan diaktifkan setelah fitur ubah password dibuat --}}
-                                <a href="{{ route('pengunjung.password.edit') }}">
-                                    <i class="bi bi-key"></i> Ubah Password
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="nav-link">
+                                    Daftar
                                 </a>
+                            </li>
 
-                            @endif
+                        @else
 
-                            {{-- Menu khusus admin --}}
-                            @if (auth()->user()->role === 'admin')
+                            {{-- Dropdown akun pengguna --}}
+                            <li class="nav-item dropdown public-account-dropdown">
 
-                                <a href="{{ route('admin.dashboard') }}">
-                                    <i class="bi bi-speedometer2"></i>
-                                    Dashboard Admin
-                                </a>
+                                <button
+                                    type="button"
+                                    class="btn public-account-toggle dropdown-toggle"
+                                    id="publicAccountToggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    <i class="bi bi-person-circle"></i>
 
-                                <a href="{{ route('admin.profile.edit') }}">
-                                    <i class="bi bi-person"></i>
-                                    Profil Saya
-                                </a>
-
-                                <a href="{{ route('admin.password.edit') }}">
-                                    <i class="bi bi-key"></i>
-                                    Ubah Password
-                                </a>
-
-                            @endif
-
-                            <div class="public-account-divider"></div>
-
-                            {{-- Logout --}}
-                            <form method="POST"
-                                action="{{ route('logout') }}">
-                                @csrf
-
-                                <button type="submit"
-                                        class="public-account-logout">
-                                    <i class="bi bi-box-arrow-right"></i>
-                                    Logout
+                                    <span>{{ auth()->user()->name }}</span>
                                 </button>
-                            </form>
 
-                        </div>
-                    </div>
-                @endguest
+                                <ul
+                                    class="dropdown-menu dropdown-menu-lg-end public-account-menu"
+                                    aria-labelledby="publicAccountToggle"
+                                >
+
+                                    {{-- Menu khusus pengunjung --}}
+                                    @if (auth()->user()->role === 'pengunjung')
+
+                                        <li>
+                                            <a
+                                                href="{{ route('pengunjung.profile.index') }}"
+                                                class="dropdown-item"
+                                            >
+                                                <i class="bi bi-person me-2"></i>
+                                                Profil Saya
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a
+                                                href="{{ route('pengunjung.password.edit') }}"
+                                                class="dropdown-item"
+                                            >
+                                                <i class="bi bi-key me-2"></i>
+                                                Ubah Password
+                                            </a>
+                                        </li>
+
+                                    @endif
+
+                                    {{-- Menu khusus admin --}}
+                                    @if (auth()->user()->role === 'admin')
+
+                                        <li>
+                                            <a
+                                                href="{{ route('admin.dashboard') }}"
+                                                class="dropdown-item"
+                                            >
+                                                <i class="bi bi-speedometer2 me-2"></i>
+                                                Dashboard Admin
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a
+                                                href="{{ route('admin.profile.edit') }}"
+                                                class="dropdown-item"
+                                            >
+                                                <i class="bi bi-person me-2"></i>
+                                                Profil Saya
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a
+                                                href="{{ route('admin.password.edit') }}"
+                                                class="dropdown-item"
+                                            >
+                                                <i class="bi bi-key me-2"></i>
+                                                Ubah Password
+                                            </a>
+                                        </li>
+
+                                    @endif
+
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+                                    {{-- Logout pengguna --}}
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+
+                                            <button
+                                                type="submit"
+                                                class="dropdown-item public-account-logout"
+                                            >
+                                                <i class="bi bi-box-arrow-right me-2"></i>
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+
+                        @endguest
+
+                    </ul>
+
+                </div>
 
             </div>
+
         </nav>
+
     </header>
 
-    <!-- Konten setiap halaman -->
+    {{-- Konten utama setiap halaman --}}
     <main class="public-content">
         @yield('content')
     </main>
-    
-    {{-- Footer Publik --}}
+
+    {{-- Footer publik --}}
     <footer class="public-footer">
 
-        <div class="public-footer-brand">
-            UMKM Kota Ambon
+        <div class="container public-container text-center">
+
+            <div class="public-footer-brand">
+                UMKM Kota Ambon
+            </div>
+
+            <p class="public-footer-description">
+                Direktori usaha, produk, dan layanan UMKM di Kota Ambon.
+            </p>
+
+            {{-- Navigasi footer --}}
+            <nav
+                class="d-flex justify-content-center flex-wrap gap-3 public-footer-links"
+                aria-label="Navigasi footer"
+            >
+
+                <a href="{{ route('home') }}">Beranda</a>
+
+                <a href="{{ route('umkm.index') }}">
+                    Direktori UMKM
+                </a>
+
+                <a href="{{ route('produk.index') }}">
+                    Katalog Produk
+                </a>
+
+                <a href="{{ route('kontak') }}">Kontak</a>
+
+            </nav>
+
+            <p class="public-footer-copyright">
+                &copy; {{ date('Y') }} Direktori UMKM Kota Ambon.
+                Hak cipta dilindungi.
+            </p>
+
         </div>
 
-        <p class="public-footer-description">
-            Direktori usaha, produk, dan layanan UMKM di Kota Ambon.
-        </p>
-
-        <nav class="public-footer-links" aria-label="Navigasi footer">
-            <a href="{{ route('home') }}">Beranda</a>
-            <a href="{{ route('umkm.index') }}">Direktori UMKM</a>
-            <a href="{{ route('produk.index') }}">Katalog Produk</a>
-            <a href="{{ route('kontak') }}">Kontak</a>
-        </nav>
-
-        <p class="public-footer-copyright">
-            &copy; {{ date('Y') }} Direktori UMKM Kota Ambon.
-            Hak cipta dilindungi.
-        </p>
     </footer>
 
-{{-- JavaScript layout publik --}}
-<script src="{{ asset('js/public-layout.js') }}" defer></script>
+    {{-- Bootstrap JavaScript --}}
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        defer
+    ></script>
 
-{{-- JavaScript tambahan setiap halaman --}}
-@stack('scripts')
+    {{-- JavaScript utama halaman publik --}}
+    <script src="{{ asset('js/public-layout.js') }}" defer></script>
+
+    {{-- Konfirmasi pengiriman ulasan --}}
+    <script src="{{ asset('js/ulasan-konfirmasi.js') }}" defer></script>
+
+    {{-- JavaScript tambahan setiap halaman --}}
+    @stack('scripts')
+
 </body>
 </html>

@@ -1,11 +1,15 @@
 @extends('layouts.admin')
 
-@section('content')
-<div class="container py-4" style="max-width: 800px;">
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin-password.css') }}">
+@endpush
 
-    <h4 class="mb-4">
+@section('content')
+<div class="container py-4 admin-password-page">
+
+    <h2 class="mb-4">
         <i class="bi bi-shield-lock"></i> Ubah Password
-    </h4>
+    </h2>
 
     <div class="card shadow-sm">
         <div class="card-body p-4">
@@ -129,70 +133,8 @@
         </div>
     </div>
 </div>
+
 @endsection
-
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const form = document.getElementById('formPassword');
-    const btnBatal = document.getElementById('btnBatal');
-
-    let bolehMeninggalkan = false;
-
-    const inputPassword = form.querySelectorAll('input[type="password"]');
-
-    function adaPerubahan() {
-        return Array.from(inputPassword).some(input => input.value !== '');
-    }
-
-    // Tampilkan atau sembunyikan password
-    document.querySelectorAll('.toggle-password').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const input = document.getElementById(button.dataset.target);
-            const icon = button.querySelector('i');
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.className = 'bi bi-eye-slash';
-                button.setAttribute('aria-label', 'Sembunyikan password');
-            } else {
-                input.type = 'password';
-                icon.className = 'bi bi-eye';
-                button.setAttribute('aria-label', 'Tampilkan password');
-            }
-        });
-    });
-
-    // Konfirmasi penyimpanan
-    form.addEventListener('submit', function (event) {
-        if (!confirm('Yakin ingin mengubah password akun?')) {
-            event.preventDefault();
-            return;
-        }
-
-        bolehMeninggalkan = true;
-    });
-
-    // Konfirmasi tombol Batal
-    btnBatal.addEventListener('click', function (event) {
-        if (adaPerubahan()) {
-            if (!confirm('Perubahan belum disimpan. Yakin ingin membatalkan?')) {
-                event.preventDefault();
-            } else {
-                bolehMeninggalkan = true;
-            }
-        }
-    });
-
-    // Peringatan meninggalkan halaman
-    window.addEventListener('beforeunload', function (event) {
-        if (adaPerubahan() && !bolehMeninggalkan) {
-            event.preventDefault();
-            event.returnValue = '';
-        }
-    });
-
-});
-</script>
+    <script src="{{ asset('js/admin-password.js') }}" defer></script>
 @endpush

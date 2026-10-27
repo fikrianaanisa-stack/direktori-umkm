@@ -16,7 +16,7 @@
     margin: 0;
 }
 
-/* Ringkasan statistik */
+/* Judul bagian */
 .dashboard-section-title {
     font-size: 18px;
     font-weight: 600;
@@ -24,13 +24,16 @@
     margin-bottom: 20px;
 }
 
+/* Ringkasan statistik */
 .dashboard-stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 
-.dashboard-card {
+/* Kartu dashboard */
+.dashboard-card,
+.dashboard-chart-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -70,6 +73,7 @@
     margin: 0;
 }
 
+/* Warna ikon statistik */
 .icon-umkm {
     background: #dbeafe;
     color: #2563eb;
@@ -90,31 +94,9 @@
     color: #7c3aed;
 }
 
-/* Responsif */
-@media (max-width: 1200px) {
-    .dashboard-stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 600px) {
-    .dashboard-stats {
-        grid-template-columns: 1fr;
-    }
-
-    .dashboard-card {
-        padding: 20px;
-    }
-}
-
 /* Grafik dashboard */
 .dashboard-chart-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 24px;
     margin-top: 24px;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
 }
 
 .dashboard-chart-container {
@@ -123,7 +105,20 @@
     height: 320px;
 }
 
+/* Responsif tablet */
+@media (max-width: 1200px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Responsif smartphone */
 @media (max-width: 600px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-card,
     .dashboard-chart-card {
         padding: 20px;
     }

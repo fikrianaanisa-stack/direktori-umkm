@@ -1,0 +1,271 @@
+/* Halaman Edit Produk */
+.edit-produk-page {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+/* Header */
+.edit-produk-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.edit-produk-header h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.edit-produk-header p {
+    margin: 6px 0 0;
+    color: #64748b;
+}
+
+/* Kartu formulir */
+.edit-produk-card {
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+/* Tata letak formulir */
+.edit-produk-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.edit-produk-grid > div {
+    min-width: 0;
+}
+
+/* Tipografi */
+.edit-produk-page h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.edit-produk-page button,
+.edit-produk-page a {
+    font-size: 14px;
+}
+
+.edit-produk-page small {
+    font-size: 14px;
+}
+
+.edit-produk-page .pilihan-harga-blade strong {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Kolom formulir */
+.edit-produk-field {
+    margin-bottom: 18px;
+}
+
+.edit-produk-field-lg {
+    margin-bottom: 24px;
+}
+
+.edit-produk-label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.edit-produk-input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    box-sizing: border-box;
+}
+
+.edit-produk-error {
+    color: #dc2626;
+}
+
+.edit-produk-help {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+}
+
+/* Galeri foto */
+.edit-produk-galeri-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.edit-produk-galeri {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.edit-produk-foto-item {
+    text-align: center;
+}
+
+.edit-produk-foto {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+}
+
+.edit-produk-foto-caption {
+    display: block;
+    margin-top: 5px;
+    color: #64748b;
+}
+
+.btn-hapus-foto-produk {
+    margin-top: 7px;
+    padding: 6px 12px;
+    background: #dc2626;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px !important;
+}
+
+.edit-produk-label-tambahan {
+    margin-top: 20px;
+}
+
+/* Pilihan harga */
+.edit-produk-harga {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.edit-produk-harga h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.edit-produk-harga > p {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.pilihan-harga-blade,
+.pilihan-harga-baru {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+}
+
+.edit-produk-harga-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.edit-produk-harga-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.edit-produk-harga-grid + .edit-produk-harga-grid {
+    margin-top: 12px;
+}
+
+.edit-produk-harga-input {
+    width: 100%;
+    padding: 9px;
+    box-sizing: border-box;
+}
+
+.hapus-pilihan-harga {
+    padding: 7px 12px;
+    background: #dc2626;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.edit-produk-tambah-harga {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #16a34a;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* Validasi harga */
+.edit-produk-harga-input.is-invalid {
+    border: 2px solid #dc2626;
+}
+
+.pesan-error-harga {
+    display: block;
+    margin-top: 5px;
+    color: #dc2626;
+    font-size: 12px;
+}
+
+/* Tombol aksi */
+.edit-produk-page .form-actions-produk {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.edit-produk-page .btn-simpan-produk,
+.edit-produk-page .btn-batal-produk {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.edit-produk-page .btn-simpan-produk {
+    background: #2563eb;
+    color: #ffffff;
+    border: 1px solid #2563eb;
+}
+
+.edit-produk-page .btn-simpan-produk:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.edit-produk-page .btn-batal-produk {
+    background: #e2e8f0;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+}
+
+.edit-produk-page .btn-batal-produk:hover {
+    background: #cbd5e1;
+    color: #1e293b;
+}

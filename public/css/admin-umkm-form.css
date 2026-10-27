@@ -1,0 +1,112 @@
+/* Kontainer formulir UMKM */
+.umkm-form-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Judul halaman */
+.umkm-form-container h1 {
+    color: #243b53;
+    font-size: 27px;
+    line-height: 1.3;
+}
+
+/* Judul bagian formulir */
+.umkm-form-container .section-title {
+    color: #243b53;
+    font-size: 19px;
+    font-weight: 600;
+    border-bottom: 2px solid #2563eb;
+}
+
+/* Label formulir */
+.umkm-form-container .form-label {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Input formulir */
+.umkm-form-container .form-control,
+.umkm-form-container .form-select {
+    font-size: 14px;
+    color: #1e293b;
+}
+
+/* Teks bantuan */
+.umkm-form-container .form-text {
+    font-size: 12px;
+}
+
+/* Tabel jam operasional */
+.umkm-form-container .jadwal-table {
+    font-size: 14px;
+}
+
+.umkm-form-container .jadwal-table th {
+    background-color: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+}
+
+.umkm-form-container .jadwal-table .nama-hari {
+    font-weight: 600;
+    color: #334155;
+}
+
+/* Input jam operasional nonaktif */
+.umkm-form-container .jadwal-table input:disabled {
+    background-color: #f1f5f9;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* Pratinjau logo dan foto usaha */
+.umkm-form-container .foto-preview {
+    width: 100%;
+    height: 180px;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Menjaga proporsi gambar */
+.umkm-form-container .foto-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Keterangan foto */
+.umkm-form-container .foto-keterangan {
+    font-size: 13px;
+    color: #64748b;
+    margin: 8px 0;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .umkm-form-container h1 {
+        font-size: 23px;
+    }
+
+    .umkm-form-container .section-title {
+        font-size: 18px;
+    }
+
+    .umkm-form-container .jadwal-table {
+        min-width: 620px;
+    }
+}

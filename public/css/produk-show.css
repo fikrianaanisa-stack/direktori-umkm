@@ -1,0 +1,245 @@
+/* Breadcrumb detail produk */
+.produk-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 22px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.produk-breadcrumb a {
+    color: #0f766e;
+    text-decoration: none;
+}
+
+.produk-breadcrumb a:hover {
+    color: #115e59;
+    text-decoration: underline;
+}
+
+.produk-breadcrumb [aria-current="page"] {
+    color: #64748b;
+    overflow-wrap: anywhere;
+}
+
+/* Bagian ulasan */
+.ulasan-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 36px auto 0;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.ulasan-section h2 {
+    margin: 0 0 18px;
+    color: #0f172a;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Ringkasan rating */
+.ulasan-ringkasan {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+    color: #475569;
+    font-size: 14px;
+}
+
+.ulasan-ringkasan strong {
+    color: #0f172a;
+    font-size: 16px;
+}
+
+.ulasan-ringkasan p {
+    margin: 0;
+}
+
+/* Daftar ulasan */
+.ulasan-item {
+    padding: 18px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.ulasan-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: #334155;
+    font-size: 14px;
+}
+
+/* Tanggal ulasan */
+.ulasan-header small {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* Pesan belum ada ulasan */
+.ulasan-kosong {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Bintang ulasan */
+.ulasan-bintang {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.bintang-aktif {
+    color: #eab308;
+}
+
+.bintang-nonaktif {
+    color: #cbd5e1;
+}
+
+/* Komentar pengunjung */
+.ulasan-item p {
+    margin: 8px 0 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Pagination ulasan */
+.ulasan-pagination {
+    margin-top: 20px;
+}
+
+/* Aksi ulasan */
+.ulasan-aksi {
+    margin-top: 24px;
+}
+
+.ulasan-aksi h3 {
+    margin: 0 0 20px;
+    color: #0f172a;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Tombol ulasan */
+.ulasan-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0f766e;
+    border: 1px solid #0f766e;
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ulasan-button:hover,
+.ulasan-button:focus-visible {
+    background: #115e59;
+    border-color: #115e59;
+    color: #ffffff;
+}
+
+/* Formulir ulasan */
+.form-ulasan {
+    max-width: 650px;
+}
+
+/* Label formulir */
+.ulasan-label {
+    display: block;
+    margin: 16px 0 10px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Pilihan rating */
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-bottom: 18px;
+}
+
+/* Radio rating disembunyikan */
+.rating-input input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+/* Bintang pilihan rating */
+.rating-input label {
+    color: #cbd5e1;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Warna bintang saat dipilih */
+.rating-input label:hover,
+.rating-input label:hover ~ label,
+.rating-input input:checked ~ label {
+    color: #eab308;
+}
+
+/* Fokus keyboard pada rating */
+.rating-input input:focus-visible + label {
+    outline: 2px solid #0f766e;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Input komentar */
+.form-ulasan textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.form-ulasan textarea:focus {
+    outline: 2px solid #0f766e;
+    outline-offset: 1px;
+}
+
+/* Tombol kirim ulasan */
+.form-ulasan button.ulasan-button {
+    margin-top: 16px;
+}
+
+/* Catatan pengiriman ulasan */
+.ulasan-catatan {
+    margin-top: 12px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+    .ulasan-section {
+        padding: 18px;
+    }
+
+    .ulasan-header {
+        flex-wrap: wrap;
+    }
+}

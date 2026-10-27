@@ -1,0 +1,110 @@
+/* Halaman Data Pengunjung */
+.admin-pengunjung {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #334155;
+}
+
+/* Judul halaman */
+.admin-pengunjung h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 10px;
+}
+
+.admin-pengunjung .page-description {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Kartu */
+.admin-pengunjung .card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.admin-pengunjung .card-body {
+    padding: 20px;
+}
+
+.admin-pengunjung .total-label {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.admin-pengunjung .total-value {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Form pencarian */
+.admin-pengunjung .form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.admin-pengunjung .form-control,
+.admin-pengunjung .form-select {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.admin-pengunjung .form-control:focus,
+.admin-pengunjung .form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.12);
+}
+
+/* Tombol */
+.admin-pengunjung .btn {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.admin-pengunjung .btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.admin-pengunjung .btn-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+/* Tabel */
+.admin-pengunjung .table {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #334155;
+}
+
+.admin-pengunjung .table th {
+    font-weight: 600;
+    color: #334155;
+    background-color: #f8fafc;
+    padding: 12px;
+}
+
+.admin-pengunjung .table td {
+    font-weight: 400;
+    color: #475569;
+    padding: 12px;
+}
+
+.admin-pengunjung .table .badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 9px;
+}
+
+/* Pagination */
+.admin-pengunjung .pagination {
+    font-size: 14px;
+}

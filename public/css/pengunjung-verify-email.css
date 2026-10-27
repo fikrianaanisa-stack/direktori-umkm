@@ -1,46 +1,52 @@
-/* Halaman verifikasi email pengunjung */
+/* Area halaman verifikasi email */
 .verify-email-container {
     max-width: 560px;
     margin: 60px auto;
     padding: 0 20px;
 }
 
+/* Kartu verifikasi email */
 .verify-email-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
+    background-color: var(--public-white);
+    border: 1px solid var(--public-border);
     border-radius: 12px;
     padding: 40px 32px;
     text-align: center;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
 }
 
+/* Ikon verifikasi email */
 .verify-email-icon {
     font-size: 52px;
-    color: #008577;
+    color: var(--public-primary);
     margin-bottom: 20px;
 }
 
+/* Judul verifikasi */
 .verify-email-title {
     font-size: 24px;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--public-text);
     margin-bottom: 16px;
 }
 
+/* Deskripsi verifikasi */
 .verify-email-description {
-    color: #64748b;
+    color: var(--public-text-muted);
     font-size: 15px;
     line-height: 1.7;
     margin-bottom: 16px;
 }
 
+/* Alamat email pengguna */
 .verify-email-address {
     font-weight: 600;
-    color: #008577;
+    color: var(--public-primary);
     overflow-wrap: anywhere;
     margin-bottom: 20px;
 }
 
+/* Area tombol */
 .verify-email-actions {
     display: flex;
     flex-direction: column;
@@ -48,6 +54,7 @@
     margin-top: 28px;
 }
 
+/* Tombol verifikasi */
 .verify-email-btn {
     display: inline-flex;
     align-items: center;
@@ -62,27 +69,36 @@
     transition: background-color 0.2s;
 }
 
+/* Tombol kirim ulang email */
 .verify-email-btn-primary {
-    background: #008577;
-    color: #ffffff;
-    border: 1px solid #008577;
+    background-color: var(--public-primary);
+    color: var(--public-white);
+    border: 1px solid var(--public-primary);
 }
 
-.verify-email-btn-primary:hover {
-    background: #006f63;
+.verify-email-btn-primary:hover,
+.verify-email-btn-primary:focus-visible {
+    background-color: #115e59;
+    border-color: #115e59;
+    color: var(--public-white);
 }
 
+/* Tombol kembali ke beranda */
 .verify-email-btn-secondary {
-    background: #ffffff;
-    color: #374151;
-    border: 1px solid #d1d5db;
+    background-color: var(--public-white);
+    color: var(--public-text-secondary);
+    border: 1px solid var(--public-border);
 }
 
-.verify-email-btn-secondary:hover {
-    background: #f3f4f6;
+.verify-email-btn-secondary:hover,
+.verify-email-btn-secondary:focus-visible {
+    background-color: var(--public-background);
+    color: var(--public-text-secondary);
 }
 
-@media (max-width: 576px) {
+/* Tampilan mobile */
+@media (max-width: 575.98px) {
+
     .verify-email-container {
         margin: 30px auto;
     }

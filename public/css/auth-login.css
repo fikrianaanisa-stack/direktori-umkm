@@ -1,0 +1,67 @@
+/* Area halaman login */
+.login-section {
+    min-height: 60vh;
+    padding: 40px 0;
+}
+
+/* Kartu login */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+}
+
+/* Judul login */
+.login-card h1 {
+    color: var(--public-text);
+    font-size: 24px;
+}
+
+/* Formulir login */
+.login-card .form-label {
+    font-size: 14px;
+}
+
+.login-card .form-control {
+    padding: 12px;
+    font-size: 14px;
+}
+
+.login-card .form-control:focus {
+    border-color: var(--public-primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+/* Tombol login */
+.login-card .btn-primary {
+    background-color: var(--public-primary);
+    border-color: var(--public-primary);
+    font-size: 15px;
+}
+
+.login-card .btn-primary:hover,
+.login-card .btn-primary:focus-visible {
+    background-color: #115e59;
+    border-color: #115e59;
+}
+
+/* Tautan login */
+.login-card a {
+    color: var(--public-primary);
+}
+
+.login-card a:hover {
+    color: #115e59;
+}
+
+/* Tampilan mobile */
+@media (max-width: 575.98px) {
+    .login-section {
+        min-height: auto;
+        padding: 15px 0;
+    }
+
+    .login-card {
+        max-width: 100%;
+    }
+}

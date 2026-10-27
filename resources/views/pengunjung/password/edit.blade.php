@@ -2,6 +2,11 @@
 
 @section('title', 'Ubah Password')
 
+{{-- CSS khusus halaman Ubah Password --}}
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pengunjung-password.css') }}">
+@endpush
+
 @section('content')
 
 <div class="container py-4">
@@ -11,9 +16,10 @@
 
             <div class="card shadow-sm">
 
-                <div class="card-header bg-white">
-                    <h4 class="mb-0">
-                        <i class="bi bi-shield-lock"></i>
+                {{-- Judul formulir dengan ikon yang konsisten --}}
+                <div class="card-header bg-white py-3">
+                    <h4 class="h5 mb-0 fw-semibold">
+                        <i class="bi bi-key me-2"></i>
                         Ubah Password
                     </h4>
                 </div>
@@ -95,17 +101,17 @@
                             >
                         </div>
 
-                        {{-- Tombol aksi --}}
-                        <div class="d-flex gap-2">
+                        {{-- Tombol aksi perubahan password --}}
+                        <div class="d-flex flex-wrap gap-2">
 
-                            <button type="submit" class="btn btn-success">
-                                <i class="bi bi-check-circle"></i>
+                            <button type="submit" class="btn btn-brand">
+                                <i class="bi bi-floppy me-1"></i>
                                 Simpan Perubahan
                             </button>
 
                             <a href="{{ route('pengunjung.profile.index') }}"
-                               class="btn btn-secondary">
-                                <i class="bi bi-x-circle"></i>
+                            class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i>
                                 Batal
                             </a>
 
@@ -122,10 +128,3 @@
 </div>
 
 @endsection
-
-@push('styles')
-<link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
->
-@endpush

@@ -57,7 +57,6 @@
 
                 <button type="button"
                         class="admin-toast-close"
-                        onclick="document.getElementById('admin-toast').remove()"
                         aria-label="Tutup notifikasi">
                     &times;
                 </button>
@@ -159,10 +158,16 @@
                 <i class="bi bi-collection"></i>Kategori Produk
             </a>
 
-            {{-- Menu Data Wilayah --}}
+           {{-- Menu Data Wilayah --}}
             <a href="{{ route('admin.wilayah.index') }}"
             class="{{ request()->routeIs('admin.wilayah.*') ? 'active' : '' }}">
                 <i class="bi bi-geo-alt"></i>Data Wilayah
+            </a>
+
+            {{-- Menu Data Pengunjung --}}
+            <a href="{{ route('admin.pengunjung.index') }}"
+            class="{{ request()->routeIs('admin.pengunjung.*') ? 'active' : '' }}">
+                <i class="bi bi-person-lines-fill"></i>Data Pengunjung
             </a>
 
             {{-- Moderasi ulasan pengunjung --}}
@@ -208,89 +213,11 @@
 
 </div>
 
+{{-- JavaScript utama admin --}}
+<script src="{{ asset('js/admin-layout.js') }}" defer></script>
+
+{{-- JavaScript khusus halaman --}}
 @stack('scripts')
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const toast = document.getElementById('admin-toast');
-
-        if (!toast) return;
-
-        // Notifikasi berhasil menutup otomatis setelah 5 detik
-        if (toast.dataset.type === 'success') {
-            setTimeout(function () {
-                if (!toast.isConnected) return;
-
-                toast.style.transition = 'opacity 0.4s ease';
-                toast.style.opacity = '0';
-
-                setTimeout(function () {
-                    toast.remove();
-                }, 400);
-            }, 5000);
-        }
-
-        // Notifikasi error tetap tampil sampai ditutup pengguna
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('adminSidebar');
-        const userMenu = document.querySelector('.user-menu');
-
-        // Membuka dan menutup sidebar
-        if (menuToggle && sidebar) {
-            menuToggle.addEventListener('click', function () {
-
-                
-        if (sidebar.classList.contains('closing')) {
-            return;
-        }
-
-        if (sidebar.classList.contains('show')) {
-            sidebar.classList.add('closing');
-
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.setAttribute('aria-label', 'Buka menu navigasi');
-
-            
-            sidebar.classList.remove('show');
-
-            setTimeout(function () {
-                sidebar.classList.remove('closing');
-            }, 550);
-
-        } else {
-            sidebar.classList.add('show');
-
-            menuToggle.setAttribute('aria-expanded', 'true');
-            menuToggle.setAttribute('aria-label', 'Tutup menu navigasi');
-        }
-
-            });
-        }
-
-        // Menutup dropdown profil ketika klik di luar
-        document.addEventListener('click', function (event) {
-            if (userMenu && !userMenu.contains(event.target)) {
-                userMenu.removeAttribute('open');
-            }
-        });
-
-        // Mengembalikan sidebar saat ukuran browser berubah
-        window.addEventListener('resize', function () {
-            if (window.innerWidth > 1024 && sidebar && menuToggle) {
-                sidebar.classList.remove('show');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                menuToggle.setAttribute('aria-label', 'Buka menu navigasi');
-            }
-        });
-
-    });
-</script>
 </body>
 </html>
-

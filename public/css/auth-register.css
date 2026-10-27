@@ -1,0 +1,74 @@
+/* Area halaman registrasi */
+.register-section {
+    min-height: 60vh;
+    padding: 40px 0;
+}
+
+/* Kartu registrasi */
+.register-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+}
+
+/* Judul registrasi */
+.register-card h1 {
+    color: var(--public-text);
+    font-size: 24px;
+}
+
+/* Label formulir */
+.register-card .form-label {
+    font-size: 14px;
+}
+
+/* Input formulir */
+.register-card .form-control {
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* Fokus input */
+.register-card .form-control:focus {
+    border-color: var(--public-primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+/* Tombol registrasi */
+.register-card .btn-primary {
+    background-color: var(--public-primary);
+    border-color: var(--public-primary);
+    font-size: 15px;
+}
+
+/* Hover dan fokus tombol */
+.register-card .btn-primary:hover,
+.register-card .btn-primary:focus-visible {
+    background-color: #115e59;
+    border-color: #115e59;
+}
+
+/* Tautan registrasi */
+.register-card a {
+    color: var(--public-primary);
+}
+
+/* Hover tautan */
+.register-card a:hover {
+    color: #115e59;
+}
+
+/* Tampilan mobile */
+@media (max-width: 575.98px) {
+
+    /* Mengatur area registrasi */
+    .register-section {
+        min-height: auto;
+        padding: 15px 0;
+    }
+
+    /* Menyesuaikan lebar kartu */
+    .register-card {
+        max-width: 100%;
+    }
+}

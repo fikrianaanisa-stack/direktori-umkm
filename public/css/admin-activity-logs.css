@@ -409,6 +409,7 @@
     color: #6b7280;
     cursor: pointer;
     padding: 5px;
+    display: none;
 }
 
 .activity-search-clear:hover {

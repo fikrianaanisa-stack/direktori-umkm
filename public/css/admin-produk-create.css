@@ -1,0 +1,187 @@
+/* Kontainer halaman */
+.produk-create {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+/* Header halaman */
+.produk-create-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.produk-create-header h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.produk-create-header p {
+    margin: 6px 0 0;
+    color: #64748b;
+}
+
+/* Kartu formulir */
+.produk-create-card {
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+/* Kelompok input */
+.produk-create-field {
+    margin-bottom: 18px;
+}
+
+.produk-create-field-lg {
+    margin-bottom: 24px;
+}
+
+/* Label formulir */
+.produk-create-label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+/* Input formulir */
+.produk-create-input {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    box-sizing: border-box;
+}
+
+/* Pesan validasi */
+.produk-create-error {
+    color: #dc2626;
+}
+
+/* Keterangan input */
+.produk-create-help {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+}
+
+/* Kontainer pilihan harga */
+.produk-create-harga {
+    margin-bottom: 24px;
+    padding: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+}
+
+.produk-create-harga h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.produk-create-harga p {
+    margin: 0 0 12px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* Tombol tambah pilihan harga */
+.produk-create-tambah-harga {
+    padding: 9px 14px;
+    background: #16a34a;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Kartu pilihan harga dinamis */
+.pilihan-harga-baru {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+}
+
+/* Header pilihan harga */
+.pilihan-harga-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* Kolom pilihan harga */
+.pilihan-harga-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.pilihan-harga-grid + .pilihan-harga-grid {
+    margin-top: 12px;
+}
+
+/* Input pilihan harga */
+.pilihan-harga-input {
+    width: 100%;
+    padding: 9px;
+    box-sizing: border-box;
+}
+
+/* Tombol hapus pilihan harga */
+.hapus-pilihan-harga {
+    padding: 7px 12px;
+    background: #dc2626;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Tombol formulir */
+.produk-create-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.produk-create-simpan {
+    padding: 11px 18px;
+    background: #2563eb;
+    border: none;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.produk-create-batal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    color: #334155;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 576px) {
+    .produk-create-card {
+        padding: 16px;
+    }
+
+    .pilihan-harga-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .produk-create-actions {
+        flex-wrap: wrap;
+    }
+}

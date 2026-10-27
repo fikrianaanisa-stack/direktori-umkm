@@ -1,0 +1,22 @@
+/* Tata letak halaman tambah kategori UMKM */
+.admin-kategori-umkm-create {
+    max-width: 800px;
+}
+
+/* Tipografi halaman tambah kategori UMKM */
+.admin-kategori-umkm-create h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.admin-kategori-umkm-create > .mb-4 > p {
+    font-size: 14px;
+    color: #64748b !important;
+}
+
+.admin-kategori-umkm-create .form-label,
+.admin-kategori-umkm-create .form-control,
+.admin-kategori-umkm-create .btn {
+    font-size: 14px;
+}

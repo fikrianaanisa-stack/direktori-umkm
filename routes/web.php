@@ -7,9 +7,11 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PengelolaController;
+use App\Http\Controllers\Admin\PengunjungController;
 use App\Http\Controllers\Admin\KategoriUmkmController;
 use App\Http\Controllers\Admin\KategoriProdukController;
 use App\Http\Controllers\Admin\WilayahController;
@@ -68,6 +70,23 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/register', [RegisterController::class, 'register'])
         ->name('register.store');
+
+    // Menampilkan formulir permintaan reset password
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])
+        ->name('password.request');
+
+    // Mengirim tautan reset password ke email
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])
+        ->middleware('throttle:6,1')
+        ->name('password.email');
+
+    // Menampilkan formulir untuk membuat password baru
+    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])
+        ->name('password.reset');
+
+    // Memproses dan menyimpan password baru
+    Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])
+        ->name('password.update');
 });
 
 
@@ -255,6 +274,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Daftar Pengelola Admin (hanya menampilkan data)
     Route::get('/admin/pengelola', [PengelolaController::class, 'index'])
         ->name('admin.pengelola.index');
+
+    // Daftar Pengunjung Terdaftar (hanya menampilkan data)
+    Route::get('/admin/pengunjung', [PengunjungController::class, 'index'])
+        ->name('admin.pengunjung.index');
 
     // Moderasi ulasan pengunjung
     Route::get('/admin/ulasan', [AdminUlasanController::class, 'index'])

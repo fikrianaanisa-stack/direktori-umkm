@@ -1,0 +1,69 @@
+/* CSS bersama untuk halaman error 403, 404, dan 503 */
+.error-page {
+    min-height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-page .row {
+    width: 100%;
+}
+
+.error-page-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 56px 32px;
+}
+
+.error-page-icon {
+    color: #0f766e;
+    font-size: 48px;
+}
+
+.error-page-code {
+    color: #0f766e;
+    font-size: clamp(72px, 12vw, 112px);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.error-page-title {
+    color: #1e293b;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.error-page-description {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.error-page .btn-primary {
+    background-color: #0f766e;
+    border-color: #0f766e;
+}
+
+.error-page .btn-primary:hover {
+    background-color: #115e59;
+    border-color: #115e59;
+}
+
+@media (max-width: 576px) {
+    .error-page-card {
+        padding: 40px 20px;
+    }
+
+    .error-page-title {
+        font-size: 23px;
+    }
+
+    .error-page-description {
+        font-size: 14px;
+    }
+}

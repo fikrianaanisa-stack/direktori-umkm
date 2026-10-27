@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin-pengelola.css') }}">
+@endpush
+
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid admin-pengelola-page">
 
     {{-- Judul halaman --}}
     <div class="mb-4">
@@ -20,7 +24,7 @@
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th width="70">No.</th>
+                            <th class="pengelola-kolom-nomor">No.</th>
                             <th>Nama Pengelola</th>
                             <th>Email</th>
                             <th>Role</th>

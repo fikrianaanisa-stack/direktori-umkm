@@ -2,8 +2,12 @@
 
 @section('title', 'Moderasi Ulasan')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin-ulasan.css') }}">
+@endpush
+
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid admin-ulasan-page">
 
     <h2 class="mb-2">Moderasi Ulasan</h2>
     <p class="text-muted mb-4">
@@ -72,7 +76,7 @@
                             <th>Komentar</th>
                             <th>Status</th>
                             <th>Tanggal</th>
-                            <th style="min-width: 125px;">Aksi</th>
+                            <th class="ulasan-kolom-aksi">Aksi</th>
                         </tr>
                     </thead>
 
@@ -111,7 +115,7 @@
                                     </div>
                                 </td>
 
-                                <td style="min-width: 220px;">
+                                <td class="ulasan-kolom-komentar">
                                     {{ $item->komentar }}
                                 </td>
 
@@ -136,7 +140,7 @@
                                             {{-- Tombol menyetujui ulasan --}}
                                             <form method="POST"
                                                 action="{{ route('admin.ulasan.approve', $item->id) }}"
-                                                onsubmit="return confirm('Yakin ingin menyetujui ulasan ini?')">
+                                                data-confirm-action="approve">
                                                 @csrf
                                                 @method('PATCH')
 
@@ -149,7 +153,7 @@
                                             {{-- Tombol menolak ulasan --}}
                                             <form method="POST"
                                                 action="{{ route('admin.ulasan.reject', $item->id) }}"
-                                                onsubmit="return confirm('Yakin ingin menolak ulasan ini?')">
+                                                data-confirm-action="reject">
                                                 @csrf
                                                 @method('PATCH')
 
@@ -188,8 +192,8 @@
                                             method="POST"
                                             action="{{ route('admin.ulasan.destroy', $item->id) }}"
                                             class="mt-2"
-                                            onsubmit="return confirm('Yakin ingin menghapus ulasan ini secara permanen? Aktivitas penghapusan akan dicatat dalam Riwayat Aktivitas.');"
-                                        >
+                                            data-confirm-action="delete">
+
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="status" value="{{ $status }}">
@@ -223,3 +227,7 @@
 
 </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/admin-ulasan.js') }}"></script>
+@endpush
