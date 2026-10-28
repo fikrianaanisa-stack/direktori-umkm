@@ -464,14 +464,14 @@ class UmkmController extends Controller
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Data UMKM dan jadwal operasional berhasil diperbarui.',
+                'message' => 'Data UMKM berhasil diperbarui.',
                 'redirect' => route('admin.umkm.index'),
             ]);
         }
 
         // Respons untuk penyimpanan formulir biasa
         return redirect()->route('admin.umkm.index')
-            ->with('success', 'Data UMKM dan jadwal operasional berhasil diperbarui.');
+            ->with('success', 'Data UMKM berhasil diperbarui.');
     }
 
     /**
