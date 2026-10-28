@@ -124,4 +124,19 @@ document.addEventListener('DOMContentLoaded', function () {
             menuToggle.setAttribute('aria-label', 'Buka menu navigasi');
         }
     });
+
+    // Mengatur perubahan tampilan header saat scroll
+    const header = document.querySelector('.header');
+
+    if (header) {
+        function updateHeader() {
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        }
+
+        updateHeader();
+
+        window.addEventListener('scroll', updateHeader, {
+            passive: true
+        });
+    }
 });

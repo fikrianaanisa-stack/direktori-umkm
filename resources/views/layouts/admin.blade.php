@@ -102,23 +102,27 @@
             </summary>
 
             <div class="dropdown">
-            <a href="{{ route('admin.profile.edit') }}">
-                <i class="bi bi-person-circle"></i> Profil Saya
-            </a>
+                <a href="{{ route('home') }}" target="_blank" rel="noopener noreferrer">
+                    <i class="bi bi-globe2"></i> Lihat Website
+                </a>
 
-            <a href="{{ route('admin.password.edit') }}">
-                <i class="bi bi-shield-lock"></i> Ubah Password
-            </a>
+                <a href="{{ route('admin.profile.edit') }}">
+                    <i class="bi bi-person"></i> Profil Saya
+                </a>
 
-            <hr>
+                <a href="{{ route('admin.password.edit') }}">
+                    <i class="bi bi-key"></i> Ubah Password
+                </a>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </button>
-            </form>
-        </div>
+                <hr>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-logout">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </form>
+            </div>
         </details>
     </header>
 
